@@ -4,4 +4,4 @@
 
 Graphical assets are stored in Terraformer (.terra) files; please see https://github.com/nicolebranagan/terraformer for details.
 
-Compile the game by running the included build.sh file. Python3 is required to run the editor and to compile the graphics assets into a format web browsers can read.
+Start the game server with "yarn start". Python3 is required to run the editor and to compile the graphics assets into a format web browsers can read.
