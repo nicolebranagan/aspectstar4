@@ -1,4 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // Require  html-webpack-plugin plugin
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 module.exports = {
     entry: './src/app/index.ts',
@@ -24,7 +25,10 @@ module.exports = {
       new HtmlWebpackPlugin({
           template: __dirname + "/src/public/index.html",
           inject: 'body'
-      })
+      }),
+      new WebpackShellPlugin({
+        onBuildStart: 'python3 process.py'
+      }),
   ],
   devServer: {  // configuration for webpack-dev-server
       contentBase: './src/public',  //source of static assets
