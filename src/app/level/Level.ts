@@ -8,6 +8,7 @@ import Point from '../system/Point';
 import Player from './objects/Player';
 import Stage from './Stage';
 import Loader from './Loader';
+import PlayerState from './PlayerState';
 
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
@@ -19,9 +20,16 @@ export default class Level extends GenericRunner implements Master {
     private player : Player
     private camera : Point
     private deathTimer = 0;
+    private lastState : PlayerState;
 
     constructor(master : Master) {
         super(master);
+        // Set initial state; eventually fetch the point from the level data
+        this.lastState = {
+            point: new Point(100, 287),
+            aspect: Aspect.ASPECT_PLUS,
+            aspects: [Aspect.ASPECT_PLUS],
+        };
         const data = this.resetObjects();
         this.drawables.addChildAt(data.terrain.drawables, 0);
 
@@ -78,7 +86,7 @@ export default class Level extends GenericRunner implements Master {
         this.stage = data.stage;
         data.objects.forEach( e => (this.addObject(e)) );
 
-        this.player = new Player(this.stage);
+        this.player = new Player(this.stage, this.lastState);
         this.addObject(this.player);
         return data;
     }
@@ -91,14 +99,4 @@ export default class Level extends GenericRunner implements Master {
     removeRunner(runner : Runner) : void {
         this.drawables.removeChild(runner.drawables);
     }
-}
-
-class PlayerState {
-    point : Point
-    aspect : Aspect
-    aspects : Aspect[]
-
-    constructor() {}
-}
-
-
+};
