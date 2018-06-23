@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>This is a test</title>
+        <style>
+        body {background-color: #000;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -o-crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+            -ms-interpolation-mode: nearest-neighbor;
+            image-rendering: pixelated;}
+        #holderdiv { height: 100%;}
+        #holderdiv2 {color: #FFF; font-size: 8pt; text-align: center;}
+        #gamecanvas { width: 800px; height: 450px; background-color: #000000;}
+        #gamecontrols { width: 100%; display:none; overflow:hidden; -webkit-touch-callout: none !important; }
+        /* Media queries
+
+        @media all and (max-width:511px) {
+            #gamecanvas { width: 256px; height: 192px }
+        }
+        @media all and (min-width:768px) and (min-height:576px) {
+            #gamecanvas { width: 768px; height: 576px;}
+        }
+        @media all and (min-width:1024px) and (min-height:768px) {
+            #gamecanvas { width: 1024px; height: 768px;}
+        }
+        @media all and (min-width:1280px) and (min-height:960px) {
+            #gamecanvas { width: 1280px; height: 960px;}
+        }*/
+        </style>
+    </head>
+    <body>
+        <center><div id="holderdiv">
+        </div></center>
+
+        <script src="lib/pixi.min.js"></script>
+        <script src="out.js"></script>
+        <script src="worldfile.js"></script>
+        <script src="objects.js"></script>
+        
+    </body>
+<html>

@@ -1,0 +1,8 @@
+*.swp
+*.kate-swp
+*.pyc
+build/
+tags
+node_modules/
+.vscode/
+yarn.lock
