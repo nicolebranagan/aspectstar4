@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
 import Controls from '../interfaces/Controls';

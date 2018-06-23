@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import Aspect from '../constants/Aspect';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';

@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js';
+
 let master : any;
 function loadResources() : void {
     PIXI.loader

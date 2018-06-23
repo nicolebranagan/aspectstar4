@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
 import Master from '../../interfaces/Master';
