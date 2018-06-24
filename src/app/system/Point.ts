@@ -4,60 +4,67 @@
  * */
 
 export default class Point {
-    x : number = 0
-    y : number = 0
+    private _x : number = 0
+    private _y : number = 0
     
     constructor(x : number, y : number) {
         if (x)
-            this.x = x;
+            this._x = x;
         if (y)
-            this.y = y;
-        Object.freeze(this);
+            this._y = y;
+    }
+
+    get x() : number {
+        return this._x;
+    }
+
+    get y() : number {
+        return this._y;
     }
 
     equals(p : Point) : boolean {
-        return (this.x == p.x) && (this.y == p.y)
+        return (this._x == p.x) && (this._y == p.y)
     }
 
     round() : Point {
         return new Point(
-            this.x >> 0,
-            this.y >> 0
+            this._x >> 0,
+            this._y >> 0
         )
     }
 
     multiply(j : number) : Point {
         return new Point(
-            this.x * j,
-            this.y * j
+            this._x * j,
+            this._y * j
         )
     }
 
     modulo(j : number) : Point {
         return new Point(
-            this.x % j,
-            this.y % j
+            this._x % j,
+            this._y % j
         )
     }
 
     floor(j : number) : Point {
         return new Point(
-            (this.x / j) >> 0,
-            (this.y / j) >> 0
+            (this._x / j) >> 0,
+            (this._y / j) >> 0
         )
     }
 
     add(p : Point) : Point {
         return new Point(
-            this.x + p.x,
-            this.y + p.y
+            this._x + p.x,
+            this._y + p.y
         )
     }
 
     subtract(p : Point) : Point {
         return new Point(
-            this.x - p.x,
-            this.y - p.y
+            this._x - p.x,
+            this._y - p.y
         )
     }
 };

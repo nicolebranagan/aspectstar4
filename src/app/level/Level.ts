@@ -60,12 +60,12 @@ export default class Level extends GenericRunner implements Master {
     }
 
     update() : void {
-        this.camera = new Point(this.player.point.x, this.player.point.y);
+        this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.drawables.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
-            )
+        );
         this.objects.slice().forEach( 
             e => {
                 e.update(this.player, this.objects, this.options);
