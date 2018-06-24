@@ -140,8 +140,8 @@ export default {
     getFallingImage(master : Master, row : number) : Runner {
         const drawables = new PIXI.Container();
         const particles : ImageParticle[] = [];
-        for (let i = -2; i < 2; i++) {
-            const particle1 = new ImageParticle(row, i*3-4, -16, 0, 0, 1);
+        for (let i = -1; i <= 1; i++) {
+            const particle1 = new ImageParticle(row, i*4-4, Math.random()*18-14, 0, 0, 0.5);
             drawables.addChild(particle1.sprite);
             particles.push(particle1);
         }
@@ -153,8 +153,8 @@ export default {
                 for (const index in particles) {
                     const p = particles[index];
                     p.update();
-                    if (p.y > 8)
-                        p.reset();
+                    if (p.y > 4)
+                        p.y = -14;
                 }
             }
         };
@@ -247,14 +247,20 @@ class ImageParticle {
 
     private lifetime : number = 0;
 
-    get x()
-    {
+    public get x() {
         return this.sprite.position.x;
     }
 
-    get y()
-    {
+    public set x(val : number) {
+        this.sprite.position.x = val;
+    }
+
+    public get y() {
         return this.sprite.position.y;
+    }
+
+    public set y(val : number) {
+        this.sprite.position.y = val;
     }
 
     constructor(row : number, x : number, y : number, lifetime : number, delta_x : number, delta_y : number) {

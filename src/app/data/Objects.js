@@ -8,6 +8,13 @@ export default
     "aspect" : 0
   },
   {
+    "name" : "Bell",
+    "type" : "bell",
+    "texture" : "player",
+    "rect" : [176, 0, 16, 16],
+    "aspect" : 0
+  },
+  {
     "name" : "Aspect Plus",
     "type" : "aspecttile",
     "texture" : "player",
