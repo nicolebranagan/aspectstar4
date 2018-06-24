@@ -1,12 +1,12 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
 import Master from '../../interfaces/Master';
+import Player from '../../interfaces/Player';
 import Runner from '../../interfaces/Runner';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
-import Player from './Player';
 import { LevelOptions } from '../Level';
 
 export default class SaveIcon implements LevelObject, Master {

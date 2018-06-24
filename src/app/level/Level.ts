@@ -3,9 +3,10 @@ import Controls from '../interfaces/Controls';
 import LevelObject from '../interfaces/LevelObject';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
+import Player from '../interfaces/Player';
 import GenericRunner from '../system/GenericRunner';
 import Point from '../system/Point';
-import Player from './objects/Player';
+import ActivePlayer from './objects/ActivePlayer';
 import Stage from './Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
@@ -103,7 +104,7 @@ export default class Level extends GenericRunner implements Master {
         this.stage = data.stage;
         data.objects.forEach( e => (this.addObject(e)) );
 
-        this.player = new Player(this.stage, this.lastState);
+        this.player = new ActivePlayer(this.stage, this.lastState);
         this.addObject(this.player);
         return data;
     }

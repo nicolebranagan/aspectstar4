@@ -15,7 +15,7 @@ import PlayerState from '../PlayerState';
  * Eventually some of this may need to be separated out into a "standard
  * LevelObject"
  * */
-export default class Player implements LevelObject, Master {
+export default class Player implements Player, Master {
     active = true
     point : Point; // THIS IS A DEBUG VALUE
     aspect : Aspect;
