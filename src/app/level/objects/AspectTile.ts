@@ -46,7 +46,7 @@ export default class AspectTile implements LevelObject, Master {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[]) {
+    update(player : Player) {
         this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
         this.timer++;
         if (this.timer == 60)

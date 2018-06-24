@@ -10,6 +10,13 @@ import Stage from './Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
 
+/* LevelOptions are options that are passed by the level to its children.
+ * They allow the child level objects to do things to the parent.
+ * */
+export interface LevelOptions {
+    saveState: () => void;
+};
+
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
  * No LevelObject should exist outside of the Level.
@@ -21,6 +28,7 @@ export default class Level extends GenericRunner implements Master {
     private camera : Point
     private deathTimer = 0;
     private lastState : PlayerState;
+    private options : LevelOptions;
 
     constructor(master : Master) {
         super(master);
@@ -34,6 +42,15 @@ export default class Level extends GenericRunner implements Master {
         this.drawables.addChildAt(data.terrain.drawables, 0);
 
         this.camera = this.player.point;
+        this.options = {
+            saveState: () => {
+                this.lastState = {
+                    point: this.player.point,
+                    aspect: this.player.aspect,
+                    aspects: this.player.aspects,
+                }
+            }
+        };
     }
 
     respond(controls : Controls) : void {
@@ -50,7 +67,7 @@ export default class Level extends GenericRunner implements Master {
             )
         this.objects.slice().forEach( 
             e => {
-                e.update(this.player, this.objects)
+                e.update(this.player, this.objects, this.options);
                 if (e !== this.player && !e.active)
                     this.removeObject(e);
             }

@@ -7,6 +7,7 @@ import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import Player from './Player';
+import { LevelOptions } from '../Level';
 
 export default class SaveIcon implements LevelObject, Master {
     active = true;
@@ -48,7 +49,7 @@ export default class SaveIcon implements LevelObject, Master {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[]) {
+    update(player : Player, objects : LevelObject[], options : LevelOptions) {
         if (this.collected) {
             this.timeOut++;
             if (this.timeOut === 0) {
@@ -74,6 +75,7 @@ export default class SaveIcon implements LevelObject, Master {
             this.removeRunner(this.fallingAspect);
             this.addRunner(Particle.getAspectEffect(this, Aspect.NONE));
             this.timeOut = -25;
+            options.saveState();
         }
     }
 
