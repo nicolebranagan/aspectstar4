@@ -16,7 +16,7 @@ import PlayerState from '../PlayerState';
  * */
 export default class Player implements Player, Master {
     active = true
-    point : Point; // THIS IS A DEBUG VALUE
+    point : Point;
     aspect : Aspect;
     aspects : Aspect[];
     graphics : PIXI.Container;

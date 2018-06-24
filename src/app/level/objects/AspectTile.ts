@@ -74,7 +74,6 @@ export default class AspectTile implements LevelObject, Master {
     }
 
     removeRunner(runner : Runner) : void {
-        console.log("bye");
         this.graphics.removeChild(runner.drawables);
         this.runners.splice(this.runners.indexOf(runner), 1);
     }
