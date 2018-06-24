@@ -40,6 +40,9 @@ with open("src/images/particle.terra", "r") as fileo:
 filen = designation + "particle.gif"
 pixelgrid.changepage(0)
 pixelgrid.getTkImage(1, False).write(filen, format='gif')
+filen = designation + "particle2.gif"
+pixelgrid.changepage(1)
+pixelgrid.getTkImage(1, False).write(filen, format='gif')
 
 with open("src/images/palace.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))

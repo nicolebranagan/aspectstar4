@@ -7,6 +7,7 @@ import json
 import os
 import sys
 
+from collections import defaultdict
 from tilesets import tilesets
 from images import images
 from bigtiles import Bigtiles
@@ -275,11 +276,9 @@ class Editor(tk.Frame):
         tk.Label(nullframe, text="No Options").pack()
         nullframe.getdata = lambda: []
 
-        options = {
+        options = defaultdict(lambda: nullframe, {
             "platform" : platformframe,
-            "square" : nullframe,
-            "aspecttile" : nullframe
-        }
+        })
         def getcorrectoptions(*data):
             objtype = Objects.data[getobj()]["type"]
             options[objtype].tkraise()

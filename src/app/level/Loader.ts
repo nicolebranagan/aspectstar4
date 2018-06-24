@@ -8,6 +8,7 @@ import AspectTile from './objects/AspectTile';
 import Platform from './objects/Platform';
 import Square from './objects/Square';
 import SaveIcon from './objects/SaveIcon';
+import Bell from './objects/Bell';
 
 import Objects from '../data/Objects';
 import Worldfile from '../data/Worldfile';
@@ -31,6 +32,9 @@ function parseObject(stage : Stage, data : any[]) : LevelObject {
     const point = new Point(data[1], data[2]);
     if (objdata.type == "saveicon") {
         return new SaveIcon(stage, point, objdata.rect);
+    }
+    else if (objdata.type == "bell") {
+        return new Bell(stage, point, objdata.rect);
     }
     else if (objdata.type == "aspecttile") {
         return new AspectTile(stage, point, objdata.aspect, objdata.rect);
