@@ -1,6 +1,5 @@
 import Aspect from '../../constants/Aspect';
 import Controls from '../../interfaces/Controls';
-import LevelObject from '../../interfaces/LevelObject';
 import Master from '../../interfaces/Master';
 import Runner from '../../interfaces/Runner';
 import Point from '../../system/Point';

@@ -1,4 +1,3 @@
-import { Container } from 'pixi.js';
 import Aspect from '../constants/Aspect';
 import Physics from '../interfaces/Physics';
 import Point from '../system/Point';
@@ -8,7 +7,7 @@ import Player from './Player';
 // An object that lives in a level must implement this interface
 export default interface LevelObject {
     active : boolean
-    graphics : Container
+    graphics : PIXI.Container
     aspect : Aspect
     physics : Physics
     point : Point
