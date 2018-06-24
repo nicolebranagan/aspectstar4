@@ -7,6 +7,7 @@ import Point from '../../system/Point';
 import PlatformerPhysics from '../physics/PlatformerPhysics';
 import Particle from '../../graphics/Particle';
 import Stage from '../Stage';
+import PlayerState from '../PlayerState';
 
 /* Class Player is a LevelObject that additionally implements the method 
  * respond() in order to respond to player input. 
@@ -16,8 +17,8 @@ import Stage from '../Stage';
  * */
 export default class Player implements LevelObject, Master {
     active = true
-    point : Point = new Point(100, 287); // THIS IS A DEBUG VALUE
-    aspect : Aspect = Aspect.ASPECT_PLUS;
+    point : Point; // THIS IS A DEBUG VALUE
+    aspect : Aspect;
     aspects : Aspect[];
     graphics : PIXI.Container;
     physics : PlatformerPhysics;
@@ -36,7 +37,7 @@ export default class Player implements LevelObject, Master {
     private waitTimer : number = 0;
     private ready = false;
 
-    constructor(stage : Stage) {
+    constructor(stage : Stage, state : PlayerState) {
         const text = PIXI.loader.resources['player'].texture;
         let rect = new PIXI.Rectangle(0, 0, 16, 32);
         text.frame = rect;
@@ -48,7 +49,9 @@ export default class Player implements LevelObject, Master {
         this.sprite.x = 200;
         this.sprite.y = 0;
 
-        this.aspects = [Aspect.ASPECT_PLUS];
+        this.point = state.point;
+        this.aspect = state.aspect;
+        this.aspects = state.aspects;
 
         this.physics = new PlatformerPhysics(stage, 1, 7, 12, 24);
     }

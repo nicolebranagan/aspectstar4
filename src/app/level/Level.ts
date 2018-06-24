@@ -8,6 +8,14 @@ import Point from '../system/Point';
 import Player from './objects/Player';
 import Stage from './Stage';
 import Loader from './Loader';
+import PlayerState from './PlayerState';
+
+/* LevelOptions are options that are passed by the level to its children.
+ * They allow the child level objects to do things to the parent.
+ * */
+export interface LevelOptions {
+    saveState: () => void;
+};
 
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
@@ -19,13 +27,30 @@ export default class Level extends GenericRunner implements Master {
     private player : Player
     private camera : Point
     private deathTimer = 0;
+    private lastState : PlayerState;
+    private options : LevelOptions;
 
     constructor(master : Master) {
         super(master);
+        // Set initial state; eventually fetch the point from the level data
+        this.lastState = {
+            point: new Point(100, 287),
+            aspect: Aspect.ASPECT_PLUS,
+            aspects: [Aspect.ASPECT_PLUS],
+        };
         const data = this.resetObjects();
         this.drawables.addChildAt(data.terrain.drawables, 0);
 
         this.camera = this.player.point;
+        this.options = {
+            saveState: () => {
+                this.lastState = {
+                    point: this.player.point,
+                    aspect: this.player.aspect,
+                    aspects: this.player.aspects,
+                }
+            }
+        };
     }
 
     respond(controls : Controls) : void {
@@ -42,7 +67,7 @@ export default class Level extends GenericRunner implements Master {
             )
         this.objects.slice().forEach( 
             e => {
-                e.update(this.player, this.objects)
+                e.update(this.player, this.objects, this.options);
                 if (e !== this.player && !e.active)
                     this.removeObject(e);
             }
@@ -78,7 +103,7 @@ export default class Level extends GenericRunner implements Master {
         this.stage = data.stage;
         data.objects.forEach( e => (this.addObject(e)) );
 
-        this.player = new Player(this.stage);
+        this.player = new Player(this.stage, this.lastState);
         this.addObject(this.player);
         return data;
     }
@@ -91,14 +116,4 @@ export default class Level extends GenericRunner implements Master {
     removeRunner(runner : Runner) : void {
         this.drawables.removeChild(runner.drawables);
     }
-}
-
-class PlayerState {
-    point : Point
-    aspect : Aspect
-    aspects : Aspect[]
-
-    constructor() {}
-}
-
-
+};

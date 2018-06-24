@@ -7,8 +7,9 @@ import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import Player from './Player';
+import { LevelOptions } from '../Level';
 
-export default class AspectTile implements LevelObject, Master {
+export default class SaveIcon implements LevelObject, Master {
     active = true;
     graphics : PIXI.Container;
     aspect : Aspect;
@@ -19,20 +20,22 @@ export default class AspectTile implements LevelObject, Master {
     private frame : PIXI.Rectangle;
     private timer : number = 0;
     private runners : Runner[] = [];
+    private collected = false;
+    private timeOut: number;
+    private fallingAspect : Runner;
 
     constructor(
         stage : Stage, 
         point : Point, 
-        aspect : Aspect,
         rect : number[]
     ) {
         this.point = point;
-        this.aspect = aspect;
         this.physics = new SolidPhysics(stage, 16, 16);
         this.graphics = new PIXI.Container();
         this.frame = new PIXI.Rectangle(...rect);
         this.sprite = this.getSprite();
-        this.addRunner(Particle.getFallingAspect(this, this.aspect));
+        this.fallingAspect = Particle.getFallingAspect(this, Aspect.NONE);
+        this.addRunner(Particle.getFallingAspect(this, Aspect.NONE));
         this.graphics.addChild(this.sprite);
     }
 
@@ -46,7 +49,14 @@ export default class AspectTile implements LevelObject, Master {
         return sprite;
     }
 
-    update(player : Player) {
+    update(player : Player, objects : LevelObject[], options : LevelOptions) {
+        if (this.collected) {
+            this.timeOut++;
+            if (this.timeOut === 0) {
+                this.active = false;
+            }
+        }
+
         this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
         this.timer++;
         if (this.timer == 60)
@@ -59,11 +69,13 @@ export default class AspectTile implements LevelObject, Master {
                 this.sprite.y--;
         }
 
-        if (player.aspects.indexOf(this.aspect) != -1)
-            this.active = false;
-        else if (player.physics.inrange(player.point, this.point)) {
-            player.getAspect(this.aspect);
-            this.active = false;
+        if (!this.collected && player.physics.inrange(player.point, this.point)) {
+            this.collected = true;
+            this.graphics.removeChild(this.sprite);
+            this.removeRunner(this.fallingAspect);
+            this.addRunner(Particle.getAspectEffect(this, Aspect.NONE));
+            this.timeOut = -25;
+            options.saveState();
         }
     }
 
@@ -74,7 +86,6 @@ export default class AspectTile implements LevelObject, Master {
     }
 
     removeRunner(runner : Runner) : void {
-        console.log("bye");
         this.graphics.removeChild(runner.drawables);
         this.runners.splice(this.runners.indexOf(runner), 1);
     }
