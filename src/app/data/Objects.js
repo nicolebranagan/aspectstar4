@@ -1,6 +1,13 @@
 export default
 [
   {
+    "name" : "Save Icon",
+    "type" : "saveicon",
+    "texture" : "player",
+    "rect" : [192, 0, 16, 16],
+    "aspect" : 0
+  },
+  {
     "name" : "Aspect Plus",
     "type" : "aspecttile",
     "texture" : "player",

@@ -7,6 +7,7 @@ import Stage from './Stage';
 import AspectTile from './objects/AspectTile';
 import Platform from './objects/Platform';
 import Square from './objects/Square';
+import SaveIcon from './objects/SaveIcon';
 
 import Objects from '../data/Objects';
 import Worldfile from '../data/Worldfile';
@@ -28,7 +29,10 @@ export default function Loader(self : Level, index : number) : { terrain : Terra
 function parseObject(stage : Stage, data : any[]) : LevelObject {
     const objdata = Objects[data[0]];
     const point = new Point(data[1], data[2]);
-    if (objdata.type == "aspecttile") {
+    if (objdata.type == "saveicon") {
+        return new SaveIcon(stage, point, objdata.rect);
+    }
+    else if (objdata.type == "aspecttile") {
         return new AspectTile(stage, point, objdata.aspect, objdata.rect);
     }
     else if (objdata.type == "platform") {
@@ -37,5 +41,6 @@ function parseObject(stage : Stage, data : any[]) : LevelObject {
     else if (objdata.type == "square") {
         return new Square(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.rect2, objdata.xor);        
     }
+
     return null;
 };
