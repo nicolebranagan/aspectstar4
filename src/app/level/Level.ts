@@ -90,7 +90,7 @@ export default class Level extends GenericRunner implements Master {
 
     private addObject(obj : LevelObject) : void {
         this.objects.push(obj);
-        this.drawables.addChild(obj.graphics);
+        this.drawables.addChildAt(obj.graphics, 0);
     }
 
     private removeObject(obj : LevelObject) : void {
