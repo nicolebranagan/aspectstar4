@@ -90,7 +90,7 @@ export default class Level extends GenericRunner implements Master {
 
     private addObject(obj : LevelObject) : void {
         this.objects.push(obj);
-        this.drawables.addChildAt(obj.graphics, 0);
+        this.drawables.addChild(obj.graphics);
     }
 
     private removeObject(obj : LevelObject) : void {
@@ -101,20 +101,22 @@ export default class Level extends GenericRunner implements Master {
     }
 
     private resetObjects() {
+        this.loaded = false;
         this.objects.slice().forEach(e => this.removeObject(e));
         const data = Loader(this, 0);
         this.stage = data.stage;
+        this.player = new ActivePlayer(this.stage, this.lastState);
 
         let count = 0;
         data.objects.forEach( e => (e.then( obj => {
             this.addObject(obj);
             count++;
-            if (count === data.objects.length)
+            if (count === data.objects.length) {
                 this.loaded = true;
+                this.addObject(this.player);
+            }
         })));
 
-        this.player = new ActivePlayer(this.stage, this.lastState);
-        this.addObject(this.player);
         return data;
     }
 
