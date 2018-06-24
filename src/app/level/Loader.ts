@@ -4,22 +4,16 @@ import Terrain from './Terrain';
 import Level from './Level';
 import Stage from './Stage';
 
-import AspectTile from './objects/AspectTile';
-import Platform from './objects/Platform';
-import Square from './objects/Square';
-import SaveIcon from './objects/SaveIcon';
-import Bell from './objects/Bell';
-
 import Objects from '../data/Objects';
 import Worldfile from '../data/Worldfile';
 
 /**
  * Loader will load everything from the worldfile
  */
-export default function Loader(self : Level, index : number) : { terrain : Terrain, stage : Stage, objects : LevelObject[]} {
+export default function Loader(self : Level, index : number) : { terrain : Terrain, stage : Stage, objects : Promise<LevelObject>[]} {
     const terrain = new Terrain(self, Worldfile.levels[index]);
     const stage = new Stage(Worldfile.levels[index]);
-    const objects = Worldfile.levels[index].objects.map(e => parseObject(stage, e));
+    const objects = Worldfile.levels[index].objects.map(async e => await parseObject(stage, e));
     return {
         terrain,
         stage,
@@ -27,24 +21,28 @@ export default function Loader(self : Level, index : number) : { terrain : Terra
     }
 }
 
-function parseObject(stage : Stage, data : any[]) : LevelObject {
+async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {
     const objdata = Objects[data[0]];
     const point = new Point(data[1], data[2]);
+
     if (objdata.type == "saveicon") {
+        const SaveIcon = (await import('./objects/SaveIcon')).default;
         return new SaveIcon(stage, point, objdata.rect);
     }
     else if (objdata.type == "bell") {
+        const Bell = (await import('./objects/Bell')).default;
         return new Bell(stage, point, objdata.rect);
     }
     else if (objdata.type == "aspecttile") {
+        const AspectTile = (await import('./objects/AspectTile')).default;
         return new AspectTile(stage, point, objdata.aspect, objdata.rect);
     }
     else if (objdata.type == "platform") {
+        const Platform = (await import('./objects/Platform')).default;
         return new Platform(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.rect2, data[3], data[4]);
     }
     else if (objdata.type == "square") {
+        const Square = (await import('./objects/Square')).default;
         return new Square(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.rect2, objdata.xor);        
     }
-
-    return null;
 };

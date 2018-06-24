@@ -30,6 +30,7 @@ export default class Level extends GenericRunner implements Master {
     private deathTimer = 0;
     private lastState : PlayerState;
     private options : LevelOptions;
+    private loaded : boolean = false;
 
     constructor(master : Master) {
         super(master);
@@ -60,6 +61,7 @@ export default class Level extends GenericRunner implements Master {
     }
 
     update() : void {
+        if (!this.loaded) return;
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.drawables.position = new PIXI.Point(
@@ -102,7 +104,14 @@ export default class Level extends GenericRunner implements Master {
         this.objects.slice().forEach(e => this.removeObject(e));
         const data = Loader(this, 0);
         this.stage = data.stage;
-        data.objects.forEach( e => (this.addObject(e)) );
+
+        let count = 0;
+        data.objects.forEach( e => (e.then( obj => {
+            this.addObject(obj);
+            count++;
+            if (count === data.objects.length)
+                this.loaded = true;
+        })));
 
         this.player = new ActivePlayer(this.stage, this.lastState);
         this.addObject(this.player);
