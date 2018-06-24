@@ -19,6 +19,7 @@ export default class Bell implements LevelObject, Master {
     private frame : PIXI.Rectangle;
     private timer : number = 0;
     private runners : Runner[] = [];
+    private multiplier : number;
 
     constructor(
         stage : Stage, 
@@ -32,6 +33,7 @@ export default class Bell implements LevelObject, Master {
         this.sprite = this.getSprite();
         this.addRunner(Particle.getFallingImage(this, 0));
         this.graphics.addChild(this.sprite);
+        this.multiplier = Math.random() > 0.5 ? 1 : -1;
     }
 
     private getSprite() : PIXI.Sprite {
@@ -52,9 +54,9 @@ export default class Bell implements LevelObject, Master {
         if (this.timer % 10 == 0)
         {
             if (this.timer < 30)
-                this.sprite.y++;
+                this.sprite.y += this.multiplier;
             else
-                this.sprite.y--;
+                this.sprite.y += -this.multiplier;
         }
 
         if (player.aspects.indexOf(this.aspect) != -1)
