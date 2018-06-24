@@ -137,6 +137,28 @@ export default {
             }
         };
     },
+    getFallingImage(master : Master, row : number) : Runner {
+        const drawables = new PIXI.Container();
+        const particles : ImageParticle[] = [];
+        for (let i = -2; i < 2; i++) {
+            const particle1 = new ImageParticle(row, i*3-4, -16, 0, 0, 1);
+            drawables.addChild(particle1.sprite);
+            particles.push(particle1);
+        }
+
+        return {
+            drawables: drawables,
+            respond: function() {;},
+            update: function() {
+                for (const index in particles) {
+                    const p = particles[index];
+                    p.update();
+                    if (p.y > 8)
+                        p.reset();
+                }
+            }
+        };
+    },
 }
 
 class ColorParticle {
@@ -207,5 +229,74 @@ class ColorParticle {
         }
         if (Math.random() > 0.6 && this.sprite.position.x > -8 && this.sprite.position.x < 8)
             this.sprite.position.x += Math.random() > 0.5 ? 1 : -1;
+    }
+}
+
+class ImageParticle {
+    public active : boolean = true;
+    public sprite : PIXI.Sprite;
+
+    private row : number;
+    private maxLifetime : number;
+    private delta_x : number;
+    private delta_y : number;
+    private x_init : number;
+    private y_init : number;
+
+    private texture : PIXI.Texture;
+
+    private lifetime : number = 0;
+
+    get x()
+    {
+        return this.sprite.position.x;
+    }
+
+    get y()
+    {
+        return this.sprite.position.y;
+    }
+
+    constructor(row : number, x : number, y : number, lifetime : number, delta_x : number, delta_y : number) {
+        this.row = row;
+        this.maxLifetime = lifetime;
+        
+        this.sprite = new PIXI.Sprite();
+        this.sprite.position.x = x;
+        this.sprite.position.y = y;
+        this.x_init = x;
+        this.y_init = y;
+        this.delta_x = delta_x;
+        this.delta_y = delta_y;
+
+        this.texture = PIXI.Texture.from(PIXI.loader.resources['particle2'].texture.baseTexture);        
+        this.sprite.texture = this.texture;
+        this.determineFrame();
+    }
+
+    private determineFrame() : void {
+        const colorstep = this.maxLifetime == 0 ? Math.floor(3 * Math.abs(this.sprite.position.y / 8)) : Math.floor(3 * this.lifetime / this.maxLifetime);
+        const rect = new PIXI.Rectangle(colorstep * 8, this.row * 8, 8, 8);
+        this.texture.frame = rect;
+    }
+
+    reset()
+    {
+        this.sprite.position.x = this.x_init;
+        this.sprite.position.y = this.y_init;
+    }
+
+    update() {
+        if (this.maxLifetime != 0) {
+            this.lifetime++;
+            if (this.lifetime >= this.maxLifetime)
+                this.active = false;
+        }
+        this.determineFrame();
+
+        if (Math.random() > 0.1) {
+            this.sprite.position.y += this.delta_y;
+            this.sprite.position.x += this.delta_x;
+        }
     }
 }

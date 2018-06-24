@@ -35,7 +35,7 @@ export default class SaveIcon implements LevelObject, Master {
         this.frame = new PIXI.Rectangle(...rect);
         this.sprite = this.getSprite();
         this.fallingAspect = Particle.getFallingAspect(this, Aspect.NONE);
-        this.addRunner(Particle.getFallingAspect(this, Aspect.NONE));
+        this.addRunner(this.fallingAspect);
         this.graphics.addChild(this.sprite);
     }
 
