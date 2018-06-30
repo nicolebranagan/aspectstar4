@@ -318,8 +318,21 @@ class Editor(tk.Frame):
                 x = self.levelcanvas.canvasx(e.x)
                 y = self.levelcanvas.canvasx(e.y)
                 for obj in self.currentlevel.objects:
-                    if (abs(obj[1] - x) < 8 and abs(obj[2] - y) < 8):
+                    dictentry = Objects.data[obj[0]]
+                    width = dictentry["rect"][2]
+                    height = dictentry["rect"][3]
+                    coords = (
+                        obj[1] - width // 2, 
+                        obj[2] - height,
+                        obj[1] + width // 2,
+                        obj[2]
+                    )
+                    if (x > coords[0] and x < coords[2] and y > coords[1] and y < coords[3]):
+                        print(obj, coords, x, y)
                         self.selectobj(obj)
+                        self.statusbar.config(text="Selected {} at {}, {}".format(
+                            dictentry["name"], obj[1], obj[2]
+                        ))
                         return
                 x = math.floor(self.levelcanvas.canvasx(e.x) / 8) * 8
                 y = math.floor(self.levelcanvas.canvasy(e.y) / 8) * 8
@@ -342,6 +355,7 @@ class Editor(tk.Frame):
                     self.currentlevel.delobj(obj)
                     self.deselectobj()
                     self.drawroom()
+                    self.statusbar.config(text="Deleted {}".format(Objects.data[obj[0]]["name"]))
                     return
             self.statusbar.config(text="Couldn't find object")
 
@@ -415,7 +429,6 @@ class Editor(tk.Frame):
         )
         return
         tileimg = self.bigtiles.drawtile(i)
-        print((x*32, y*32, x*32 + 32, y*32 + 32))
         self.levelcanvas.img.paste(tileimg, box=(x*32, y*32, x*32 + 32, y*32 + 32))
 
     def selectobj(self, obj):
@@ -435,7 +448,7 @@ class Editor(tk.Frame):
             obj[2]
         )
     
-    def deselectobj(self, obj):
+    def deselectobj(self):
         self.levelcanvas.itemconfig(
             self.selectobjectbox,
             width=0.0,
