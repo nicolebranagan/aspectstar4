@@ -328,7 +328,6 @@ class Editor(tk.Frame):
                         obj[2]
                     )
                     if (x > coords[0] and x < coords[2] and y > coords[1] and y < coords[3]):
-                        print(obj, coords, x, y)
                         self.selectobj(obj)
                         self.statusbar.config(text="Selected {} at {}, {}".format(
                             dictentry["name"], obj[1], obj[2]
@@ -345,11 +344,8 @@ class Editor(tk.Frame):
                 self.selectobj([getobj(), x, y])
 
         def deleteObj(*args):
-            print(self.selectedobj)
             if (self.selectedobj is None):
                 return
-            x = self.selectedobj[1]
-            y = self.selectedobj[2]
             for obj in self.currentlevel.objects:
                 if obj[0] == self.selectedobj[0] and obj[1] == self.selectedobj[1] and obj[2] == self.selectedobj[2]:
                     self.currentlevel.delobj(obj)
@@ -358,11 +354,38 @@ class Editor(tk.Frame):
                     self.statusbar.config(text="Deleted {}".format(Objects.data[obj[0]]["name"]))
                     return
             self.statusbar.config(text="Couldn't find object")
+        
+        def moveObj(delx, dely):
+            def f(e):
+                if (self.selectedobj is None):
+                    return
+                for obj in self.currentlevel.objects:
+                    if (
+                        obj[0] == self.selectedobj[0] and 
+                        obj[1] == self.selectedobj[1] and 
+                        obj[2] == self.selectedobj[2]
+                    ):
+                        obj[1] += delx
+                        obj[2] += dely
+                        self.currentlevel.img = None
+                        self.selectobj(obj)
+                        self.drawroom()
+                        return
+ 
+            return f
 
         self.levelcanvas.bind("<Button-1>", clickLevel)
         self.levelcanvas.bind("<B1-Motion>", clickLevel)
         self.master.bind("<BackSpace>", deleteObj)
         self.master.bind("<Delete>", deleteObj)
+        self.master.bind("<Shift-Up>", moveObj(0, -1))
+        self.master.bind("<Shift-Down>", moveObj(0, 1))
+        self.master.bind("<Shift-Left>", moveObj(-1, 0))
+        self.master.bind("<Shift-Right>", moveObj(1, 0))
+        self.master.bind("<Up>", moveObj(0, -8))
+        self.master.bind("<Down>", moveObj(0, 8))
+        self.master.bind("<Left>", moveObj(-8, 0))
+        self.master.bind("<Right>", moveObj(8, 0))
 
         def rclickLevel(e):
             if (self.mode == EditorMode.OBJECT_EDIT):

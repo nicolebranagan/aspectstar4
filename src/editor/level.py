@@ -19,8 +19,7 @@ class Level():
         return self.grid[x+y*self.width]
 
     def addobj(self, *data):
-        print(data)
-        self.objects.append(data)
+        self.objects.append(list(data))
 
     def delobj(self, obj):
         self.objects.remove(obj)
