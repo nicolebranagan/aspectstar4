@@ -50,7 +50,7 @@ export default class Player implements Player, Master {
 
         this.point = state.point;
         this.aspect = state.aspect;
-        this.aspects = state.aspects;
+        this.aspects = state.aspects.slice();
 
         this.physics = new PlatformerPhysics(stage, 1, 7, 12, 24);
     }
