@@ -24,7 +24,6 @@ class SolidityType(Enum):
 class EditorMode(Enum):
     TILE_EDIT = 0
     OBJECT_EDIT = 1
-    OBJECT_DELETE = 2
 
 class Editor(tk.Frame):
     def __init__(self, master=None):
@@ -105,6 +104,7 @@ class Editor(tk.Frame):
             def f():
                 self.statusbar.config(text="Switching to " + mode.name + " mode")
                 self.mode = mode
+                self.deselectobj()
             return f
 
         tk.Button(
@@ -117,11 +117,6 @@ class Editor(tk.Frame):
             text="Object Editor",
             command=changemode(EditorMode.OBJECT_EDIT)
         ).grid(row=0, column=1)
-        tk.Button(
-            modepanel,
-            text="Object Delete",
-            command=changemode(EditorMode.OBJECT_DELETE)
-        ).grid(row=0, column=2)
 
         scrolltiles = tk.Scrollbar(tilegrid, orient=tk.HORIZONTAL)
         self.tilecanvas = tk.Canvas(
@@ -320,6 +315,24 @@ class Editor(tk.Frame):
                 #self.drawroom()
                 self.drawtile(x, y, self.selected_bigtile)
             elif (self.mode == EditorMode.OBJECT_EDIT):
+                x = self.levelcanvas.canvasx(e.x)
+                y = self.levelcanvas.canvasx(e.y)
+                for obj in self.currentlevel.objects:
+                    dictentry = Objects.data[obj[0]]
+                    width = dictentry["rect"][2]
+                    height = dictentry["rect"][3]
+                    coords = (
+                        obj[1] - width // 2, 
+                        obj[2] - height,
+                        obj[1] + width // 2,
+                        obj[2]
+                    )
+                    if (x > coords[0] and x < coords[2] and y > coords[1] and y < coords[3]):
+                        self.selectobj(obj)
+                        self.statusbar.config(text="Selected {} at {}, {}".format(
+                            dictentry["name"], obj[1], obj[2]
+                        ))
+                        return
                 x = math.floor(self.levelcanvas.canvasx(e.x) / 8) * 8
                 y = math.floor(self.levelcanvas.canvasy(e.y) / 8) * 8
                 self.currentlevel.addobj(getobj(), x, y, *getoptiondata())
@@ -328,19 +341,51 @@ class Editor(tk.Frame):
                     self.levelcanvas.image,
                     image=self.levelcanvas.img,
                 )
-            elif (self.mode == EditorMode.OBJECT_DELETE):
-                x = self.levelcanvas.canvasx(e.x)
-                y = self.levelcanvas.canvasx(e.y)
+                self.selectobj([getobj(), x, y])
+
+        def deleteObj(*args):
+            if (self.selectedobj is None):
+                return
+            for obj in self.currentlevel.objects:
+                if obj[0] == self.selectedobj[0] and obj[1] == self.selectedobj[1] and obj[2] == self.selectedobj[2]:
+                    self.currentlevel.delobj(obj)
+                    self.deselectobj()
+                    self.drawroom()
+                    self.statusbar.config(text="Deleted {}".format(Objects.data[obj[0]]["name"]))
+                    return
+            self.statusbar.config(text="Couldn't find object")
+        
+        def moveObj(delx, dely):
+            def f(e):
+                if (self.selectedobj is None):
+                    return
                 for obj in self.currentlevel.objects:
-                    print(abs(obj[1] - x), abs(obj[2] - y))
-                    if (abs(obj[1] - x) < 8 and abs(obj[2] - y) < 8):
-                        self.currentlevel.delobj(obj)
+                    if (
+                        obj[0] == self.selectedobj[0] and 
+                        obj[1] == self.selectedobj[1] and 
+                        obj[2] == self.selectedobj[2]
+                    ):
+                        obj[1] += delx
+                        obj[2] += dely
+                        self.currentlevel.img = None
+                        self.selectobj(obj)
                         self.drawroom()
                         return
-                self.statusbar.config(text="Couldn't find object")
+ 
+            return f
 
         self.levelcanvas.bind("<Button-1>", clickLevel)
         self.levelcanvas.bind("<B1-Motion>", clickLevel)
+        self.master.bind("<BackSpace>", deleteObj)
+        self.master.bind("<Delete>", deleteObj)
+        self.master.bind("<Shift-Up>", moveObj(0, -1))
+        self.master.bind("<Shift-Down>", moveObj(0, 1))
+        self.master.bind("<Shift-Left>", moveObj(-1, 0))
+        self.master.bind("<Shift-Right>", moveObj(1, 0))
+        self.master.bind("<Up>", moveObj(0, -8))
+        self.master.bind("<Down>", moveObj(0, 8))
+        self.master.bind("<Left>", moveObj(-8, 0))
+        self.master.bind("<Right>", moveObj(8, 0))
 
         def rclickLevel(e):
             if (self.mode == EditorMode.OBJECT_EDIT):
@@ -350,6 +395,8 @@ class Editor(tk.Frame):
             self.selectBigtile(self.currentlevel.get(x, y))
         self.levelcanvas.bind("<Button-3>", rclickLevel)
         self.levelcanvas.bind("<Button-2>", rclickLevel)
+
+        self.selectobjectbox = self.levelcanvas.create_rectangle((0, 0, 16, 16), outline='blue', width=0.0)
 
         self.statusbar = tk.Label(self, text="Loaded successfully!", bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -405,8 +452,31 @@ class Editor(tk.Frame):
         )
         return
         tileimg = self.bigtiles.drawtile(i)
-        print((x*32, y*32, x*32 + 32, y*32 + 32))
         self.levelcanvas.img.paste(tileimg, box=(x*32, y*32, x*32 + 32, y*32 + 32))
+
+    def selectobj(self, obj):
+        self.levelcanvas.itemconfig(
+            self.selectobjectbox,
+            width=2.0,
+        )
+        self.selectedobj = obj
+        dictentry = Objects.data[obj[0]]
+        width = dictentry["rect"][2]
+        height = dictentry["rect"][3]
+        self.levelcanvas.coords(
+            self.selectobjectbox,
+            obj[1] - width // 2, 
+            obj[2] - height,
+            obj[1] + width // 2,
+            obj[2]
+        )
+    
+    def deselectobj(self):
+        self.levelcanvas.itemconfig(
+            self.selectobjectbox,
+            width=0.0,
+        )
+        self.selectedobj = None
 
 root = tk.Tk()
 Editor(root).mainloop()
