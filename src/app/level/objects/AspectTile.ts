@@ -7,6 +7,7 @@ import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
+import { LevelOptions } from '../Level';
 
 export default class AspectTile implements LevelObject, Master {
     active = true;
@@ -46,7 +47,7 @@ export default class AspectTile implements LevelObject, Master {
         return sprite;
     }
 
-    update(player : Player) {
+    update(player : Player, objects : LevelObject[], options : LevelOptions) {
         this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
         this.timer++;
         if (this.timer == 60)
@@ -62,7 +63,7 @@ export default class AspectTile implements LevelObject, Master {
         if (player.aspects.indexOf(this.aspect) != -1)
             this.active = false;
         else if (player.physics.inrange(player.point, this.point)) {
-            player.getAspect(this.aspect);
+            options.getAspect(this.aspect);
             this.active = false;
         }
     }

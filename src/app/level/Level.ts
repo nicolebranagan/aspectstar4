@@ -10,12 +10,14 @@ import ActivePlayer from './objects/ActivePlayer';
 import Stage from './Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
+import System from './System';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
  * */
 export interface LevelOptions {
     saveState: () => void;
+    getAspect: (aspect : Aspect) => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -27,10 +29,12 @@ export default class Level extends GenericRunner implements Master {
     private stage : Stage
     private player : Player
     private camera : Point
+    private system : System;
     private deathTimer = 0;
     private lastState : PlayerState;
     private options : LevelOptions;
     private loaded : boolean = false;
+    private levelFrame = new PIXI.Container();
 
     constructor(master : Master) {
         super(master);
@@ -41,7 +45,12 @@ export default class Level extends GenericRunner implements Master {
             aspects: [Aspect.ASPECT_PLUS],
         };
         const data = this.resetObjects();
-        this.drawables.addChildAt(data.terrain.drawables, 0);
+        this.levelFrame.addChildAt(data.terrain.drawables, 0);
+        this.levelFrame.position.set(0, 0);
+        this.drawables.addChild(this.levelFrame);
+
+        this.system = new System(this);
+        this.addRunner(this.system);
 
         this.camera = this.player.point;
         this.options = {
@@ -51,6 +60,11 @@ export default class Level extends GenericRunner implements Master {
                     aspect: this.player.aspect,
                     aspects: this.player.aspects,
                 }
+            },
+
+            getAspect: (aspect : Aspect) => {
+                this.player.getAspect(aspect);
+                this.system.getAspect(aspect);
             }
         };
     }
@@ -64,7 +78,7 @@ export default class Level extends GenericRunner implements Master {
         if (!this.loaded) return;
         this.camera = this.player.point;
         const truecamera = this.camera.round();
-        this.drawables.position = new PIXI.Point(
+        this.levelFrame.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
         );
@@ -90,14 +104,14 @@ export default class Level extends GenericRunner implements Master {
 
     private addObject(obj : LevelObject) : void {
         this.objects.push(obj);
-        this.drawables.addChild(obj.graphics);
+        this.levelFrame.addChild(obj.graphics);
     }
 
     private removeObject(obj : LevelObject) : void {
         const index = this.objects.indexOf(obj);
         if (index !== -1)
             this.objects.splice(index, 1);
-        this.drawables.removeChild(obj.graphics);
+        this.levelFrame.removeChild(obj.graphics);
     }
 
     private resetObjects() {

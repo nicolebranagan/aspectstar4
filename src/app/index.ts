@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 let master : any;
 function loadResources() : void {
     PIXI.loader
+        .add('system', 'images/system.gif')
         .add('player', 'images/player.gif')
         .add('particle', 'images/particle.gif')
         .add('particle2', 'images/particle2.gif')
