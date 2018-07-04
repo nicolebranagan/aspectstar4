@@ -59,10 +59,9 @@ export default class Bell implements LevelObject, Master {
                 this.sprite.y += -this.multiplier;
         }
 
-        if (player.aspects.indexOf(this.aspect) != -1)
+        if (player.physics.inrange(player.point, this.point)) {
             this.active = false;
-        else if (player.physics.inrange(player.point, this.point)) {
-            this.active = false;
+            player.getBell();
         }
     }
 

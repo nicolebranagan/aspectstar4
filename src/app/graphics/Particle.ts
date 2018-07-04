@@ -159,6 +159,43 @@ export default {
             }
         };
     },
+    getImageBurst(master : Master, row: number) : Runner {
+        const drawables = new PIXI.Container();
+        const particles : ImageParticle[] = [];
+        for (let i = 0; i < 1080; i = i + 108) {
+            const speed = Math.ceil(i / 720);
+            const angle = 2 * Math.PI * ((i % 360) / 360);
+            const x = speed*Math.sin(angle);
+            const y = speed*Math.cos(angle);
+            if (Math.floor(x*10) == 0 && Math.floor(y*10) == 0) 
+                continue;
+            const particle1 = new ImageParticle(row, 0, -16, 10, x, y);
+            drawables.addChild(particle1.sprite);
+            particles.push(particle1);
+        }
+
+        return {
+            drawables: drawables,
+            respond: function() {;},
+            update: function() {
+                const toDelete = [];
+                for (const index in particles) {
+                    const p = particles[index];
+                    p.update();
+                    if (!p.active) {
+                        drawables.removeChild(p.sprite);
+                        toDelete.push(index);
+                    }
+                }
+                toDelete.reverse();
+                for (const delindex of toDelete) {
+                    particles.splice(Number(delindex), 1);
+                }
+                if (particles.length == 0)
+                    master.removeRunner(this);
+            }
+        };
+    },
 }
 
 class ColorParticle {

@@ -7,5 +7,6 @@ export default interface Player extends LevelObject {
     aspects : Aspect[]
     respond(controls : Controls) : void
     getAspect(aspect : Aspect) : void
+    getBell() : void
     die() : void
 };

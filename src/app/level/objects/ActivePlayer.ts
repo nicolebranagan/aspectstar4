@@ -148,6 +148,10 @@ export default class Player implements Player, Master {
         this.changeAspect(asp);
     }
 
+    getBell() : void {
+        this.addRunner(Particle.getImageBurst(this, 0));
+    }
+
     /* Implements Master interface */
     addRunner(runner : Runner) : void {
         this.graphics.addChild(runner.drawables);
