@@ -66,7 +66,6 @@ class Editor(tk.Frame):
                 with open(filen, "r") as fileo:
                     header = fileo.readline()
                     if header != "export default\n":
-                        print(header)
                         self.statusbar.config(text="Not a proper worldfile!")
                         return
                     data = fileo.read()
@@ -327,7 +326,6 @@ class Editor(tk.Frame):
                         obj[1] + width // 2,
                         obj[2]
                     )
-                    print(x, y, coords, x > coords[0], x < coords[2], y > coords[1], y < coords[3])
                     if (x > coords[0] and x < coords[2] and y > coords[1] and y < coords[3]):
                         self.selectobj(obj)
                         self.statusbar.config(text="Selected {} at {}, {}".format(
@@ -337,7 +335,6 @@ class Editor(tk.Frame):
                 x = math.floor(self.levelcanvas.canvasx(e.x) / 8) * 8
                 y = math.floor(self.levelcanvas.canvasy(e.y) / 8) * 8
                 self.currentlevel.addobj(getobj(), x, y, *getoptiondata())
-                print("creating object")
                 self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.drawobj(x, y, getobj()))
                 self.levelcanvas.itemconfig(
                     self.levelcanvas.image,
