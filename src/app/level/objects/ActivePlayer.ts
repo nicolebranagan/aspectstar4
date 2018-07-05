@@ -98,7 +98,7 @@ export default class Player implements Player, Master {
 
         if (!this.ready) {
             if (this.timer == 1)
-                this.addRunner(Particle.getAspectImplode(this, Aspect.ASPECT_PLUS));
+                this.addRunner(Particle.getAspectImplode(this, this.aspect));
             this.timer++;
             if (this.timer == 51) {
                 this.ready = true;
