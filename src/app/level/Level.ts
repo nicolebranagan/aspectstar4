@@ -49,7 +49,7 @@ export default class Level extends GenericRunner implements Master {
         this.levelFrame.position.set(0, 0);
         this.drawables.addChild(this.levelFrame);
 
-        this.system = new System(this);
+        this.system = new System(this, this.player);
         this.addRunner(this.system);
 
         this.camera = this.player.point;
@@ -64,7 +64,6 @@ export default class Level extends GenericRunner implements Master {
 
             getAspect: (aspect : Aspect) => {
                 this.player.getAspect(aspect);
-                this.system.getAspect(aspect);
             }
         };
     }
@@ -76,6 +75,7 @@ export default class Level extends GenericRunner implements Master {
 
     update() : void {
         if (!this.loaded) return;
+        this.system.updateSystem(this.player);
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.levelFrame.position = new PIXI.Point(
@@ -101,7 +101,7 @@ export default class Level extends GenericRunner implements Master {
             }
         }
     }
-
+    
     private addObject(obj : LevelObject) : void {
         this.objects.push(obj);
         this.levelFrame.addChild(obj.graphics);
