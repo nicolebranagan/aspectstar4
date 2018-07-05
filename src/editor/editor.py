@@ -66,7 +66,6 @@ class Editor(tk.Frame):
                 with open(filen, "r") as fileo:
                     header = fileo.readline()
                     if header != "export default\n":
-                        print(header)
                         self.statusbar.config(text="Not a proper worldfile!")
                         return
                     data = fileo.read()
@@ -316,7 +315,7 @@ class Editor(tk.Frame):
                 self.drawtile(x, y, self.selected_bigtile)
             elif (self.mode == EditorMode.OBJECT_EDIT):
                 x = self.levelcanvas.canvasx(e.x)
-                y = self.levelcanvas.canvasx(e.y)
+                y = self.levelcanvas.canvasy(e.y)
                 for obj in self.currentlevel.objects:
                     dictentry = Objects.data[obj[0]]
                     width = dictentry["rect"][2]
