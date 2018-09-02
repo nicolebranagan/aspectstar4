@@ -12,7 +12,7 @@ function loadResources() : void {
         .load(function() {master.initialize()})
 }
 
-import('./system/LocalMaster').then(
+import(/* webpackChunkName: "local-master" */ './system/LocalMaster').then(
     (LocalMaster) => {
         master = new LocalMaster.default();
         loadResources();

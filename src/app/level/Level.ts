@@ -35,6 +35,7 @@ export default class Level extends GenericRunner implements Master {
     private options : LevelOptions;
     private loaded : boolean = false;
     private levelFrame = new PIXI.Container();
+    private bellCount = 0;
 
     constructor(master : Master) {
         super(master);
@@ -116,6 +117,7 @@ export default class Level extends GenericRunner implements Master {
 
     private resetObjects() {
         this.loaded = false;
+        this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
         const data = Loader(this, 0);
         this.stage = data.stage;
@@ -124,6 +126,9 @@ export default class Level extends GenericRunner implements Master {
         let count = 0;
         data.objects.forEach( e => (e.then( obj => {
             this.addObject(obj);
+            if (obj.constructor.name === "Bell") {
+                this.bellCount++;
+            }
             count++;
             if (count === data.objects.length) {
                 this.loaded = true;
