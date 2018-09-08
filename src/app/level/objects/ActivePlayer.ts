@@ -21,6 +21,7 @@ export default class Player implements Player, Master {
     aspects : Aspect[];
     graphics : PIXI.Container;
     physics : PlatformerPhysics;
+    bells : number = 0;
 
     private static WAIT_TIME_MAX = 300;
     private static WAIT_FRAME_CHANGE = 20;
@@ -150,6 +151,7 @@ export default class Player implements Player, Master {
 
     getBell() : void {
         this.addRunner(Particle.getImageBurst(this, 0));
+        this.bells = this.bells + 1;
     }
 
     /* Implements Master interface */

@@ -42,15 +42,42 @@ const getTopLeftCorner : () => PIXI.Sprite = () => {
     return sprite;
 }
 
+const topRightCorner : CachedSprite = new CachedSprite();
+
+const getTopRightCorner : () => PIXI.Sprite = () => {
+    const text = PIXI.Texture.from(PIXI.loader.resources['system'].texture.baseTexture); 
+    let rect = new PIXI.Rectangle(0, 24, 64, 24);
+    text.frame = rect;
+    const sprite = new PIXI.Sprite(text);
+    sprite.anchor.set(0, 0);
+    sprite.x = 400-64;
+    sprite.y = 0;
+    return sprite;
+};
+
+const getNumber : (number : number, x : number, y: number) => PIXI.Sprite = (number, x, y) => {
+    const text = PIXI.Texture.from(PIXI.loader.resources['system'].texture.baseTexture); 
+    let rect = new PIXI.Rectangle(number * 8, 48, 8, 16);
+    text.frame = rect;
+    const sprite = new PIXI.Sprite(text);
+    sprite.anchor.set(0, 0);
+    sprite.x = x;
+    sprite.y = y;
+    return sprite;
+};
+
 export default class System implements Runner {
     public drawables : PIXI.Container
     private aspects : Aspect[]
     private selectedAspect : Aspect
+    private bellCount : number
+    private bellCountMax : number
 
-    constructor(master : Master, player : Player) {
+    constructor(master : Master, player : Player, bellCountMax : number) {
         this.drawables = new PIXI.Container();
         this.selectedAspect = player.aspect;
         this.aspects = player.aspects;
+        this.bellCountMax = bellCountMax;
         this.reset();
     }
     
@@ -64,16 +91,36 @@ export default class System implements Runner {
                 this.drawables.addChild(aspectCache[aspect][number].get(getAspect.bind(null, aspect, number)))
             }
         )
+        this.drawables.addChild(topRightCorner.get(getTopRightCorner));
+        this.resetBellCount();
+    }
+
+    private resetBellCount() {
+        const digit0 = this.bellCount / 10 >> 0;
+        const digit1 = this.bellCount % 10;
+        const digit2 = this.bellCountMax / 10 >> 0;
+        const digit3 = this.bellCountMax % 10;
+
+        this.drawables.addChild(getNumber(digit0, 400-40, 0))
+        this.drawables.addChild(getNumber(digit1, 400-32, 0))
+        this.drawables.addChild(getNumber(digit2, 400-16, 0))
+        this.drawables.addChild(getNumber(digit3, 400-8, 0))
     }
 
     respond() {}
 
     update() {}
 
-    updateSystem(player : Player) {
-        if (player.aspect !== this.selectedAspect || player.aspects.length !== this.aspects.length) {
+    updateSystem(player : Player, bellCountMax : number) {
+        if (player.aspect !== this.selectedAspect 
+            || player.aspects.length !== this.aspects.length 
+            || this.bellCount !== player.bells
+            || this.bellCountMax !== bellCountMax
+        ) {
             this.selectedAspect = player.aspect;
             this.aspects = player.aspects;
+            this.bellCount = player.bells;
+            this.bellCountMax = bellCountMax;
             this.reset();
         }
     }

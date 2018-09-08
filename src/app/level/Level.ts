@@ -50,7 +50,7 @@ export default class Level extends GenericRunner implements Master {
         this.levelFrame.position.set(0, 0);
         this.drawables.addChild(this.levelFrame);
 
-        this.system = new System(this, this.player);
+        this.system = new System(this, this.player, this.bellCount);
         this.addRunner(this.system);
 
         this.camera = this.player.point;
@@ -76,7 +76,7 @@ export default class Level extends GenericRunner implements Master {
 
     update() : void {
         if (!this.loaded) return;
-        this.system.updateSystem(this.player);
+        this.system.updateSystem(this.player, this.bellCount);
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.levelFrame.position = new PIXI.Point(
@@ -127,7 +127,7 @@ export default class Level extends GenericRunner implements Master {
         data.objects.forEach( e => (e.then( obj => {
             this.addObject(obj);
             if (obj.constructor.name === "Bell") {
-                this.bellCount++;
+                this.bellCount += 1;
             }
             count++;
             if (count === data.objects.length) {
