@@ -4,6 +4,8 @@ import NullPhysics from '../physics/NullPhysics';
 import Point from '../../system/Point';
 import Player from '../../interfaces/Player';
 import { LevelOptions } from '../Level';
+import Interaction from '../../interfaces/Interaction';
+import Interactions from '../../data/Interactions';
 
 export default class Character implements LevelObject {
     active = true;
@@ -18,8 +20,9 @@ export default class Character implements LevelObject {
     private rect : PIXI.Rectangle;
     private frame : number = 0
     private timer : number = 0
+    private interaction : Interaction;
 
-    constructor(point : Point, row : number) {
+    constructor(point : Point, row : number, interactionKey : string) {
         this.point = point;
         this.row = row;
 
@@ -33,6 +36,8 @@ export default class Character implements LevelObject {
         this.sprite.anchor.set(0.5, 1);
         this.sprite.x = this.point.x;
         this.sprite.y = this.point.y;
+
+        this.interaction = Interactions[interactionKey];
     }
 
     update(player : Player, objects: LevelObject[], levelOptions : LevelOptions) {
@@ -47,13 +52,7 @@ export default class Character implements LevelObject {
         if (Math.abs(this.point.x - player.point.x) < 32 &&
             Math.abs(this.point.y - player.point.y) < 8
         ) {
-            levelOptions.prepareInteraction([{
-                name: 'Mary',
-                text: 'Beep boop'
-            }, {
-                name: 'Nicole',
-                text: 'Sounds perfectly normal to me!'
-            }])
+            levelOptions.prepareInteraction(this.interaction)
         } else {
             levelOptions.prepareInteraction(null);
         }

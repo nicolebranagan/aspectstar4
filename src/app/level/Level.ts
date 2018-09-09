@@ -76,7 +76,7 @@ export default class Level extends GenericRunner implements Master {
                 this.interaction = interaction;
             },
         };
-        this.addObject(new Character(new Point(100, 287), 0))
+        this.addObject(new Character(new Point(100, 287), 0, 'testInteraction'))
     }
 
     respond(controls : Controls) : void {
