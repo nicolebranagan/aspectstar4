@@ -264,6 +264,23 @@ class Editor(tk.Frame):
             ]
         platformframe.getdata = getplatformdata
 
+        # Details for character
+        characterframe = tk.Frame(objdetails)
+        characterframe.grid(row=0, column=0, sticky="nsew")
+        tk.Label(characterframe, text="Character Options").pack()
+        characterinteractionframe = tk.Frame(characterframe)
+        characterinteractionframe.pack()
+        tk.Label(characterinteractionframe, text="Interaction").grid(row=0, column=0)
+        characterinteractionentry = tk.Entry(characterinteractionframe, width=9)
+        characterinteractionentry.insert(0, "")
+        characterinteractionentry.grid(row=0, column=1)
+
+        def getcharacterdata():
+            return [
+                characterinteractionentry.get()
+            ]
+        characterframe.getdata = getcharacterdata
+
         # Details for nothing
         nullframe = tk.Frame(objdetails)
         nullframe.grid(row=0, column=0, sticky="nsew")
@@ -272,6 +289,7 @@ class Editor(tk.Frame):
 
         options = defaultdict(lambda: nullframe, {
             "platform" : platformframe,
+            "character" : characterframe,
         })
         def getcorrectoptions(*data):
             objtype = Objects.data[getobj()]["type"]

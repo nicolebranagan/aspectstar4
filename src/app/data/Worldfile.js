@@ -1559,6 +1559,12 @@ export default
           4,
           272,
           144
+        ],
+        [
+          15,
+          400,
+          288,
+          "testInteraction"
         ]
       ],
       "width": 64

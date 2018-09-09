@@ -44,5 +44,9 @@ async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {
     else if (objdata.type == "square") {
         const Square = (await import(/* webpackChunkName: "square" */ './objects/Square')).default;
         return new Square(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.rect2, objdata.xor);        
+    } 
+    else if (objdata.type === "character") {
+        const Character = (await import(/* webpackChunkName: "character" */ './objects/Character')).default;
+        return new Character(point, objdata.row, data[3]);
     }
 };

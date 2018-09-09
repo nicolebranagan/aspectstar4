@@ -6,6 +6,7 @@ class __Object():
     def __init__(self):
         self.tilesets = {
             "player"  : Image.open("../public/images/player.gif"),
+            "characters" : Image.open("../public/images/characters.gif"),
             "object1" : Image.open("../public/images/object1.gif")
         }
         self.data = self.loadobjects()

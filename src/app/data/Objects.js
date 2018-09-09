@@ -120,5 +120,12 @@ export default
     "rect2" : [0, 96, 16, 16],
     "aspect" : 3,
     "xor" : true
+  },
+  {
+    "name" : "Mary-bot",
+    "type" : "character",
+    "texture" : "characters",
+    "rect" : [0, 0, 16, 32],
+    "row" : 0
   }
 ]
