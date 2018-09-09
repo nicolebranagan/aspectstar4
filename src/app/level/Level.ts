@@ -11,6 +11,7 @@ import Stage from './Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
+import Character from './objects/Character';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -72,6 +73,7 @@ export default class Level extends GenericRunner implements Master {
             this.textBox = new TextBox.default(this);
             this.addRunner(this.textBox);
         });
+        this.addObject(new Character(new Point(100, 200), 0))
     }
 
     respond(controls : Controls) : void {
