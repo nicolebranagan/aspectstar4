@@ -1,6 +1,9 @@
+declare var require: any
+
 import Controls from '../interfaces/Controls';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
+const FontFaceObserver = require('fontfaceobserver');
 
 enum TextBoxState {
     OPENING,
@@ -52,7 +55,8 @@ export default class TextBox implements Runner {
         this.drawTextBox(this.openingHeight, TEXT_BOX_WIDTH);
         if (this.openingHeight === TEXT_BOX_HEIGHT) {
             this.state = TextBoxState.OPEN;
-            this.drawText();
+            const observer = new FontFaceObserver(DEFAULT_TEXT_STYLE.fontFamily);
+            observer.load().then(() => this.drawText())
         } else {
             setTimeout(this.openTextBox, 1);
         }
