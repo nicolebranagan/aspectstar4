@@ -25,7 +25,7 @@ const DEFAULT_TEXT_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
     fontSize: 6,
     fontWeight: '100',
-    fill: '0xEEEEFF',
+    fill: '0xF8B800',
     dropShadow: true,
     dropShadowColor: 0x000000,
     dropShadowAlpha: 0.7,
@@ -72,8 +72,8 @@ export default class TextBox implements Runner {
     }
 
     drawTextBox(height : number, width : number) {
-        this.graphics.lineStyle(1, 0x777777);
-        this.graphics.beginFill(0x001177);
+        this.graphics.lineStyle(1, 0x750020);
+        this.graphics.beginFill(0xCD0055);
         this.graphics.drawRect(0, 0, width, height);
         this.graphics.endFill();
     }
