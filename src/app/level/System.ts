@@ -101,10 +101,10 @@ export default class System implements Runner {
         const digit2 = this.bellCountMax / 10 >> 0;
         const digit3 = this.bellCountMax % 10;
 
-        this.drawables.addChild(getNumber(digit0, 400-40, 0))
-        this.drawables.addChild(getNumber(digit1, 400-32, 0))
-        this.drawables.addChild(getNumber(digit2, 400-16, 0))
-        this.drawables.addChild(getNumber(digit3, 400-8, 0))
+        this.drawables.addChild(getNumber(digit0, 400-40, 0));
+        this.drawables.addChild(getNumber(digit1, 400-32, 0));
+        this.drawables.addChild(getNumber(digit2, 400-16, 0));
+        this.drawables.addChild(getNumber(digit3, 400-8, 0));
     }
 
     respond() {}

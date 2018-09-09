@@ -7,6 +7,7 @@ function loadResources() : void {
         .add('player', 'images/player.gif')
         .add('particle', 'images/particle.gif')
         .add('particle2', 'images/particle2.gif')
+        .add('characters', 'images/characters.gif')
         .add('level1', 'images/level1.gif')
         .add('object1', 'images/object1.gif')
         .load(function() {master.initialize()})
