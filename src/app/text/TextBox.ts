@@ -1,4 +1,4 @@
-declare var require: any
+declare var require: any 
 
 import Controls from '../interfaces/Controls';
 import Master from '../interfaces/Master';

@@ -77,7 +77,7 @@ export default class Level extends GenericRunner implements Master {
     respond(controls : Controls) : void {
         if (this.textBox)
             this.textBox.respond(controls)
-        if (this.player.active)
+        else if (this.player.active)
             this.player.respond(controls);
     }
 
@@ -86,6 +86,14 @@ export default class Level extends GenericRunner implements Master {
         this.system.updateSystem(this.player, this.bellCount);
         this.camera = this.player.point;
         const truecamera = this.camera.round();
+        if (this.textBox) {
+            this.levelFrame.position = new PIXI.Point(
+                Math.min(200 - truecamera.x,0),
+                100 - truecamera.y
+            );
+            return;
+        };
+
         this.levelFrame.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
