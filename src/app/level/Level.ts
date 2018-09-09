@@ -67,6 +67,7 @@ export default class Level extends GenericRunner implements Master {
                 this.player.getAspect(aspect);
             }
         };
+        import('../text/TextBox').then(TextBox => this.addRunner(new TextBox.default(this)));
     }
 
     respond(controls : Controls) : void {
