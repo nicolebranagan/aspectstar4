@@ -4,6 +4,7 @@ import LevelObject from '../interfaces/LevelObject';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
 import Player from '../interfaces/Player';
+import Interaction from '../interfaces/Interaction';
 import GenericRunner from '../system/GenericRunner';
 import Point from '../system/Point';
 import ActivePlayer from './objects/ActivePlayer';
@@ -19,6 +20,7 @@ import Character from './objects/Character';
 export interface LevelOptions {
     saveState: () => void;
     getAspect: (aspect : Aspect) => void;
+    prepareInteraction: (text : Interaction) => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -38,6 +40,7 @@ export default class Level extends GenericRunner implements Master {
     private levelFrame = new PIXI.Container();
     private bellCount = 0;
     private textBox : Runner;
+    private interaction : Interaction;
 
     constructor(master : Master) {
         super(master);
@@ -67,19 +70,25 @@ export default class Level extends GenericRunner implements Master {
 
             getAspect: (aspect : Aspect) => {
                 this.player.getAspect(aspect);
-            }
+            },
+
+            prepareInteraction: (interaction : Interaction) => {
+                this.interaction = interaction;
+            },
         };
-        import('../text/TextBox').then(TextBox => {
-            this.textBox = new TextBox.default(this);
-            this.addRunner(this.textBox);
-        });
-        this.addObject(new Character(new Point(100, 200), 0))
+        this.addObject(new Character(new Point(100, 287), 0))
     }
 
     respond(controls : Controls) : void {
         if (this.textBox)
             this.textBox.respond(controls)
-        else if (this.player.active)
+        else if (!!this.interaction && controls.ButtonA) {
+            import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
+                this.textBox = new TextBox.default(this, this.interaction);
+                this.addRunner(this.textBox);
+                this.interaction = null;
+            });
+        } else if (this.player.active)
             this.player.respond(controls);
     }
 

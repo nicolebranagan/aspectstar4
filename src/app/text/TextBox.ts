@@ -3,6 +3,7 @@ declare var require: any
 import Controls from '../interfaces/Controls';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
+import Interaction from '../interfaces/Interaction';
 const FontFaceObserver = require('fontfaceobserver');
 
 enum TextBoxState {
@@ -38,9 +39,12 @@ export default class TextBox implements Runner {
     private graphics : PIXI.Graphics;
     private state : TextBoxState = TextBoxState.OPENING;
     private openingHeight : number = 0;
+    private interaction : Interaction;
+    private marker : number = 0;
 
-    constructor(master : Master) {
+    constructor(master : Master, interaction : Interaction) {
         this.master = master;
+        this.interaction = interaction;
         this.drawables = new PIXI.Container();
 
         this.graphics = new PIXI.Graphics();
@@ -101,10 +105,11 @@ export default class TextBox implements Runner {
     }
 
     drawText() {
+        const child = this.interaction[this.marker];
         this.resetGraphics();
         this.drawTextBox(TEXT_BOX_HEIGHT, TEXT_BOX_WIDTH);
-        this.drawChildTextBox('Nicole');
-        const text = new PIXI.Text('Welcome to Aspect Star 4!\nChoosing fonts is hard...\nSome more newlines...\nSo hard for it, honey\nSo hard for it, honey', DEFAULT_TEXT_STYLE);
+        this.drawChildTextBox(child.name);
+        const text = new PIXI.Text(child.text, DEFAULT_TEXT_STYLE);
         text.x = 8;
         text.y = 140;
         text.scale.x = 2;
@@ -115,8 +120,13 @@ export default class TextBox implements Runner {
     respond(controls : Controls) : void {
         if (this.state === TextBoxState.OPEN) {
             if (controls.ButtonA || controls.ButtonB) {
+                this.marker++;
                 controls.release();
-                this.master.removeRunner(this);
+                if (this.marker === this.interaction.length) {
+                    this.master.removeRunner(this);
+                } else {
+                    this.drawText();
+                }
             }
         }
     }
