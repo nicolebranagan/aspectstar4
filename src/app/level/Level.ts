@@ -36,6 +36,7 @@ export default class Level extends GenericRunner implements Master {
     private loaded : boolean = false;
     private levelFrame = new PIXI.Container();
     private bellCount = 0;
+    private textBox : Runner;
 
     constructor(master : Master) {
         super(master);
@@ -67,10 +68,15 @@ export default class Level extends GenericRunner implements Master {
                 this.player.getAspect(aspect);
             }
         };
-        import('../text/TextBox').then(TextBox => this.addRunner(new TextBox.default(this)));
+        import('../text/TextBox').then(TextBox => {
+            this.textBox = new TextBox.default(this);
+            this.addRunner(this.textBox);
+        });
     }
 
     respond(controls : Controls) : void {
+        if (this.textBox)
+            this.textBox.respond(controls)
         if (this.player.active)
             this.player.respond(controls);
     }
@@ -147,5 +153,8 @@ export default class Level extends GenericRunner implements Master {
 
     removeRunner(runner : Runner) : void {
         this.drawables.removeChild(runner.drawables);
+        if (runner === this.textBox) {
+            this.textBox = null;
+        }
     }
 };
