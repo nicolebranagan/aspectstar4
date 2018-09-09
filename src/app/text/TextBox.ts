@@ -15,20 +15,21 @@ const TEXT_BOX_HEIGHT = 99;
 
 const DEFAULT_TITLE_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
-    fontSize: 16,
+    fontSize: 8,
     fontWeight: '100',
-    fill: 'white'
+    fill: 'white',
 });
 
 const DEFAULT_TEXT_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
-    fontSize: 14,
+    fontSize: 6,
     fontWeight: '100',
-    fill: 0xEEEEFF,
+    fill: '0xEEEEFF',
     dropShadow: true,
     dropShadowColor: 0x000000,
     dropShadowAlpha: 0.7,
-    dropShadowDistance: 2,
+    dropShadowDistance: 1,
+    strokeThickness: 1,
 });
 
 export default class TextBox implements Runner {
@@ -77,12 +78,14 @@ export default class TextBox implements Runner {
         const metrics = PIXI.TextMetrics.measureText(name, DEFAULT_TITLE_STYLE);
         this.graphics.lineStyle(1, 0x777777);
         this.graphics.beginFill(0x000022);
-        this.graphics.drawRoundedRect(0, -10, metrics.width+32, 24, 14);
+        this.graphics.drawRoundedRect(0, -10, (2*metrics.width)+32, 24, 14);
         this.graphics.endFill();
         const nameText = new PIXI.Text(name, DEFAULT_TITLE_STYLE);
         nameText.x = 16;
-        nameText.y = 118;
+        nameText.y = 117;
         this.drawables.addChild(nameText)
+        nameText.scale.x = 2;
+        nameText.scale.y = 2;
     }
 
     openTextBox() {
@@ -104,6 +107,8 @@ export default class TextBox implements Runner {
         const text = new PIXI.Text('Welcome to Aspect Star 4!\nChoosing fonts is hard...\nSome more newlines...\nSo hard for it, honey\nSo hard for it, honey', DEFAULT_TEXT_STYLE);
         text.x = 8;
         text.y = 140;
+        text.scale.x = 2;
+        text.scale.y = 2;
         this.drawables.addChild(text)
     }
 
