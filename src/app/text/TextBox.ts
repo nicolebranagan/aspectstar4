@@ -5,7 +5,7 @@ import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
 import Interaction from '../interfaces/Interaction';
 const FontFaceObserver = require('fontfaceobserver');
-import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE } from './Fonts';
+import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE, CustomFonts } from './Fonts';
 
 enum TextBoxState {
     OPENING,
@@ -88,10 +88,11 @@ export default class TextBox implements Runner {
 
     drawText() {
         const child = this.interaction[this.marker];
+        const font = child.font ? CustomFonts[child.font] : DEFAULT_TEXT_STYLE;
         this.resetGraphics();
         this.drawTextBox(TEXT_BOX_HEIGHT, TEXT_BOX_WIDTH);
         this.drawChildTextBox(child.name);
-        const text = new PIXI.Text(child.text, DEFAULT_TEXT_STYLE);
+        const text = new PIXI.Text(child.text, font);
         text.x = 8;
         text.y = 140;
         text.scale.x = 2;
