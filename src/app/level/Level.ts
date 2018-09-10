@@ -4,6 +4,7 @@ import LevelObject from '../interfaces/LevelObject';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
 import Player from '../interfaces/Player';
+import Background from '../interfaces/Background';
 import Interaction from '../interfaces/Interaction';
 import GenericRunner from '../system/GenericRunner';
 import Point from '../system/Point';
@@ -12,6 +13,7 @@ import Stage from './Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
+import Palace from './backgrounds/Palace';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -41,10 +43,13 @@ export default class Level extends GenericRunner implements Master {
     private bellCount = 0;
     private textBox : Runner;
     private interaction : Interaction;
+    private background : Background;
 
     constructor(master : Master) {
         super(master);
         // Set initial state; eventually fetch the point from the level data
+        this.background = new Palace();
+        this.addRunner(this.background);
         this.lastState = {
             point: new Point(100, 287),
             aspect: Aspect.ASPECT_PLUS,
@@ -111,6 +116,7 @@ export default class Level extends GenericRunner implements Master {
             );
             return;
         };
+        this.background.updatePos(truecamera.x, truecamera.y);
 
         this.levelFrame.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),

@@ -68,3 +68,9 @@ with open("src/images/palace-objects.terra", "r") as fileo:
 filen = designation + "object1.gif"
 pixelgrid.changepage(0)
 pixelgrid.getTkImage(1, False).write(filen, format='gif')
+
+with open("src/images/background.terra", "r") as fileo:
+    pixelgrid.load(json.load(fileo))
+filen = designation + "background.gif"
+pixelgrid.changepage(0)
+pixelgrid.getTkImage(1, False).write(filen, format='gif')
