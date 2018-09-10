@@ -109,7 +109,7 @@ export default class Level extends GenericRunner implements Master {
         this.system.updateSystem(this.player, this.bellCount);
         this.camera = this.player.point;
         const truecamera = this.camera.round();
-        this.background.updatePos(truecamera.x, truecamera.y, this.textBox ? -60 : 0);
+        this.background.updatePos(Math.min(200 - truecamera.x,0), truecamera.y, this.textBox ? -60 : 0);
         if (this.textBox) {
             this.levelFrame.position = new PIXI.Point(
                 Math.min(200 - truecamera.x,0),

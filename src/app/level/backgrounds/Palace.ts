@@ -57,7 +57,7 @@ export default class Palace implements Background  {
 
     generateRow(rect : number[], y : number) {
         const centerPillars = new PIXI.Container();
-        for (let i = -1; i < 5; i++) {
+        for (let i = -1; i < 6; i++) {
             centerPillars.addChild(generateSprite(
                 rect, 96*i, y
             ))
