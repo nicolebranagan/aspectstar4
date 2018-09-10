@@ -144,6 +144,7 @@ export default class Player implements Player, Master {
         this.graphics.removeChild(this.sprite);
         this.addRunner(Particle.getAspectExplode(this, this.aspect));
         this.active = false;
+        SFX('die');
     }
 
     getAspect(asp : Aspect) : void {
