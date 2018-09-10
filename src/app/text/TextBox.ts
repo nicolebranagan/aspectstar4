@@ -42,9 +42,7 @@ export default class TextBox implements Runner {
     }
 
     resetGraphics() {
-        if (this.graphics) {
-            this.drawables.removeChild(this.graphics);
-        }
+        this.drawables.removeChildren();
         this.graphics = new PIXI.Graphics();
         this.graphics.x = 1;
         this.graphics.y = 125;
