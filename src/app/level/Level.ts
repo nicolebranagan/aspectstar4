@@ -23,6 +23,7 @@ export interface LevelOptions {
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
+    win: () => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -44,6 +45,7 @@ export default class Level extends GenericRunner implements Master {
     private textBox : Runner;
     private interaction : Interaction[];
     private background : Background;
+    private won : boolean = false;
 
     constructor(master : Master) {
         super(master);
@@ -88,6 +90,10 @@ export default class Level extends GenericRunner implements Master {
                     this.interaction = null;
                 });
             },
+
+            win: () => {
+                this.won = true;
+            }
         };
     }
 
@@ -100,13 +106,14 @@ export default class Level extends GenericRunner implements Master {
                 this.addRunner(this.textBox);
                 this.interaction = null;
             });
-        } else if (this.player.active)
+        } else if (this.player.active && !this.won)
             this.player.respond(controls);
     }
 
     update() : void {
         if (!this.loaded) return;
-        this.system.updateSystem(this.player, this.bellCount);
+        this.system.updateSystem(this.player, this.bellCount, this.won);
+        if (this.won) return;
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.background.updatePos(Math.min(200 - truecamera.x,0), truecamera.y, this.textBox ? -60 : 0);

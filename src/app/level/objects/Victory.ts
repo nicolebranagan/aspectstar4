@@ -14,4 +14,8 @@ export default class Victory extends Character {
         this.spoken = true;
         this.timer = 0;
     }
+
+    deactivate(levelOptions : LevelOptions) {
+        levelOptions.win();
+    }
 };
