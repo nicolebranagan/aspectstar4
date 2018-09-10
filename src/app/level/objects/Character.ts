@@ -22,7 +22,7 @@ export default class Character implements LevelObject {
     private rect : PIXI.Rectangle;
     private frame : number = 0
     protected timer : number = 0
-    protected interaction : Interaction;
+    protected interaction : Interaction[];
 
     constructor(point : Point, row : number, interactionKey : string, oneTimeUse : boolean) {
         this.point = point;

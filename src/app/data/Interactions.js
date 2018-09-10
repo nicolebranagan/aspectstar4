@@ -25,7 +25,7 @@ export default
         text: 'But... I want there to be an end of the level. I want some\ncertainty that I\'m on the right path.'
     }, {
         name: 'Zip',
-        text: 'You know what, fine. Come over here and find me in \neach area, and you\'ll get a level end... \nBut you\'ll have to give me all of those bells and \naspects you\'ve been collecting.'
+        text: 'You know what, fine. Come over here and find me in \neach area, and you\'ll get a level end... \nBut you\'ll have to give me, say, all of those bells and \naspects you\'ve been collecting.'
     }, {
         name: 'Nicole',
         text: 'Deal! ^_^'

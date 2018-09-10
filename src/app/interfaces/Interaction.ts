@@ -1,8 +1,5 @@
-export default interface Interaction {
-    [index: number]: {
-        name: string,
-        text: string,
-        font?: string,
-    },
-    length: number,
+export default interface Interaction{
+    name: string,
+    text: string,
+    font?: string,
 };

@@ -21,8 +21,8 @@ import Palace from './backgrounds/Palace';
 export interface LevelOptions {
     saveState: () => void;
     getAspect: (aspect : Aspect) => void;
-    prepareInteraction: (text : Interaction) => void;
-    setInteraction: (text : Interaction) => void;
+    prepareInteraction: (text : Interaction[]) => void;
+    setInteraction: (text : Interaction[]) => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -42,7 +42,7 @@ export default class Level extends GenericRunner implements Master {
     private levelFrame = new PIXI.Container();
     private bellCount = 0;
     private textBox : Runner;
-    private interaction : Interaction;
+    private interaction : Interaction[];
     private background : Background;
 
     constructor(master : Master) {
@@ -77,11 +77,11 @@ export default class Level extends GenericRunner implements Master {
                 this.player.getAspect(aspect);
             },
 
-            prepareInteraction: (interaction : Interaction) => {
+            prepareInteraction: (interaction : Interaction[]) => {
                 this.interaction = interaction;
             },
 
-            setInteraction: (interaction : Interaction) => {
+            setInteraction: (interaction : Interaction[]) => {
                 import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
                     this.textBox = new TextBox.default(this, interaction);
                     this.addRunner(this.textBox);
