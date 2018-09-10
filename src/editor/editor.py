@@ -290,6 +290,7 @@ class Editor(tk.Frame):
         options = defaultdict(lambda: nullframe, {
             "platform" : platformframe,
             "character" : characterframe,
+            "victory" : characterframe,
         })
         def getcorrectoptions(*data):
             objtype = Objects.data[getobj()]["type"]
