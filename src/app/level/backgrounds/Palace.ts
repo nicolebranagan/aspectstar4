@@ -67,11 +67,12 @@ export default class Palace implements Background  {
 
     offsetRow(row : PIXI.Container, offset : number) {
         row.children.forEach((child, index ) => {
-            child.x = 96*(index - 1) + offset
+            child.x = 96*(index - 1) + offset;
         });
     }
 
-    updatePos(x : number) {
+    updatePos(x : number, y : number, offset : number) {
+        this.drawables.position.y = offset; // Handle camera movement for text boxes
         this.offsetRow(this.rows[0], x % 96);
         this.offsetRow(this.rows[1], (x / 2 >> 0) % 96);
         this.offsetRow(this.rows[2], (x / 4 >> 0) % 96);
