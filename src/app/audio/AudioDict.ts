@@ -1,6 +1,6 @@
 import { Howl } from 'howler';
+import { sound } from './SFX';
 
-const sound : string[] = [];
 const audioDict : {[key : string] : Howl} = {};
 
 const getPromise = (name : string, filename : string, opts : object) => {
@@ -20,7 +20,7 @@ const getPromise = (name : string, filename : string, opts : object) => {
 };
 
 const initializeAudio = () => {
-    const promises = sound.map(name => getPromise(name, `${name}.wav`, {loop: false}));
+    const promises = sound.map(name => getPromise(name, `./audio/${name}.wav`, {loop: false}));
     return Promise.all(promises);
 };
 
