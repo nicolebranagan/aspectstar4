@@ -17,6 +17,8 @@ function loadResources() : void {
 import(/* webpackChunkName: "local-master" */ './system/LocalMaster').then(
     (LocalMaster) => {
         master = new LocalMaster.default();
-        loadResources();
+        import(/* webpackChunkName: "audio-dict" */ './audio/AudioDict').then(
+            ({default: {initializeAudio}}) => initializeAudio().then(() => loadResources())
+        );
     }
 );
