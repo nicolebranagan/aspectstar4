@@ -49,7 +49,7 @@ export default class Character implements LevelObject {
             // We need them to remain on-screen for the duration of the textbox,
             // but then disappear immediately.
             this.timer++;
-            if (this.timer === 2) {
+            if (this.timer === 3) {
                 this.active = false;
             }
             return;
