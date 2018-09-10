@@ -7,6 +7,7 @@ import PlatformerPhysics from '../physics/PlatformerPhysics';
 import Particle from '../../graphics/Particle';
 import Stage from '../Stage';
 import PlayerState from '../PlayerState';
+import SFX from '../../audio/SFX';
 
 /* Class Player is a LevelObject that additionally implements the method 
  * respond() in order to respond to player input. 
@@ -79,6 +80,7 @@ export default class Player implements Player, Master {
         
         if (controls.ButtonA && this.physics.ground) {
             this.physics.yvel = -7;
+            SFX('jump');
         }
 
         if (controls.ButtonPlus) { 
@@ -142,6 +144,7 @@ export default class Player implements Player, Master {
         this.graphics.removeChild(this.sprite);
         this.addRunner(Particle.getAspectExplode(this, this.aspect));
         this.active = false;
+        SFX('die');
     }
 
     getAspect(asp : Aspect) : void {
@@ -152,6 +155,7 @@ export default class Player implements Player, Master {
     getBell() : void {
         this.addRunner(Particle.getImageBurst(this, 0));
         this.bells = this.bells + 1;
+        SFX('coin');
     }
 
     /* Implements Master interface */
@@ -168,6 +172,7 @@ export default class Player implements Player, Master {
     private changeAspect(asp : Aspect) : void {
         if (asp == this.aspect || this.aspects.indexOf(asp) == -1)
             return;
+        SFX('aspect');
         this.addRunner(Particle.getAspectEffect(this, this.aspect));
         this.aspect = asp;
     }
