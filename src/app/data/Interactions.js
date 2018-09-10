@@ -2,7 +2,8 @@ export default
 {
     testInteraction: [{
         name: 'Mary',
-        text: 'Beep boop, I\'m definitely not a robot pretending to be\nMary! You can trust me!\n*beeps trustworthily*'
+        text: 'BEEP BOOP, I\'M DEFINITELY NOT A ROBOT PRETENDING\nTO BE MARY! YOU CAN TRUST ME!\n*beeps trustworthily*',
+        font: 'machine'
     }, {
         name: 'Nicole',
         text: 'Sounds perfectly normal to me!'
