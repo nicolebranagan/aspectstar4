@@ -20,6 +20,7 @@ export interface LevelOptions {
     saveState: () => void;
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction) => void;
+    setInteraction: (text : Interaction) => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -73,6 +74,14 @@ export default class Level extends GenericRunner implements Master {
 
             prepareInteraction: (interaction : Interaction) => {
                 this.interaction = interaction;
+            },
+
+            setInteraction: (interaction : Interaction) => {
+                import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
+                    this.textBox = new TextBox.default(this, interaction);
+                    this.addRunner(this.textBox);
+                    this.interaction = null;
+                });
             },
         };
     }

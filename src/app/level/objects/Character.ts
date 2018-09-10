@@ -15,6 +15,8 @@ export default class Character implements LevelObject {
     point: Point;
 
     private row : number;
+    private oneTimeUse : boolean;
+    private spoken : boolean = false;
     private facingLeft : boolean = false;
     private sprite : PIXI.Sprite;
     private rect : PIXI.Rectangle;
@@ -22,9 +24,10 @@ export default class Character implements LevelObject {
     private timer : number = 0
     private interaction : Interaction;
 
-    constructor(point : Point, row : number, interactionKey : string) {
+    constructor(point : Point, row : number, interactionKey : string, oneTimeUse : boolean) {
         this.point = point;
         this.row = row;
+        this.oneTimeUse = oneTimeUse;
 
         const text = PIXI.Texture.from(PIXI.loader.resources['characters'].texture.baseTexture);
         this.rect = new PIXI.Rectangle(0, this.row*16, 16, 32);
@@ -41,6 +44,14 @@ export default class Character implements LevelObject {
     }
 
     update(player : Player, objects: LevelObject[], levelOptions : LevelOptions) {
+        if (this.spoken) {
+            this.timer++;
+            if (this.timer === 2) {
+                this.active = false;
+            }
+            return;
+        }
+
         this.timer++
         if (this.timer == 17) {
             this.timer = 0;
@@ -49,10 +60,16 @@ export default class Character implements LevelObject {
         }
         this.facingLeft = this.point.x > player.point.x;
 
-        if (Math.abs(this.point.x - player.point.x) < 32 &&
+        if (!this.spoken && Math.abs(this.point.x - player.point.x) < 32 &&
             Math.abs(this.point.y - player.point.y) < 8
         ) {
-            levelOptions.prepareInteraction(this.interaction)
+            if (this.oneTimeUse) {
+                levelOptions.setInteraction(this.interaction);
+                this.spoken = true;
+                this.timer = 0;
+            } else {
+                levelOptions.prepareInteraction(this.interaction)
+            }
         } else {
             levelOptions.prepareInteraction(null);
         }

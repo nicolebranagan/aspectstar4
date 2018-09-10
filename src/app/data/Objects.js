@@ -126,6 +126,7 @@ export default
     "type" : "character",
     "texture" : "characters",
     "rect" : [0, 0, 16, 32],
-    "row" : 0
+    "row" : 0,
+    "oneTimeUse" : true
   }
 ]
