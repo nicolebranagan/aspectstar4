@@ -45,6 +45,9 @@ export default class Character implements LevelObject {
 
     update(player : Player, objects: LevelObject[], levelOptions : LevelOptions) {
         if (this.spoken) {
+            // This is a very simple timer for objects that phase out of existence
+            // We need them to remain on-screen for the duration of the textbox,
+            // but then disappear immediately.
             this.timer++;
             if (this.timer === 2) {
                 this.active = false;
