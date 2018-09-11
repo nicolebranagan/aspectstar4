@@ -161,7 +161,10 @@ export default class Level extends GenericRunner implements Master {
             );
             return;
         };
-
+        if (this.paused) {
+            this.paused.update();
+            return;
+        }
         this.levelFrame.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
