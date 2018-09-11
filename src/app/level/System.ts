@@ -2,7 +2,6 @@ import Master from '../interfaces/Master';
 import Aspect from '../constants/Aspect';
 import Player from '../interfaces/Player';
 import Runner from '../interfaces/Runner';
-import WinSystem from './WinSystem';
 
 class CachedSprite {
     private sprite : PIXI.Sprite;
@@ -73,7 +72,6 @@ export default class System implements Runner {
     private selectedAspect : Aspect
     private bellCount : number
     private bellCountMax : number
-    private winSystem : Runner
 
     constructor(master : Master, player : Player, bellCountMax : number) {
         this.drawables = new PIXI.Container();
@@ -85,9 +83,6 @@ export default class System implements Runner {
     
     reset() {
         this.drawables.removeChildren();
-        if (this.winSystem) {
-            this.drawables.addChild(this.winSystem.drawables);
-        }
         this.drawables.addChild(topLeftCorner.get(getTopLeftCorner));
         this.aspects.forEach(
             aspect => {
@@ -116,21 +111,16 @@ export default class System implements Runner {
 
     update() {}
 
-    updateSystem(player : Player, bellCountMax : number, won : boolean, deaths : number) {
+    updateSystem(player : Player, bellCountMax : number) {
         if (player.aspect !== this.selectedAspect 
             || player.aspects.length !== this.aspects.length 
             || this.bellCount !== player.bells
             || this.bellCountMax !== bellCountMax
-            || won && !this.winSystem
         ) {
             this.selectedAspect = player.aspect;
             this.aspects = player.aspects;
             this.bellCount = player.bells;
             this.bellCountMax = bellCountMax;
-            if (won) {
-                this.winSystem = new WinSystem(null, this.aspects, this.bellCount, this.bellCountMax, deaths);
-                this.drawables.addChild(this.winSystem.drawables);
-            }
             this.reset();
         }
     }

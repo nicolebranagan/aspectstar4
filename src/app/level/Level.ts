@@ -45,7 +45,7 @@ export default class Level extends GenericRunner implements Master {
     private textBox : Runner;
     private interaction : Interaction[];
     private background : Background;
-    private won : boolean = false;
+    private winSystem : Runner;
     private deaths : number = 0;
 
     constructor(master : Master) {
@@ -93,7 +93,12 @@ export default class Level extends GenericRunner implements Master {
             },
 
             win: () => {
-                this.won = true;
+                import(/* webpackChunkName: "win-system" */ './WinSystem').then(WinSystem => {
+                    this.winSystem = new WinSystem.default(
+                        this, this.player.aspects, this.player.bells, this.bellCount, this.deaths
+                    );
+                    this.addRunner(this.winSystem);
+                })
             }
         };
     }
@@ -101,20 +106,25 @@ export default class Level extends GenericRunner implements Master {
     respond(controls : Controls) : void {
         if (this.textBox)
             this.textBox.respond(controls)
-        else if (!!this.interaction && controls.ButtonA) {
+        else if (!!this.interaction) {
             import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
                 this.textBox = new TextBox.default(this, this.interaction);
                 this.addRunner(this.textBox);
                 this.interaction = null;
             });
-        } else if (this.player.active && !this.won)
+        } else if (!!this.winSystem) {
+            // Have ability to progress
+        } else if (this.player.active)
             this.player.respond(controls);
     }
 
     update() : void {
         if (!this.loaded) return;
-        this.system.updateSystem(this.player, this.bellCount, this.won, this.deaths);
-        if (this.won) return;
+        this.system.updateSystem(this.player, this.bellCount);
+        if (!!this.winSystem) {
+            this.winSystem.update();
+            return;
+        }
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.background.updatePos(Math.min(200 - truecamera.x,0), truecamera.y, this.textBox ? -60 : 0);

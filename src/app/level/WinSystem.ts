@@ -16,6 +16,7 @@ const BELLS_LABEL = (
 const DEATHS_LABEL = (
     deaths : number, 
 ) => `Deaths: ${deaths}`;
+const SCROLLER_TEXT = "Let's nya!";
 
 const getAspect : (aspect : Aspect) => PIXI.Sprite = (aspect : Aspect) => {
     const text = PIXI.Texture.from(PIXI.loader.resources['player'].texture.baseTexture); 
@@ -34,6 +35,7 @@ export default class WinSystem extends GenericRunner {
     private firstLine1 : PIXI.Text;
     private firstLine2 : PIXI.Text;
     private levelName : PIXI.Text;
+    private scrollerText : PIXI.Text;
 
     constructor(
         master : Master, 
@@ -103,6 +105,7 @@ export default class WinSystem extends GenericRunner {
             this.drawAspects(130, 120);
             this.drawBells(130, 144);
             this.drawDeaths(130, 168);
+            delay(50).then(() => {this.drawScroller(200)});
         })
     }
 
@@ -162,5 +165,23 @@ export default class WinSystem extends GenericRunner {
         this.drawables.addChild(deathsLabel);
     }
 
-    update() {;}
+    drawScroller(y : number) {
+        this.scrollerText = new PIXI.Text(SCROLLER_TEXT, DEFAULT_SYSTEM_STYLE);
+        this.scrollerText.y = y;
+        this.scrollerText.x = 0;
+        this.scrollerText.scale.x = 2;
+        this.scrollerText.scale.y = 2;
+        this.drawables.addChild(this.scrollerText);
+
+        const loopScroller = () => {
+            setTimeout(loopScroller, 1);
+        };
+        loopScroller();
+    }
+
+    update() {
+        if (this.scrollerText) {
+            this.scrollerText.x = (this.scrollerText.x + this.scrollerText.width + 2) % (400 + this.scrollerText.width) - this.scrollerText.width;
+        }
+    }
 }
