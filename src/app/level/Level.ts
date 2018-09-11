@@ -15,16 +15,19 @@ import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
 import Menu from '../text/Menu';
+import PauseMenu from './PauseMenu';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
  * */
 export interface LevelOptions {
     saveState: () => void;
+    loadState: () => void;
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
     win: () => void;
+    closePauseWindow: () => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -78,6 +81,10 @@ export default class Level extends GenericRunner implements Master {
                 }
             },
 
+            loadState: () => {
+                this.resetObjects();
+            },
+
             getAspect: (aspect : Aspect) => {
                 this.player.getAspect(aspect);
             },
@@ -101,6 +108,11 @@ export default class Level extends GenericRunner implements Master {
                     );
                     this.addRunner(this.winSystem);
                 })
+            },
+
+            closePauseWindow: () => {
+                this.removeRunner(this.paused);
+                this.paused = null;
             }
         };
     }
@@ -118,21 +130,7 @@ export default class Level extends GenericRunner implements Master {
             // Have ability to progress
         } else if (controls.Start) {
             if (!this.paused) {
-                this.paused = new Menu(this, {
-                    options: [{
-                        name : "Return",
-                        onChoose: () => {alert('return')}
-                    }, {
-                        name : "Restart",
-                        onChoose: () => {alert('restart')}                    
-                    }, {
-                        name : "Give Up",
-                        onChoose: () => {alert('give up')}
-                    }, {
-                        name : "Exit",
-                        onChoose: () => {alert('exit')}
-                    }],
-                });
+                this.paused = new PauseMenu(this, this.options);
                 this.addRunner(this.paused);
                 controls.release();
             } else {
