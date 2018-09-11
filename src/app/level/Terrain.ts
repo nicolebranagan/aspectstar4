@@ -2,14 +2,18 @@ import Master from '../interfaces/Master';
 import GenericRunner from '../system/GenericRunner';
 
 import Worldfile from '../data/Worldfile';
+import Attributes from '../interfaces/Attributes';
+
+const TILESETS = ['level1'];
 
 /* The terrain object is in charge of drawing the level. */
 
 export default class Terrain extends GenericRunner {
     constructor(master : Master, level : any) {
         super(master);
-        const text = PIXI.loader.resources['level1'].texture.baseTexture;
         const drawables = this.drawables;
+        const attributes : Attributes = level.attributes;
+        const text = PIXI.loader.resources[TILESETS[attributes.tileset]].texture.baseTexture;
 
         function getTile(i : number) : PIXI.Texture {
             const rect = new PIXI.Rectangle(16*i, 0, 16, 16);
@@ -23,7 +27,7 @@ export default class Terrain extends GenericRunner {
             drawables.addChild(sprite);
         }
 
-        const bigtileset : any = Worldfile.bigtiles[0].bigtiles;
+        const bigtileset : any = Worldfile.bigtiles[attributes.bigtileset].bigtiles;
         function drawBigtile(i : number, x : number, y : number) : void {
             const bigtile = bigtileset[i];
             if (bigtile == -1) {

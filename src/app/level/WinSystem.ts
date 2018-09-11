@@ -5,7 +5,6 @@ import Aspect from '../constants/Aspect';
 
 const FIRST_LINE_1 = "Nicole";
 const FIRST_LINE_2 = "has passed";
-const LEVEL_NAME = "Palace of Marion 1";
 const ASPECT_LABEL = "Aspects: ";
 const BELLS_LABEL = (
     bellCount : number, 
@@ -37,6 +36,7 @@ export default class WinSystem extends GenericRunner {
 
     constructor(
         master : Master, 
+        private name : string,
         private aspects : Aspect[], 
         private bellCount : number, 
         private bellCountMax : number,
@@ -90,9 +90,9 @@ export default class WinSystem extends GenericRunner {
         if (this.levelName) {
             this.drawables.removeChild(this.levelName);
         }
-        const metrics = PIXI.TextMetrics.measureText(LEVEL_NAME, WIN_LEVEL_NAME_STYLE);
+        const metrics = PIXI.TextMetrics.measureText(this.name, WIN_LEVEL_NAME_STYLE);
         const x = 200-metrics.width;
-        this.levelName = new PIXI.Text(LEVEL_NAME, WIN_LEVEL_NAME_STYLE);
+        this.levelName = new PIXI.Text(this.name, WIN_LEVEL_NAME_STYLE);
         this.levelName.x = x;
         this.levelName.y = y;
         this.levelName.scale.x = 2;

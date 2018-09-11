@@ -17,7 +17,7 @@ export default function Loader(self : Level, index : number) : { terrain : Terra
      return {
         terrain,
         stage,
-        objects
+        objects,
     }
 }
 
