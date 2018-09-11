@@ -50,7 +50,7 @@ async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {
         return new Character(point, objdata.row, data[3], objdata.oneTimeUse);
     }
     else if (objdata.type === "victory") {
-        const Victory = (await import(/* webpackChunkName: "victory" */ './objects/Victory')).default;
+        const Victory = (await import(/* webpackChunkName: "character" */ './objects/Victory')).default;
         return new Victory(point, data[3]);
     }
 };
