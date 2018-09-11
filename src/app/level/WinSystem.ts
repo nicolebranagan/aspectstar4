@@ -11,6 +11,9 @@ const BELLS_LABEL = (
     bellCount : number, 
     bellCountMax : number,
 ) => `Bells: ${bellCount} / ${bellCountMax}`;
+const DEATHS_LABEL = (
+    deaths : number, 
+) => `Deaths: ${deaths}`;
 
 const getAspect : (aspect : Aspect) => PIXI.Sprite = (aspect : Aspect) => {
     const text = PIXI.Texture.from(PIXI.loader.resources['player'].texture.baseTexture); 
@@ -34,7 +37,8 @@ export default class WinSystem extends GenericRunner {
         master : Master, 
         private aspects : Aspect[], 
         private bellCount : number, 
-        private bellCountMax : number
+        private bellCountMax : number,
+        private deaths : number,
     ) {
         super(master);
 
@@ -94,8 +98,9 @@ export default class WinSystem extends GenericRunner {
         this.drawables.addChild(this.levelName);
 
         delay(300).then(() => {
-            this.drawAspects(130, 130);
-            this.drawBells(130, 154);
+            this.drawAspects(130, 120);
+            this.drawBells(130, 144);
+            this.drawDeaths(130, 168);
         })
     }
 
@@ -139,6 +144,20 @@ export default class WinSystem extends GenericRunner {
         bellsLabel.scale.x = 2;
         bellsLabel.scale.y = 2;
         this.drawables.addChild(bellsLabel);
+    }
+
+    drawDeaths(x : number, y : number) {
+        const deathStyle = DEFAULT_SYSTEM_STYLE.clone();
+        if (this.deaths === 0) {
+            deathStyle.fill = '0xF8B800';
+        }
+        const deathsText = DEATHS_LABEL(this.deaths);
+        const deathsLabel = new PIXI.Text(deathsText, deathStyle);
+        deathsLabel.x = x;
+        deathsLabel.y = y;
+        deathsLabel.scale.x = 2;
+        deathsLabel.scale.y = 2;
+        this.drawables.addChild(deathsLabel);
     }
 
     update() {;}

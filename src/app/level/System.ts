@@ -116,7 +116,7 @@ export default class System implements Runner {
 
     update() {}
 
-    updateSystem(player : Player, bellCountMax : number, won : boolean) {
+    updateSystem(player : Player, bellCountMax : number, won : boolean, deaths : number) {
         if (player.aspect !== this.selectedAspect 
             || player.aspects.length !== this.aspects.length 
             || this.bellCount !== player.bells
@@ -128,7 +128,7 @@ export default class System implements Runner {
             this.bellCount = player.bells;
             this.bellCountMax = bellCountMax;
             if (won) {
-                this.winSystem = new WinSystem(null, this.aspects, this.bellCount, this.bellCountMax);
+                this.winSystem = new WinSystem(null, this.aspects, this.bellCount, this.bellCountMax, deaths);
                 this.drawables.addChild(this.winSystem.drawables);
             }
             this.reset();

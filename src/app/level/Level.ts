@@ -46,6 +46,7 @@ export default class Level extends GenericRunner implements Master {
     private interaction : Interaction[];
     private background : Background;
     private won : boolean = false;
+    private deaths : number = 0;
 
     constructor(master : Master) {
         super(master);
@@ -112,7 +113,7 @@ export default class Level extends GenericRunner implements Master {
 
     update() : void {
         if (!this.loaded) return;
-        this.system.updateSystem(this.player, this.bellCount, this.won);
+        this.system.updateSystem(this.player, this.bellCount, this.won, this.deaths);
         if (this.won) return;
         this.camera = this.player.point;
         const truecamera = this.camera.round();
@@ -139,6 +140,7 @@ export default class Level extends GenericRunner implements Master {
         if (this.player.active) {
             if (this.stage.isDeath(this.player.point)) {
                 this.player.die();
+                this.deaths++;
             }
         } else {
             this.deathTimer++;
