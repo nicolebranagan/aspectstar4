@@ -46,8 +46,8 @@ export default class Menu extends GenericRunner {
     }
 
     getXY() : Point {
-        const { options, centered, x, y } = this.menuOptions;
-        if (!centered) {
+        const { options, x, y } = this.menuOptions;
+        if (!!x && !!y) {
             return new Point(x, y);
         }
         const metrics = options.map(opt => 
@@ -56,7 +56,7 @@ export default class Menu extends GenericRunner {
         // We render text at 2X resolution, so these are only half
         const halfWidth = Math.max(...metrics.map(metric => metric.width));
         const halfHeight = metrics.reduce((prev, curr) => prev + curr.height + OPTION_SEPARATOR, -OPTION_SEPARATOR);
-        return new Point(200 - halfWidth, 112 - halfHeight).round();
+        return new Point(x || 200 - halfWidth, y || 112 - halfHeight).round();
     }
 
     respond(controls : Controls) {

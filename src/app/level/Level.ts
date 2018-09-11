@@ -132,7 +132,6 @@ export default class Level extends GenericRunner implements Master {
                         name : "Exit",
                         onChoose: () => {alert('exit')}
                     }],
-                    centered: true,
                 });
                 this.addRunner(this.paused);
                 controls.release();

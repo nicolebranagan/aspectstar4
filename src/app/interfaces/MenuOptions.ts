@@ -3,7 +3,6 @@ export default interface MenuOptions {
         name: string,
         onChoose: () => void,
     }[],
-    centered : boolean,
     defaultSelected? : number,
     x? : number,
     y? : number,
