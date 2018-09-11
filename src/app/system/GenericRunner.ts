@@ -12,5 +12,5 @@ export default abstract class GenericRunner implements Runner {
     }
     
     respond(controls : Controls) : void {;}
-    abstract update() : void;
+    update() : void {;};
 }

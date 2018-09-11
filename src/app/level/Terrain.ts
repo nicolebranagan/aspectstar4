@@ -47,6 +47,5 @@ export default class Terrain extends GenericRunner {
             drawBigtile(level.grid[i], x, y);
         }
     }
-    update() : void {;}
 };
 

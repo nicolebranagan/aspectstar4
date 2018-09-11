@@ -81,8 +81,4 @@ export default class Menu extends GenericRunner {
             controls.release();
         }
     }
-
-    update() {
-
-    }
 };
