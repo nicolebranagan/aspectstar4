@@ -172,11 +172,6 @@ export default class WinSystem extends GenericRunner {
         this.scrollerText.scale.x = 2;
         this.scrollerText.scale.y = 2;
         this.drawables.addChild(this.scrollerText);
-
-        const loopScroller = () => {
-            setTimeout(loopScroller, 1);
-        };
-        loopScroller();
     }
 
     update() {
