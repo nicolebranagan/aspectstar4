@@ -1,10 +1,7 @@
-declare var require: any 
-
 import Controls from '../interfaces/Controls';
 import Master from '../interfaces/Master';
 import Runner from '../interfaces/Runner';
 import Interaction from '../interfaces/Interaction';
-const FontFaceObserver = require('fontfaceobserver');
 import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE, CustomFonts } from './Fonts';
 
 enum TextBoxState {
@@ -14,12 +11,6 @@ enum TextBoxState {
 
 const TEXT_BOX_WIDTH = 398;
 const TEXT_BOX_HEIGHT = 99;
-
-// For fonts that aren't loaded by us, but can be assumed to always be present.
-// Only use web-safe fonts on this list.
-const SafeFonts = [
-    'Courier New'
-];
 
 export default class TextBox implements Runner {
     public drawables : PIXI.Container;
@@ -78,37 +69,12 @@ export default class TextBox implements Runner {
         nameText.scale.y = 2;
     }
 
-    waitForRelevantFonts() {
-        const customFonts : string[] = this.interaction
-            .map(dialogue => dialogue.font)
-            .filter(font => font)
-            .map(font => CustomFonts[font].fontFamily)
-            .reduce<string[]>((fonts, font) => {
-                if (Array.isArray(font)) {
-                    fonts.push(...font);
-                } else {
-                    fonts.push(font);
-                }
-                return fonts;
-            }, [])
-            .filter(font => SafeFonts.indexOf(font) === -1)
-
-        const relevantFonts = [
-            DEFAULT_TEXT_STYLE.fontFamily, 
-            DEFAULT_TITLE_STYLE.fontFamily, 
-            ...customFonts
-        ].filter((value, index, array) => array.indexOf(value) === index);
-        return Promise.all(relevantFonts.map(font => new FontFaceObserver(font).load()));
-    }
-
     openTextBox() {
         this.openingHeight++;
         this.drawTextBox(this.openingHeight, TEXT_BOX_WIDTH);
         if (this.openingHeight === TEXT_BOX_HEIGHT) {
             this.state = TextBoxState.OPEN;
-            this.waitForRelevantFonts()
-                .then(() => this.drawText())
-                .catch((err) => {throw err})
+            this.drawText();
         } else {
             setTimeout(this.openTextBox, 1);
         }

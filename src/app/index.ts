@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import FontLoader from './text/FontLoader';
 
 let master : any;
 function loadResources() : void {
@@ -14,11 +15,13 @@ function loadResources() : void {
         .load(function() {master.initialize()})
 }
 
-import(/* webpackChunkName: "local-master" */ './system/LocalMaster').then(
-    (LocalMaster) => {
-        master = new LocalMaster.default();
-        import(/* webpackChunkName: "audio-dict" */ './audio/AudioDict').then(
-            ({default: {initializeAudio}}) => initializeAudio().then(() => loadResources())
-        );
-    }
-);
+FontLoader().then(() => {
+    import(/* webpackChunkName: "local-master" */ './system/LocalMaster').then(
+        (LocalMaster) => {
+            master = new LocalMaster.default();
+            import(/* webpackChunkName: "audio-dict" */ './audio/AudioDict').then(
+                ({default: {initializeAudio}}) => initializeAudio().then(() => loadResources())
+            );
+        }
+    );
+})
