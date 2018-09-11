@@ -3,6 +3,8 @@ import GenericRunner from "../system/GenericRunner";
 import { DEFAULT_SYSTEM_STYLE, DEFAULT_TEXT_STYLE, WIN_LEVEL_NAME_STYLE } from '../text/Fonts';
 import Aspect from '../constants/Aspect';
 
+const GOLD_COLOR = '0xF8B800';
+
 const FIRST_LINE_1 = "Nicole";
 const FIRST_LINE_2 = "has passed";
 const LEVEL_NAME = "Palace of Marion 1";
@@ -107,7 +109,7 @@ export default class WinSystem extends GenericRunner {
     drawAspects(x : number, y : number) {
         const aspectStyle = DEFAULT_SYSTEM_STYLE.clone();
         if (this.aspects.length === 3) {
-            aspectStyle.fill = '0xF8B800';
+            aspectStyle.fill = GOLD_COLOR;
         }
 
         const metrics = PIXI.TextMetrics.measureText(ASPECT_LABEL, aspectStyle);
@@ -135,7 +137,7 @@ export default class WinSystem extends GenericRunner {
     drawBells(x : number, y : number) {
         const bellsStyle = DEFAULT_SYSTEM_STYLE.clone();
         if (this.bellCount === this.bellCountMax) {
-            bellsStyle.fill = '0xF8B800';
+            bellsStyle.fill = GOLD_COLOR;
         }
         const bellsText = BELLS_LABEL(this.bellCount, this.bellCountMax);
         const bellsLabel = new PIXI.Text(bellsText, bellsStyle);
@@ -149,7 +151,7 @@ export default class WinSystem extends GenericRunner {
     drawDeaths(x : number, y : number) {
         const deathStyle = DEFAULT_SYSTEM_STYLE.clone();
         if (this.deaths === 0) {
-            deathStyle.fill = '0xF8B800';
+            deathStyle.fill = GOLD_COLOR;
         }
         const deathsText = DEATHS_LABEL(this.deaths);
         const deathsLabel = new PIXI.Text(deathsText, deathStyle);
