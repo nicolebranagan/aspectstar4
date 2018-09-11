@@ -25,6 +25,7 @@ export default class LocalMaster implements Master {
         document.getElementById("holderdiv").appendChild(this.gamescreen.view);
         this.runners = [];
         this.controls = new KeyboardControls();
+        this.update = this.update.bind(this);
     }
 
     initialize() : void {
@@ -38,7 +39,7 @@ export default class LocalMaster implements Master {
     }
 
     update() : void {
-        setTimeout(() => {this.update()}, 1000/60);
+        setTimeout(this.update, 1000/60);
         this.runners.forEach((e) => {
             e.respond(this.controls);
             e.update();
