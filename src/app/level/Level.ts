@@ -14,6 +14,7 @@ import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
+import Menu from '../text/Menu';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -47,6 +48,7 @@ export default class Level extends GenericRunner implements Master {
     private background : Background;
     private winSystem : Runner;
     private deaths : number = 0;
+    private paused : Runner;
 
     constructor(master : Master) {
         super(master);
@@ -114,6 +116,33 @@ export default class Level extends GenericRunner implements Master {
             });
         } else if (!!this.winSystem) {
             // Have ability to progress
+        } else if (controls.Start) {
+            if (!this.paused) {
+                this.paused = new Menu(this, {
+                    options: [{
+                        name : "Return",
+                        onChoose: () => {alert('return')}
+                    }, {
+                        name : "Restart",
+                        onChoose: () => {alert('restart')}                    
+                    }, {
+                        name : "Give Up",
+                        onChoose: () => {alert('give up')}
+                    }, {
+                        name : "Exit",
+                        onChoose: () => {alert('exit')}
+                    }],
+                    centered: true,
+                });
+                this.addRunner(this.paused);
+                controls.release();
+            } else {
+                this.removeRunner(this.paused);
+                this.paused = null;
+                controls.release();
+            }
+        } else if (!!this.paused) {
+            this.paused.respond(controls);
         } else if (this.player.active)
             this.player.respond(controls);
     }

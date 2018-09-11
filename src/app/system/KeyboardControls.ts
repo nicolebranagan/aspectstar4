@@ -29,6 +29,8 @@ export default class KeyboardControls implements Controls {
         this.ButtonPlus = false;
         this.ButtonX = false;
         this.ButtonO = false;
+        this.Up = false;
+        this.Down = false;
     }
 
     keyDown(event : KeyboardEvent) : void {

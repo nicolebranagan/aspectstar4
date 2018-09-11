@@ -1,3 +1,5 @@
+export const GOLD_COLOR = '0xF8B800';
+
 export const DEFAULT_TITLE_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
     fontSize: 8,
