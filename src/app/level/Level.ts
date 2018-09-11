@@ -14,7 +14,6 @@ import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
-import Menu from '../text/Menu';
 import PauseMenu from './PauseMenu';
 
 /* LevelOptions are options that are passed by the level to its children.
