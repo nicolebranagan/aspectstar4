@@ -40,9 +40,14 @@ class Editor(tk.Frame):
         self.level = 0
         self.selected_tile = 0
         self.selected_bigtile = 0
-        self.tileset = 0
-        self.bigtiles = wf.bigtiles[0]
         self.currentlevel = wf.levels[0]
+        self.tileset = self.currentlevel.attributes.get("tileset");
+        self.bigtiles = wf.bigtiles[self.currentlevel.attributes.get("bigtileset")]
+        try:
+            self.levelname.set(self.currentlevel.attributes['name'])
+        except:
+            # On the first pass, this variable doesn't exist yet. It'll be set when we need it.
+            pass
 
         if (redraw):
             self.selectTile(0)
@@ -95,6 +100,17 @@ class Editor(tk.Frame):
 
         tilegrid = tk.Frame(self, width=256)
         tilegrid.grid(row=1, column=0, sticky=tk.N)
+
+        leveloptionspanel = tk.Frame(tilegrid)
+        leveloptionspanel.pack()
+        tk.Label(leveloptionspanel, text="Level Name:").grid(row=0, column=0)
+        self.levelname = tk.StringVar()
+        self.levelname.set(self.currentlevel.attributes['name'])
+        def setName(name, *args):
+            self.currentlevel.attributes['name'] = self.levelname.get()
+        self.levelname.trace_add("write", setName)
+        levelnameentry = tk.Entry(leveloptionspanel, textvariable=self.levelname)
+        levelnameentry.grid(row=0, column=1)
 
         modepanel = tk.Frame(tilegrid)
         modepanel.pack()
@@ -362,7 +378,7 @@ class Editor(tk.Frame):
                 self.selectobj([getobj(), x, y])
 
         def deleteObj(*args):
-            if (self.selectedobj is None):
+            if (not hasattr(self, 'selectedobj') or self.selectedobj is None):
                 return
             for obj in self.currentlevel.objects:
                 if obj[0] == self.selectedobj[0] and obj[1] == self.selectedobj[1] and obj[2] == self.selectedobj[2]:

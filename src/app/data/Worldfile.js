@@ -368,6 +368,16 @@ export default
   ],
   "levels": [
     {
+      "attributes": {
+        "background": 0,
+        "bigtileset": 0,
+        "name": "Palace of Marion 1",
+        "start": [
+          100,
+          287
+        ],
+        "tileset": 0
+      },
       "grid": [
         0,
         0,
