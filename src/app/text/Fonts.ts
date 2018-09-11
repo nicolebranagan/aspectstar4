@@ -5,6 +5,30 @@ export const DEFAULT_TITLE_STYLE = new PIXI.TextStyle({
     fill: 'white',
 });
 
+export const DEFAULT_SYSTEM_STYLE = new PIXI.TextStyle({
+    fontFamily: 'chicago',
+    fontSize: 8,
+    fontWeight: '100',
+    fill: 'white',
+    dropShadow: true,
+    dropShadowColor: 0x000000,
+    dropShadowAlpha: 0.7,
+    dropShadowDistance: 1,
+    strokeThickness: 1,
+});
+
+export const WIN_LEVEL_NAME_STYLE = new PIXI.TextStyle({
+    fontFamily: 'chicago',
+    fontSize: 16,
+    fontWeight: '100',
+    fill: 'white',
+    dropShadow: true,
+    dropShadowColor: 0x000000,
+    dropShadowAlpha: 0.7,
+    dropShadowDistance: 1,
+    strokeThickness: 1,
+});
+
 export const DEFAULT_TEXT_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
     fontSize: 6,

@@ -128,5 +128,12 @@ export default
     "rect" : [0, 0, 16, 32],
     "row" : 0,
     "oneTimeUse" : true
+  },
+  {
+    "name" : "Zip",
+    "type" : "victory",
+    "texture" : "characters",
+    "rect" : [0, 32, 16, 32],
+    "row" : 1
   }
 ]

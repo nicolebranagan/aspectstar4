@@ -16,13 +16,13 @@ export default class Character implements LevelObject {
 
     private row : number;
     private oneTimeUse : boolean;
-    private spoken : boolean = false;
+    protected spoken : boolean = false;
     private facingLeft : boolean = false;
     private sprite : PIXI.Sprite;
     private rect : PIXI.Rectangle;
     private frame : number = 0
-    private timer : number = 0
-    private interaction : Interaction;
+    protected timer : number = 0
+    protected interaction : Interaction[];
 
     constructor(point : Point, row : number, interactionKey : string, oneTimeUse : boolean) {
         this.point = point;
@@ -30,7 +30,7 @@ export default class Character implements LevelObject {
         this.oneTimeUse = oneTimeUse;
 
         const text = PIXI.Texture.from(PIXI.loader.resources['characters'].texture.baseTexture);
-        this.rect = new PIXI.Rectangle(0, this.row*16, 16, 32);
+        this.rect = new PIXI.Rectangle(0, this.row*32, 16, 32);
         text.frame = this.rect;
         this.sprite = new PIXI.Sprite(text);
         this.graphics = new PIXI.Container();
@@ -50,7 +50,7 @@ export default class Character implements LevelObject {
             // but then disappear immediately.
             this.timer++;
             if (this.timer === 3) {
-                this.active = false;
+                this.deactivate(levelOptions);
             }
             return;
         }
@@ -66,20 +66,28 @@ export default class Character implements LevelObject {
         if (!this.spoken && Math.abs(this.point.x - player.point.x) < 32 &&
             Math.abs(this.point.y - player.point.y) < 8
         ) {
-            if (this.oneTimeUse) {
-                levelOptions.setInteraction(this.interaction);
-                this.spoken = true;
-                this.timer = 0;
-            } else {
-                levelOptions.prepareInteraction(this.interaction)
-            }
+            this.activate(levelOptions);
         } else {
             levelOptions.prepareInteraction(null);
         }
     }
 
+    protected activate(levelOptions : LevelOptions) {
+        if (this.oneTimeUse) {
+            levelOptions.setInteraction(this.interaction);
+            this.spoken = true;
+            this.timer = 0;
+        } else {
+            levelOptions.prepareInteraction(this.interaction)
+        }
+    }
+
+    protected deactivate(levelOptions : LevelOptions) {
+        this.active = false;
+    }
+
     determineFrame() {
-        this.rect = new PIXI.Rectangle(this.frame * 16, this.row*16, 16, 32);
+        this.rect = new PIXI.Rectangle(this.frame * 16, this.row*32, 16, 32);
         this.sprite.texture.frame = this.rect;
         if (this.facingLeft)
             this.sprite.scale.x = -1;

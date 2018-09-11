@@ -21,8 +21,9 @@ import Palace from './backgrounds/Palace';
 export interface LevelOptions {
     saveState: () => void;
     getAspect: (aspect : Aspect) => void;
-    prepareInteraction: (text : Interaction) => void;
-    setInteraction: (text : Interaction) => void;
+    prepareInteraction: (text : Interaction[]) => void;
+    setInteraction: (text : Interaction[]) => void;
+    win: () => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -42,8 +43,10 @@ export default class Level extends GenericRunner implements Master {
     private levelFrame = new PIXI.Container();
     private bellCount = 0;
     private textBox : Runner;
-    private interaction : Interaction;
+    private interaction : Interaction[];
     private background : Background;
+    private won : boolean = false;
+    private deaths : number = 0;
 
     constructor(master : Master) {
         super(master);
@@ -77,17 +80,21 @@ export default class Level extends GenericRunner implements Master {
                 this.player.getAspect(aspect);
             },
 
-            prepareInteraction: (interaction : Interaction) => {
+            prepareInteraction: (interaction : Interaction[]) => {
                 this.interaction = interaction;
             },
 
-            setInteraction: (interaction : Interaction) => {
+            setInteraction: (interaction : Interaction[]) => {
                 import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
                     this.textBox = new TextBox.default(this, interaction);
                     this.addRunner(this.textBox);
                     this.interaction = null;
                 });
             },
+
+            win: () => {
+                this.won = true;
+            }
         };
     }
 
@@ -100,13 +107,14 @@ export default class Level extends GenericRunner implements Master {
                 this.addRunner(this.textBox);
                 this.interaction = null;
             });
-        } else if (this.player.active)
+        } else if (this.player.active && !this.won)
             this.player.respond(controls);
     }
 
     update() : void {
         if (!this.loaded) return;
-        this.system.updateSystem(this.player, this.bellCount);
+        this.system.updateSystem(this.player, this.bellCount, this.won, this.deaths);
+        if (this.won) return;
         this.camera = this.player.point;
         const truecamera = this.camera.round();
         this.background.updatePos(Math.min(200 - truecamera.x,0), truecamera.y, this.textBox ? -60 : 0);
@@ -132,6 +140,7 @@ export default class Level extends GenericRunner implements Master {
         if (this.player.active) {
             if (this.stage.isDeath(this.player.point)) {
                 this.player.die();
+                this.deaths++;
             }
         } else {
             this.deathTimer++;
