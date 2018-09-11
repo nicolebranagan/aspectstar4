@@ -14,16 +14,20 @@ import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
+import Menu from '../text/Menu';
+import PauseMenu from './PauseMenu';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
  * */
 export interface LevelOptions {
     saveState: () => void;
+    loadState: () => void;
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
     win: () => void;
+    closePauseWindow: () => void;
 };
 
 /* Level is a Runner that represents a level in-game.
@@ -47,6 +51,7 @@ export default class Level extends GenericRunner implements Master {
     private background : Background;
     private winSystem : Runner;
     private deaths : number = 0;
+    private paused : Runner;
 
     constructor(master : Master) {
         super(master);
@@ -76,6 +81,10 @@ export default class Level extends GenericRunner implements Master {
                 }
             },
 
+            loadState: () => {
+                this.resetObjects();
+            },
+
             getAspect: (aspect : Aspect) => {
                 this.player.getAspect(aspect);
             },
@@ -99,6 +108,11 @@ export default class Level extends GenericRunner implements Master {
                     );
                     this.addRunner(this.winSystem);
                 })
+            },
+
+            closePauseWindow: () => {
+                this.removeRunner(this.paused);
+                this.paused = null;
             }
         };
     }
@@ -114,6 +128,18 @@ export default class Level extends GenericRunner implements Master {
             });
         } else if (!!this.winSystem) {
             // Have ability to progress
+        } else if (controls.Start) {
+            if (!this.paused) {
+                this.paused = new PauseMenu(this, this.options);
+                this.addRunner(this.paused);
+                controls.release();
+            } else {
+                this.removeRunner(this.paused);
+                this.paused = null;
+                controls.release();
+            }
+        } else if (!!this.paused) {
+            this.paused.respond(controls);
         } else if (this.player.active)
             this.player.respond(controls);
     }
@@ -135,7 +161,10 @@ export default class Level extends GenericRunner implements Master {
             );
             return;
         };
-
+        if (this.paused) {
+            this.paused.update();
+            return;
+        }
         this.levelFrame.position = new PIXI.Point(
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
