@@ -38,6 +38,7 @@ const BACKGROUNDS = [Palace];
  * No LevelObject should exist outside of the Level.
  * */
 export default class Level extends GenericRunner implements Master {
+    private levelid : number;
     private objects : LevelObject[] = []
     private stage : Stage
     private player : Player
@@ -56,10 +57,11 @@ export default class Level extends GenericRunner implements Master {
     private deaths : number = 0;
     private paused : Runner;
 
-    constructor(master : Master) {
+    constructor(master : Master, levelid : number) {
         super(master);
 
-        const attributes : Attributes = Worldfile.levels[0].attributes;
+        this.levelid = levelid;
+        const attributes : Attributes = Worldfile.levels[levelid].attributes;
 
         this.background = new BACKGROUNDS[attributes.background]();
         this.addRunner(this.background);
@@ -212,7 +214,7 @@ export default class Level extends GenericRunner implements Master {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
-        const data = Loader(this, 0);
+        const data = Loader(this, this.levelid);
         this.stage = data.stage;
         this.player = new ActivePlayer(this.stage, this.lastState);
 
