@@ -80,6 +80,10 @@ export default class PlatformerPhysics implements Physics {
 
     private isSolid(pt : Point, asp : Aspect) : boolean {
         const checks : Point[] = [pt];
+        if (this.xvel < 0)
+            checks.push(new Point(pt.x - this.width/2, pt.y - this.height/2));
+        if (this.xvel > 0)
+            checks.push(new Point(pt.x + this.width/2, pt.y - this.height/2));
         if (this.yvel > 0 || this.xvel < 0) 
             checks.push(new Point(pt.x - this.width/2, pt.y));
         if (this.yvel > 0 || this.xvel > 0) 
