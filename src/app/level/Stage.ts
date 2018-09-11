@@ -5,6 +5,7 @@ import Point from '../system/Point';
 import Solidity from './Solidity';
 
 import Worldfile from '../data/Worldfile';
+import Attributes from '../interfaces/Attributes';
 
 /* Stage represents the level, but solely as far as game logic is concerned;
  * actually drawing the level is the responsibility of the Terrain object.
@@ -17,9 +18,10 @@ export default class Stage {
     private platforms : [LevelObject, Aspect, boolean][] = [];
 
     constructor(level : any) {
+        const attributes : Attributes = level.attributes;
         this.level = level.grid;
-        this.bigtiles = Worldfile.bigtiles[0].bigtiles;
-        this.key = Worldfile.bigtiles[0].key;
+        this.bigtiles = Worldfile.bigtiles[attributes.bigtileset].bigtiles;
+        this.key = Worldfile.bigtiles[attributes.bigtileset].key;
         this.width = level.width;
     }
 

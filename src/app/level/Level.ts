@@ -15,6 +15,8 @@ import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
 import PauseMenu from './PauseMenu';
+import Worldfile from '../data/Worldfile';
+import Attributes from '../interfaces/Attributes';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -29,11 +31,14 @@ export interface LevelOptions {
     closePauseWindow: () => void;
 };
 
+const BACKGROUNDS = [Palace];
+
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
  * No LevelObject should exist outside of the Level.
  * */
 export default class Level extends GenericRunner implements Master {
+    private levelid : number;
     private objects : LevelObject[] = []
     private stage : Stage
     private player : Player
@@ -52,13 +57,17 @@ export default class Level extends GenericRunner implements Master {
     private deaths : number = 0;
     private paused : Runner;
 
-    constructor(master : Master) {
+    constructor(master : Master, levelid : number) {
         super(master);
-        // Set initial state; eventually fetch the point from the level data
-        this.background = new Palace();
+
+        this.levelid = levelid;
+        const attributes : Attributes = Worldfile.levels[levelid].attributes;
+
+        this.background = new BACKGROUNDS[attributes.background]();
         this.addRunner(this.background);
         this.lastState = {
-            point: new Point(100, 287),
+            //@ts-ignore This is perfectly safe but there's no good way for typescript to realize that
+            point: new Point(...attributes.start),
             aspect: Aspect.ASPECT_PLUS,
             aspects: [Aspect.ASPECT_PLUS],
         };
@@ -103,7 +112,7 @@ export default class Level extends GenericRunner implements Master {
             win: () => {
                 import(/* webpackChunkName: "win-system" */ './WinSystem').then(WinSystem => {
                     this.winSystem = new WinSystem.default(
-                        this, this.player.aspects, this.player.bells, this.bellCount, this.deaths
+                        this, attributes.name, this.player.aspects, this.player.bells, this.bellCount, this.deaths
                     );
                     this.addRunner(this.winSystem);
                 })
@@ -205,7 +214,7 @@ export default class Level extends GenericRunner implements Master {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
-        const data = Loader(this, 0);
+        const data = Loader(this, this.levelid);
         this.stage = data.stage;
         this.player = new ActivePlayer(this.stage, this.lastState);
 

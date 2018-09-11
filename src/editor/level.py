@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw
 from objects import Objects
 
 """A level class consists of a level. A level is a grid of Bigtiles"""
@@ -10,6 +10,13 @@ class Level():
         self.modified = []
         self.img = None
         self.objects = []
+        self.attributes = {
+            "name": "",
+            "background": 0,
+            "tileset": 0,
+            "bigtileset": 0,
+            "start": [100, 287]
+        }
 
     def set(self, x, y, i):
         self.grid[x+y*self.width] = i
@@ -47,6 +54,8 @@ class Level():
                 y - height
             )
         )
+        draw = ImageDraw.Draw(img)
+        draw.text(self.attributes.get('start'), 'X')
         return img
 
     def draw_full(self, bigtiles):
@@ -68,7 +77,8 @@ class Level():
             "grid": self.grid,
             "width": self.width,
             "height": self.height,
-            "objects": self.objects
+            "objects": self.objects,
+            "attributes": self.attributes
         }
 
     @staticmethod
@@ -76,4 +86,5 @@ class Level():
         lvl = Level(indict["width"], indict["height"])
         lvl.grid = indict["grid"]
         lvl.objects = indict["objects"]
+        lvl.attributes = indict["attributes"]
         return lvl

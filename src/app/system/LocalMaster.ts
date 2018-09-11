@@ -32,7 +32,7 @@ export default class LocalMaster implements Master {
         // Everything that needs to go after resources have loaded
         import(/* webpackChunkName: "level" */ '../level/Level').then(
             level => {
-                this.addRunner(new level.default(this));
+                this.addRunner(new level.default(this, 0));
                 this.update();
             }
         );
