@@ -85,7 +85,7 @@ export default class Level extends GenericRunner implements Master {
                 this.lastState = {
                     point: this.player.point,
                     aspect: this.player.aspect,
-                    aspects: this.player.aspects,
+                    aspects: this.player.aspects.slice(),
                 }
             },
 

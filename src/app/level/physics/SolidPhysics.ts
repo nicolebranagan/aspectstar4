@@ -8,6 +8,8 @@ export default class SolidPhysics implements Physics {
         public height : number) {;}
 
     inrange(point : Point, other : Point) {
-        return (Math.abs(point.x - other.x) < this.width/2) && ((point.y - other.y) < this.height);
+        return ((Math.abs(point.x - other.x) < this.width/2) 
+            && (point.y - other.y) < this.height
+            && (point.y - other.y) >= 0);
     }
 };
