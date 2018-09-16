@@ -73,15 +73,15 @@ export default class Palace implements Background  {
 
     updatePos(x : number, y : number, offset : number) {
         this.drawables.position.y = offset; // Handle camera movement for text boxes
-        this.offsetRow(this.rows[0], (x / 2 >> 0) % 96);
-        this.offsetRow(this.rows[1], (x / 4 >> 0) % 96);
-        this.offsetRow(this.rows[2], (x / 8 >> 0) % 96);
+        this.offsetRow(this.rows[0], (x / 4 >> 0) % 96);
+        this.offsetRow(this.rows[1], (x / 8 >> 0) % 96);
+        this.offsetRow(this.rows[2], (x / 16 >> 0) % 96);
 
-        this.offsetRow(this.rows[3], (x / 16 >> 0) % 96);
+        this.offsetRow(this.rows[3], (x / 32 >> 0) % 96);
 
-        this.offsetRow(this.rows[4], (x / 8 >> 0) % 96);
-        this.offsetRow(this.rows[5], (x / 4 >> 0) % 96);
-        this.offsetRow(this.rows[6], (x / 2 >> 0) % 96);
+        this.offsetRow(this.rows[4], (x / 16 >> 0) % 96);
+        this.offsetRow(this.rows[5], (x / 8 >> 0) % 96);
+        this.offsetRow(this.rows[6], (x / 4 >> 0) % 96);
     }
 
     update() {;}
