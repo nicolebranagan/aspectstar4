@@ -30,10 +30,10 @@ export default class LocalMaster implements Master {
 
     initialize() : void {
         // Everything that needs to go after resources have loaded
-        import(/* webpackChunkName: "level" */ '../level/Level').then(
-            level => {
-                this.addRunner(new level.default(this, 0));
-                this.update();
+        import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
+            MainMenu => {
+                this.addRunner(new MainMenu.default(this));
+                this.update(); 
             }
         );
     }

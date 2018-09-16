@@ -2,6 +2,11 @@ import * as PIXI from 'pixi.js';
 import FontLoader from './text/FontLoader';
 
 let master : any;
+
+window.addEventListener("unhandledrejection", function (event) {
+    console.warn("WARNING: Unhandled promise rejection.", event);
+});
+
 function loadResources() : void {
     PIXI.loader
         .add('system', 'images/system.gif')
