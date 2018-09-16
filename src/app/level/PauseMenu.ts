@@ -46,7 +46,10 @@ export default class PauseMenu extends GenericRunner implements Master {
             onChoose: () => {throw "Not implemented"}
         }, {
             name : "Exit",
-            onChoose: () => {throw "Not implemented"}
+            onChoose: () => {
+                this.levelOptions.exit();
+                this.levelOptions.closePauseWindow();
+            }
         }];
     }
 

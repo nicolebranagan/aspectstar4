@@ -28,6 +28,7 @@ export interface LevelOptions {
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
     win: () => void;
+    exit: () => void;
     closePauseWindow: () => void;
 };
 
@@ -116,6 +117,15 @@ export default class Level extends GenericRunner implements Master {
                     );
                     this.addRunner(this.winSystem);
                 })
+            },
+
+            exit: () => {
+                import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
+                    MainMenu => {
+                        this.master.removeRunner(this);
+                        this.master.addRunner(new MainMenu.default(this.master))
+                    }
+                );
             },
 
             closePauseWindow: () => {
