@@ -57,7 +57,7 @@ export default class Level extends GenericRunner implements Master {
     private deaths : number = 0;
     private paused : Runner;
 
-    constructor(master : Master, levelid : number) {
+    constructor(master : Master, levelid : number, private onload? : (callback : () => void) => void) {
         super(master);
 
         this.levelid = levelid;
@@ -226,8 +226,15 @@ export default class Level extends GenericRunner implements Master {
             }
             count++;
             if (count === data.objects.length) {
-                this.loaded = true;
-                this.addObject(this.player);
+                const callback = () => {
+                    this.loaded = true;
+                    this.addObject(this.player)
+                };
+                if (this.onload) {
+                    this.onload(callback);
+                } else {
+                    callback();
+                }
             }
         })));
 

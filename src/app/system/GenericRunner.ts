@@ -4,7 +4,7 @@ import Controls from '../interfaces/Controls';
 
 export default abstract class GenericRunner implements Runner {
     public drawables : PIXI.Container;
-    private master : Master;
+    protected master : Master;
 
     constructor(master : Master) {
         this.drawables = new PIXI.Container();

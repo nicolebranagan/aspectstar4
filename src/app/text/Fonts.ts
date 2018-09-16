@@ -19,6 +19,18 @@ export const DEFAULT_SYSTEM_STYLE = new PIXI.TextStyle({
     strokeThickness: 1,
 });
 
+export const LOAD_LEVEL_NAME_STYLE = new PIXI.TextStyle({
+    fontFamily: 'chicago',
+    fontSize: 14,
+    fontWeight: '100',
+    fill: 'black',
+    dropShadow: true,
+    dropShadowColor: 0xAAAAAA,
+    dropShadowAlpha: 0.7,
+    dropShadowDistance: 1,
+    strokeThickness: 0,
+});
+
 export const WIN_LEVEL_NAME_STYLE = new PIXI.TextStyle({
     fontFamily: 'chicago',
     fontSize: 16,
