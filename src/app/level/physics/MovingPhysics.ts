@@ -3,11 +3,13 @@ import LevelObject from '../../interfaces/LevelObject';
 import Physics from '../../interfaces/Physics';
 import Point from '../../system/Point';
 import Stage from '../Stage';
+import { DEFAULT_TEXT_STYLE } from '../../text/Fonts';
 
 export default class MovingPhysics implements Physics {
     constructor(public stage : Stage,
         public width : number,
-        public height : number) {;}
+        public height : number
+    ) {;}
 
     step(point : Point, asp : Aspect, objects : LevelObject[], self : LevelObject, delta : Point) : Point {
         const move : LevelObject[] = [];
@@ -20,7 +22,13 @@ export default class MovingPhysics implements Physics {
                 }
             }
         }
-        move.forEach(e => e.point = e.point.add(delta));
+
+        move.forEach(e => {
+            e.point = e.point.add(delta);
+            if (delta.y) {
+                e.point = e.point.round();
+            }
+        });
         return point.add(delta);
     }
 
