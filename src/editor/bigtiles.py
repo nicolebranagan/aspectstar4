@@ -23,6 +23,8 @@ class Bigtiles():
     def set(self, i, x, y, j):
         if i not in self._bigtiles:
             self._bigtiles[i] = [0 for i in range(0, 2*2)]
+        if i >= self.length:
+            self.length = i + 1
         self._bigtiles[i][x+2*y] = j
         self._drawcache.pop(i, None)
         self._fullcache = None
