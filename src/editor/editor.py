@@ -30,6 +30,7 @@ class Editor(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         self.pack()
+        self.selectedobj = None
 
         self.openworldfile(Worldfile.new())
         self.buildGUI()
@@ -111,6 +112,31 @@ class Editor(tk.Frame):
         self.levelname.trace_add("write", setName)
         levelnameentry = tk.Entry(leveloptionspanel, textvariable=self.levelname)
         levelnameentry.grid(row=0, column=1)
+        
+        levelstartpointpanel = tk.Frame(leveloptionspanel)
+        levelstartpointpanel.grid(row=1, column=0, columnspan=2)
+        levelstartx = tk.StringVar()
+        levelstarty = tk.StringVar()
+        levelstartx.set(str(self.currentlevel.attributes['start'][0]))
+        levelstarty.set(str(self.currentlevel.attributes['start'][1]))
+        def setPos(*args):
+            try:
+                self.currentlevel.attributes['start'] = [
+                    int(levelstartx.get()),
+                    int(levelstarty.get())
+                ]
+                self.forcedrawroom()
+            except ValueError:
+                # If the user put something that can't be converted to integer
+                levelstartx.set(str(self.currentlevel.attributes['start'][0]))
+                levelstarty.set(str(self.currentlevel.attributes['start'][1]))
+        levelstartx.trace_add("write", setPos)
+        levelstarty.trace_add("write", setPos)
+        tk.Label(levelstartpointpanel, text="Start:").grid(row=0, column=0)
+        levelstartxentry = tk.Entry(levelstartpointpanel, textvariable=levelstartx)
+        levelstartxentry.grid(row=0, column=1)
+        levelstartyentry = tk.Entry(levelstartpointpanel, textvariable=levelstarty)
+        levelstartyentry.grid(row=0, column=2)
 
         modepanel = tk.Frame(tilegrid)
         modepanel.pack()
@@ -237,7 +263,7 @@ class Editor(tk.Frame):
                   command=self.buildBigTileset).pack()
         tk.Button(bigtileoptions,
                   text="Refresh room",
-                  command=self.drawroom).pack()
+                  command=self.forcedrawroom).pack()
 
 
         tk.Label(tilegrid, text="Current object:").pack()
@@ -467,6 +493,16 @@ class Editor(tk.Frame):
         self.selectedbigtile.itemconfig(
             self.selectedbigtile.image, 
             image=self.selectedbigtile.img)
+
+    def forcedrawroom(self):
+        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw_full(self.bigtiles))
+        self.levelcanvas.itemconfig(
+            self.levelcanvas.image,
+            image=self.levelcanvas.img,
+        )
+        self.levelcanvas.config(
+            scrollregion=(0, 0, self.levelcanvas.img.width(), self.levelcanvas.img.height())
+        )
 
     def drawroom(self):
         self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw(self.bigtiles))

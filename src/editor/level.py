@@ -34,7 +34,7 @@ class Level():
     
     def draw(self, bigtiles):
         if (self.img is None):
-            self.img = self.draw_full(bigtiles)
+            self.draw_full(bigtiles)
         else:
             for mod in self.modified:
                 self.img.paste(bigtiles.drawtile(mod[2]), box=(mod[0]*32, mod[1]*32))
@@ -69,7 +69,8 @@ class Level():
         
         for i in self.objects:
             self.drawobj(i[1], i[2], i[0], img)
-    
+
+        self.img = img
         return img
 
     def serialize(self):
