@@ -74,7 +74,7 @@ export default class Menu extends GenericRunner {
             }
             this.renderOptions();
             controls.release();
-        } else if (controls.ButtonA || controls.ButtonB) {
+        } else if (controls.ButtonA || controls.ButtonB || controls.Start) {
             // It's the menu's consumer's job to close the menu
             const options = this.menuOptions.options[this.selected];
             options.onChoose();
