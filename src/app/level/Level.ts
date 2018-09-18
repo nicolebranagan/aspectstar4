@@ -242,6 +242,7 @@ export default class Level extends GenericRunner implements Master {
                 };
                 if (this.onload) {
                     this.onload(callback);
+                    this.onload = null;
                 } else {
                     callback();
                 }
