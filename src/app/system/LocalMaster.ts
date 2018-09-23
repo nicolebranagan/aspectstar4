@@ -6,9 +6,6 @@ import Runner from '../interfaces/Runner';
 /* LocalMaster is the parent of everything.
  * A single local master is created at the time the game loads,
  * which in turn sets the whole game in motion.
- * 
- * Any runner that holds LocalMaster as its parent is a runner that is
- * currently displayed on screen.
  * */
 export default class LocalMaster implements Master {
     private gamescreen: PIXI.Application;

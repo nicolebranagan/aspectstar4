@@ -4,6 +4,13 @@ import Interaction from '../interfaces/Interaction';
 import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE, CustomFonts } from './Fonts';
 import Runner from '../interfaces/Runner';
 
+/**
+ * A TextBox is a Runner which implements a text-based conversation at the
+ * bottom of the screen. The TextBox will remove itself from the parent
+ * (which must implement Master) once the conversation is complete. If
+ * this state needs to be detected, check for it in removeRunner.
+ */
+
 enum TextBoxState {
     OPENING,
     OPEN,
