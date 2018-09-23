@@ -1,4 +1,3 @@
-import Master from '../interfaces/Master';
 import Aspect from '../constants/Aspect';
 import Player from '../interfaces/Player';
 import Drawable from '../interfaces/Drawable';
