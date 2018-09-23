@@ -139,6 +139,8 @@ export default class LevelPreload implements Runner {
         this.drawables.addChild(this.timerText);
     }
 
+    respond() {;}
+
     update() {
         this.scrollerTexts.forEach(scrollerText =>{
             scrollerText.x = (scrollerText.x + scrollerText.width + 6) % (400 + scrollerText.width) - scrollerText.width;

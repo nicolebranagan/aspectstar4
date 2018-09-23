@@ -1,9 +1,9 @@
 import Aspect from '../constants/Aspect';
-import Master from '../interfaces/Master';
-import Runner from '../interfaces/Runner';
+import Updatable from '../interfaces/Updatable';
+import UpdatableHolder from '../interfaces/UpdatableHolder';
 
 export default {
-    getAspectEffect(master : Master, asp : Aspect) : Runner {
+    getAspectEffect(master : UpdatableHolder, asp : Aspect) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ColorParticle[] = [];
         for (let i = -6; i <= 6; i++) {
@@ -19,7 +19,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 const toDelete = [];
                 for (const index in particles) {
@@ -35,11 +34,11 @@ export default {
                     particles.splice(Number(delindex), 1);
                 }
                 if (particles.length == 0)
-                    master.removeRunner(this);
+                    master.removeChild(this);
             }
         };
     },
-    getAspectExplode(master : Master, asp: Aspect) : Runner {
+    getAspectExplode(master : UpdatableHolder, asp: Aspect) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ColorParticle[] = [];
         for (let i = 0; i < 1080; i++) {
@@ -56,7 +55,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 const toDelete = [];
                 for (const index in particles) {
@@ -72,11 +70,11 @@ export default {
                     particles.splice(Number(delindex), 1);
                 }
                 if (particles.length == 0)
-                    master.removeRunner(this);
+                    master.removeChild(this);
             }
         };
     },
-    getAspectImplode(master : Master, asp: Aspect) : Runner {
+    getAspectImplode(master : UpdatableHolder, asp: Aspect) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ColorParticle[] = [];
         for (let i = 0; i < 360; i++) {
@@ -95,7 +93,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 const toDelete = [];
                 for (const index in particles) {
@@ -111,11 +108,11 @@ export default {
                     particles.splice(Number(delindex), 1);
                 }
                 if (particles.length == 0)
-                    master.removeRunner(this);
+                    master.removeChild(this);
             }
         };
     },
-    getFallingAspect(master : Master, asp : Aspect) : Runner {
+    getFallingAspect(master : UpdatableHolder, asp : Aspect) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ColorParticle[] = [];
         for (let i = -6; i < 6; i++) {
@@ -126,7 +123,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 for (const index in particles) {
                     const p = particles[index];
@@ -137,7 +133,7 @@ export default {
             }
         };
     },
-    getFallingImage(master : Master, row : number) : Runner {
+    getFallingImage(master : UpdatableHolder, row : number) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ImageParticle[] = [];
         for (let i = -1; i <= 1; i++) {
@@ -148,7 +144,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 for (const index in particles) {
                     const p = particles[index];
@@ -159,7 +154,7 @@ export default {
             }
         };
     },
-    getImageBurst(master : Master, row: number) : Runner {
+    getImageBurst(master : UpdatableHolder, row: number) : Updatable {
         const drawables = new PIXI.Container();
         const particles : ImageParticle[] = [];
         for (let i = 0; i < 1080; i = i + 108) {
@@ -176,7 +171,6 @@ export default {
 
         return {
             drawables: drawables,
-            respond: function() {;},
             update: function() {
                 const toDelete = [];
                 for (const index in particles) {
@@ -192,7 +186,7 @@ export default {
                     particles.splice(Number(delindex), 1);
                 }
                 if (particles.length == 0)
-                    master.removeRunner(this);
+                    master.removeChild(this);
             }
         };
     },

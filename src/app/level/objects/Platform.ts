@@ -7,7 +7,7 @@ import Stage from '../Stage';
 
 export default class Platform implements LevelObject {
     active = true;
-    graphics : PIXI.Container;
+    drawables : PIXI.Container;
     aspect : Aspect;
     physics : MovingPhysics;
     point : Point;
@@ -30,11 +30,11 @@ export default class Platform implements LevelObject {
         this.point = point;
         this.aspect = aspect;
         this.physics = new MovingPhysics(stage, 3*16, 16);
-        this.graphics = new PIXI.Container;
+        this.drawables = new PIXI.Container;
         this.frame1 = new PIXI.Rectangle(...rect);
         this.frame2 = new PIXI.Rectangle(...rect2);
         this.sprite = this.getSprite(texture);
-        this.graphics.addChild(this.sprite);
+        this.drawables.addChild(this.sprite);
         stage.register(this, this.aspect, false);
     }
 

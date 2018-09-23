@@ -1,42 +1,42 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
-import Master from '../../interfaces/Master';
 import Player from '../../interfaces/Player';
-import Runner from '../../interfaces/Runner';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import { LevelOptions } from '../Level';
+import BaseLevelObject from './BaseLevelObject';
+import Updatable from '../../interfaces/Updatable';
 
-export default class SaveIcon implements LevelObject, Master {
+export default class SaveIcon extends BaseLevelObject {
     active = true;
-    graphics : PIXI.Container;
+    drawables : PIXI.Container;
     aspect : Aspect;
     physics : SolidPhysics;
     point : Point;
 
-    private sprite : PIXI.Sprite;
     private frame : PIXI.Rectangle;
     private timer : number = 0;
-    private runners : Runner[] = [];
     private collected = false;
     private timeOut: number;
-    private fallingAspect : Runner;
+    private fallingAspect : Updatable;
 
     constructor(
         stage : Stage, 
         point : Point, 
         rect : number[]
     ) {
+        super();
+
         this.point = point;
         this.physics = new SolidPhysics(stage, 16, 16);
-        this.graphics = new PIXI.Container();
+        this.drawables = new PIXI.Container();
         this.frame = new PIXI.Rectangle(...rect);
         this.sprite = this.getSprite();
         this.fallingAspect = Particle.getFallingAspect(this, Aspect.NONE);
-        this.addRunner(this.fallingAspect);
-        this.graphics.addChild(this.sprite);
+        this.addChild(this.fallingAspect);
+        this.drawables.addChild(this.sprite);
     }
 
     private getSprite() : PIXI.Sprite {
@@ -50,6 +50,7 @@ export default class SaveIcon implements LevelObject, Master {
     }
 
     update(player : Player, objects : LevelObject[], options : LevelOptions) {
+        super.update();
         if (this.collected) {
             this.timeOut++;
             if (this.timeOut === 0) {
@@ -57,7 +58,6 @@ export default class SaveIcon implements LevelObject, Master {
             }
         }
 
-        this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
         this.timer++;
         if (this.timer == 60)
             this.timer = 0;
@@ -71,22 +71,11 @@ export default class SaveIcon implements LevelObject, Master {
 
         if (!this.collected && player.physics.inrange(player.point, this.point)) {
             this.collected = true;
-            this.graphics.removeChild(this.sprite);
-            this.removeRunner(this.fallingAspect);
-            this.addRunner(Particle.getAspectEffect(this, Aspect.NONE));
+            this.drawables.removeChild(this.sprite);
+            this.removeChild(this.fallingAspect);
+            this.addChild(Particle.getAspectEffect(this, Aspect.NONE));
             this.timeOut = -25;
             options.saveState();
         }
-    }
-
-    /* Implements Master interface */
-    addRunner(runner : Runner) : void {
-        this.graphics.addChild(runner.drawables);
-        this.runners.push(runner);
-    }
-
-    removeRunner(runner : Runner) : void {
-        this.graphics.removeChild(runner.drawables);
-        this.runners.splice(this.runners.indexOf(runner), 1);
     }
 }

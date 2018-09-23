@@ -1,24 +1,21 @@
 import Aspect from '../../constants/Aspect';
-import LevelObject from '../../interfaces/LevelObject';
-import Master from '../../interfaces/Master';
 import Runner from '../../interfaces/Runner';
 import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
+import BaseLevelObject from './BaseLevelObject';
 
-export default class Bell implements LevelObject, Master {
+export default class Bell extends BaseLevelObject {
     active = true;
-    graphics : PIXI.Container;
+    drawables : PIXI.Container;
     aspect : Aspect = Aspect.NONE;
     physics : SolidPhysics;
     point : Point;
 
-    private sprite : PIXI.Sprite;
     private frame : PIXI.Rectangle;
     private timer : number = 0;
-    private runners : Runner[] = [];
     private multiplier : number;
 
     constructor(
@@ -26,13 +23,14 @@ export default class Bell implements LevelObject, Master {
         point : Point, 
         rect : number[]
     ) {
+        super();
         this.point = point;
         this.physics = new SolidPhysics(stage, 16, 16);
-        this.graphics = new PIXI.Container();
+        this.drawables = new PIXI.Container();
         this.frame = new PIXI.Rectangle(...rect);
         this.sprite = this.getSprite();
-        this.addRunner(Particle.getFallingImage(this, 0));
-        this.graphics.addChild(this.sprite);
+        this.addChild(Particle.getFallingImage(this, 0));
+        this.drawables.addChild(this.sprite);
         this.multiplier = Math.random() > 0.5 ? 1 : -1;
     }
 
@@ -47,7 +45,7 @@ export default class Bell implements LevelObject, Master {
     }
 
     update(player : Player) {
-        this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
+        super.update();
         this.timer++;
         if (this.timer == 60)
             this.timer = 0;
@@ -63,16 +61,5 @@ export default class Bell implements LevelObject, Master {
             this.active = false;
             player.getBell();
         }
-    }
-
-    /* Implements Master interface */
-    addRunner(runner : Runner) : void {
-        this.graphics.addChild(runner.drawables);
-        this.runners.push(runner);
-    }
-
-    removeRunner(runner : Runner) : void {
-        this.graphics.removeChild(runner.drawables);
-        this.runners.splice(this.runners.indexOf(runner), 1);
     }
 }

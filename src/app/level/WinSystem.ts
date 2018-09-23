@@ -1,6 +1,6 @@
-import Runner from '../interfaces/Runner';
 import { DEFAULT_SYSTEM_STYLE, DEFAULT_TEXT_STYLE, WIN_LEVEL_NAME_STYLE, GOLD_COLOR } from '../text/Fonts';
 import Aspect from '../constants/Aspect';
+import Updatable from '../interfaces/Updatable';
 
 const FIRST_LINE_1 = "Nicole";
 const FIRST_LINE_2 = "has passed";
@@ -27,7 +27,7 @@ const getAspect : (aspect : Aspect) => PIXI.Sprite = (aspect : Aspect) => {
 
 const delay = (t : number) => new Promise(resolve => setTimeout(resolve, t));
 
-export default class WinSystem implements Runner {
+export default class WinSystem implements Updatable {
     public drawables : PIXI.Container;
 
     private firstLine1 : PIXI.Text;

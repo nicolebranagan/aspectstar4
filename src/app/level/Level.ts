@@ -17,6 +17,7 @@ import PauseMenu from './PauseMenu';
 import Worldfile from '../data/Worldfile';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
+import Updatable from '../interfaces/Updatable';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -57,7 +58,7 @@ export default class Level implements Runner, Master {
     private textBox : Runner;
     private interaction : Interaction[];
     private background : Background;
-    private winSystem : Runner;
+    private winSystem : Updatable;
     private deaths : number = 0;
     private paused : Runner;
 
@@ -214,14 +215,14 @@ export default class Level implements Runner, Master {
     
     private addObject(obj : LevelObject) : void {
         this.objects.push(obj);
-        this.levelFrame.addChild(obj.graphics);
+        this.levelFrame.addChild(obj.drawables);
     }
 
     private removeObject(obj : LevelObject) : void {
         const index = this.objects.indexOf(obj);
         if (index !== -1)
             this.objects.splice(index, 1);
-        this.levelFrame.removeChild(obj.graphics);
+        this.levelFrame.removeChild(obj.drawables);
     }
 
     private resetObjects() {

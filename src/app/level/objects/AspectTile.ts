@@ -1,6 +1,5 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
-import Master from '../../interfaces/Master';
 import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
@@ -8,18 +7,17 @@ import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import { LevelOptions } from '../Level';
 import Runner from '../../interfaces/Runner';
+import BaseLevelObject from './BaseLevelObject';
 
-export default class AspectTile implements LevelObject, Master {
+export default class AspectTile extends BaseLevelObject {
     active = true;
-    graphics : PIXI.Container;
+    drawables : PIXI.Container;
     aspect : Aspect;
     physics : SolidPhysics;
     point : Point;
 
-    private sprite : PIXI.Sprite;
     private frame : PIXI.Rectangle;
     private timer : number = 0;
-    private runners : Runner[] = [];
 
     constructor(
         stage : Stage, 
@@ -27,14 +25,15 @@ export default class AspectTile implements LevelObject, Master {
         aspect : Aspect,
         rect : number[]
     ) {
+        super();
         this.point = point;
         this.aspect = aspect;
         this.physics = new SolidPhysics(stage, 16, 16);
-        this.graphics = new PIXI.Container();
+        this.drawables = new PIXI.Container();
         this.frame = new PIXI.Rectangle(...rect);
         this.sprite = this.getSprite();
-        this.addRunner(Particle.getFallingAspect(this, this.aspect));
-        this.graphics.addChild(this.sprite);
+        this.addChild(Particle.getFallingAspect(this, this.aspect));
+        this.drawables.addChild(this.sprite);
     }
 
     private getSprite() : PIXI.Sprite {
@@ -48,7 +47,7 @@ export default class AspectTile implements LevelObject, Master {
     }
 
     update(player : Player, objects : LevelObject[], options : LevelOptions) {
-        this.runners.forEach( e => {e.update(); e.drawables.position = this.sprite.position});
+        super.update();
         this.timer++;
         if (this.timer == 60)
             this.timer = 0;
@@ -66,16 +65,5 @@ export default class AspectTile implements LevelObject, Master {
             options.getAspect(this.aspect);
             this.active = false;
         }
-    }
-
-    /* Implements Master interface */
-    addRunner(runner : Runner) : void {
-        this.graphics.addChild(runner.drawables);
-        this.runners.push(runner);
-    }
-
-    removeRunner(runner : Runner) : void {
-        this.graphics.removeChild(runner.drawables);
-        this.runners.splice(this.runners.indexOf(runner), 1);
     }
 }

@@ -9,7 +9,7 @@ import Interactions from '../../data/Interactions';
 
 export default class Character implements LevelObject {
     active = true;
-    graphics : PIXI.Container;
+    drawables : PIXI.Container;
     aspect = Aspect.NONE;
     physics = new NullPhysics();
     point: Point;
@@ -33,8 +33,8 @@ export default class Character implements LevelObject {
         this.rect = new PIXI.Rectangle(0, this.row*32, 16, 32);
         text.frame = this.rect;
         this.sprite = new PIXI.Sprite(text);
-        this.graphics = new PIXI.Container();
-        this.graphics.addChild(this.sprite);
+        this.drawables = new PIXI.Container();
+        this.drawables.addChild(this.sprite);
 
         this.sprite.anchor.set(0.5, 1);
         this.sprite.x = this.point.x;
