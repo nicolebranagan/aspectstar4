@@ -73,7 +73,7 @@ export default class System implements Drawable {
     private bellCount : number
     private bellCountMax : number
 
-    constructor(master : Master, player : Player, bellCountMax : number) {
+    constructor(player : Player, bellCountMax : number) {
         this.drawables = new PIXI.Container();
         this.selectedAspect = player.aspect;
         this.aspects = player.aspects;

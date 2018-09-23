@@ -82,7 +82,7 @@ export default class Level implements Runner, Master {
         this.levelFrame.position.set(0, 0);
         this.drawables.addChild(this.levelFrame);
 
-        this.system = new System(this, this.player, this.bellCount);
+        this.system = new System(this.player, this.bellCount);
         this.addRunner(this.system);
 
         this.camera = this.player.point;
