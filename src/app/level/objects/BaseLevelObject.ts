@@ -21,7 +21,7 @@ export default abstract class BaseLevelObject implements LevelObject, UpdatableH
     private updatables : Updatable[] = [];
     protected sprite : PIXI.Sprite;
 
-    update(player? : Player, objects? : LevelObject[], options? : LevelOptions) : void {
+    update(options? : LevelOptions) : void {
         this.updatables.forEach(updatable => {
             updatable.update();
             updatable.drawables.position = this.sprite.position;

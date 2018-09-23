@@ -4,6 +4,7 @@ import Player from '../../interfaces/Player';
 import Point from '../../system/Point';
 import MovingPhysics from '../physics/MovingPhysics';
 import Stage from '../Stage';
+import { LevelOptions } from '../Level';
 
 export default class Platform implements LevelObject {
     active = true;
@@ -48,7 +49,9 @@ export default class Platform implements LevelObject {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[]) {
+    update(options : LevelOptions) {
+        const player = options.getPlayer();
+        const objects = options.getObjects();
         if (player.aspect == this.aspect)
             this.sprite.texture.frame = this.frame2;
         else

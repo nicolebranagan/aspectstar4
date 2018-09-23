@@ -49,8 +49,10 @@ export default class SaveIcon extends BaseLevelObject {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[], options : LevelOptions) {
+    update(options : LevelOptions) {
         super.update();
+
+        const player = options.getPlayer();
         if (this.collected) {
             this.timeOut++;
             if (this.timeOut === 0) {

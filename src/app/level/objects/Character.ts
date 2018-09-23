@@ -43,7 +43,8 @@ export default class Character implements LevelObject {
         this.interaction = Interactions[interactionKey];
     }
 
-    update(player : Player, objects: LevelObject[], levelOptions : LevelOptions) {
+    update(levelOptions : LevelOptions) {
+        const player = levelOptions.getPlayer();
         if (this.spoken) {
             // This is a very simple timer for objects that phase out of existence
             // We need them to remain on-screen for the duration of the textbox,

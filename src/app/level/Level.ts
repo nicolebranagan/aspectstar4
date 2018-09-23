@@ -30,6 +30,8 @@ export interface LevelOptions {
     setInteraction: (text : Interaction[]) => void;
     win: () => void;
     exit: () => void;
+    getPlayer: () => Player;
+    getObjects: () => LevelObject[];
     closePauseWindow: () => void;
 };
 
@@ -136,7 +138,11 @@ export default class Level implements Runner, Master {
             closePauseWindow: () => {
                 this.removeRunner(this.paused);
                 this.paused = null;
-            }
+            },
+
+            getPlayer: () => this.player,
+
+            getObjects: () => this.objects,
         };
     }
 
@@ -194,7 +200,7 @@ export default class Level implements Runner, Master {
         );
         this.objects.slice().forEach( 
             e => {
-                e.update(this.player, this.objects, this.options);
+                e.update(this.options);
                 if (e !== this.player && !e.active)
                     this.removeObject(e);
             }

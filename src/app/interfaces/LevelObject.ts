@@ -11,5 +11,5 @@ export default interface LevelObject extends Drawable {
     aspect : Aspect
     physics : Physics
     point : Point
-    update(player : Player, objects : LevelObject[], options : LevelOptions) : void
+    update(options : LevelOptions) : void
 };

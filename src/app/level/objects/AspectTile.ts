@@ -46,7 +46,8 @@ export default class AspectTile extends BaseLevelObject {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[], options : LevelOptions) {
+    update(options : LevelOptions) {
+        const player = options.getPlayer();
         super.update();
         this.timer++;
         if (this.timer == 60)

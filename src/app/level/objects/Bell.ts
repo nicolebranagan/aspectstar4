@@ -6,6 +6,7 @@ import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import BaseLevelObject from './BaseLevelObject';
+import { LevelOptions } from '../Level';
 
 export default class Bell extends BaseLevelObject {
     active = true;
@@ -44,8 +45,10 @@ export default class Bell extends BaseLevelObject {
         return sprite;
     }
 
-    update(player : Player) {
+    update(options : LevelOptions) {
         super.update();
+        const player = options.getPlayer();
+        
         this.timer++;
         if (this.timer == 60)
             this.timer = 0;

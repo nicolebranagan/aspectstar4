@@ -4,6 +4,7 @@ import Player from '../../interfaces/Player';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
+import { LevelOptions } from '../Level';
 
 export default class Square implements LevelObject {
     active = true;
@@ -47,8 +48,8 @@ export default class Square implements LevelObject {
         return sprite;
     }
 
-    update(player : Player, objects : LevelObject[]) {
-        if (player.aspect == this.aspect)
+    update(options : LevelOptions) {
+        if (options.getPlayer().aspect === this.aspect)
             this.sprite.texture.frame = this.frame2;
         else
             this.sprite.texture.frame = this.frame1;
