@@ -1,8 +1,8 @@
 import Controls from '../interfaces/Controls';
 import Master from '../interfaces/Master';
-import Runner from '../interfaces/Runner';
 import Interaction from '../interfaces/Interaction';
 import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE, CustomFonts } from './Fonts';
+import Runner from '../interfaces/Runner';
 
 enum TextBoxState {
     OPENING,

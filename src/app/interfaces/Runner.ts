@@ -1,6 +1,7 @@
 import Controls from './Controls';
+import Drawable from './Drawable';
 
-/* A Runner is an interface which wraps a PIXI.Container.
+/* A FunctionalRunner is an interface which wraps a PIXI.Container.
  * and represents an abstract concept of something that is loaded to the
  * screen along with its state.
  * 
@@ -9,8 +10,7 @@ import Controls from './Controls';
  * input; update handles all other behavior needed by the runner and is called once
  * per frame.
  * */
-export default interface Runner {
-    drawables : PIXI.Container;
-    respond(controls : Controls) : void;
+export default interface Runner extends Drawable {
+    respond?(controls : Controls) : void;
     update() : void;
 }

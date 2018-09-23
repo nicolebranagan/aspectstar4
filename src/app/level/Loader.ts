@@ -10,8 +10,8 @@ import Worldfile from '../data/Worldfile';
 /**
  * Loader will load everything from the worldfile
  */
-export default function Loader(self : Level, index : number) : { terrain : Terrain, stage : Stage, objects : Promise<LevelObject>[]} {
-    const terrain = new Terrain(self, Worldfile.levels[index]);
+export default function Loader(index : number) : { terrain : Terrain, stage : Stage, objects : Promise<LevelObject>[]} {
+    const terrain = new Terrain(Worldfile.levels[index]);
     const stage = new Stage(Worldfile.levels[index]);
     const objects = Worldfile.levels[index].objects.map(async e => await parseObject(stage, e));
      return {

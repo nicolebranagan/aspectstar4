@@ -1,5 +1,5 @@
 import Aspect from '../constants/Aspect';
-import Physics from '../interfaces/Physics';
+import Physics from './Physics';
 import Point from '../system/Point';
 import { LevelOptions } from '../level/Level';
 import Player from './Player';

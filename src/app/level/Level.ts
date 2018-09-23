@@ -2,11 +2,10 @@ import Aspect from '../constants/Aspect';
 import Controls from '../interfaces/Controls';
 import LevelObject from '../interfaces/LevelObject';
 import Master from '../interfaces/Master';
-import Runner from '../interfaces/Runner';
+import Drawable from '../interfaces/Drawable';
 import Player from '../interfaces/Player';
 import Background from '../interfaces/Background';
 import Interaction from '../interfaces/Interaction';
-import GenericRunner from '../system/GenericRunner';
 import Point from '../system/Point';
 import ActivePlayer from './objects/ActivePlayer';
 import Stage from './Stage';
@@ -17,6 +16,7 @@ import Palace from './backgrounds/Palace';
 import PauseMenu from './PauseMenu';
 import Worldfile from '../data/Worldfile';
 import Attributes from '../interfaces/Attributes';
+import Runner from '../interfaces/Runner';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -38,7 +38,10 @@ const BACKGROUNDS = [Palace];
  * The level is responsible for all coordination of objects within the level.
  * No LevelObject should exist outside of the Level.
  * */
-export default class Level extends GenericRunner implements Master {
+export default class Level implements Runner, Master {
+    public drawables : PIXI.Container;
+
+    private master : Master;
     private levelid : number;
     private objects : LevelObject[] = []
     private stage : Stage
@@ -59,7 +62,8 @@ export default class Level extends GenericRunner implements Master {
     private paused : Runner;
 
     constructor(master : Master, levelid : number, private onload? : (callback : () => void) => void) {
-        super(master);
+        this.master = master;
+        this.drawables = new PIXI.Container;
 
         this.levelid = levelid;
         const attributes : Attributes = Worldfile.levels[levelid].attributes;
@@ -113,7 +117,7 @@ export default class Level extends GenericRunner implements Master {
             win: () => {
                 import(/* webpackChunkName: "win-system" */ './WinSystem').then(WinSystem => {
                     this.winSystem = new WinSystem.default(
-                        this, attributes.name, this.player.aspects, this.player.bells, this.bellCount, this.deaths
+                        attributes.name, this.player.aspects, this.player.bells, this.bellCount, this.deaths
                     );
                     this.addRunner(this.winSystem);
                 })
@@ -148,7 +152,7 @@ export default class Level extends GenericRunner implements Master {
             // Have ability to progress
         } else if (controls.Start) {
             if (!this.paused) {
-                this.paused = new PauseMenu(this, this.options);
+                this.paused = new PauseMenu(this.options);
                 this.addRunner(this.paused);
                 controls.release();
             } else {
@@ -224,7 +228,7 @@ export default class Level extends GenericRunner implements Master {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
-        const data = Loader(this, this.levelid);
+        const data = Loader(this.levelid);
         this.stage = data.stage;
         this.player = new ActivePlayer(this.stage, this.lastState);
 
@@ -253,11 +257,11 @@ export default class Level extends GenericRunner implements Master {
     }
 
     /* Implements Master interface */
-    addRunner(runner : Runner) : void {
+    addRunner(runner : Drawable) : void {
         this.drawables.addChild(runner.drawables);
     }
 
-    removeRunner(runner : Runner) : void {
+    removeRunner(runner : Drawable) : void {
         this.drawables.removeChild(runner.drawables);
         if (runner === this.textBox) {
             this.textBox = null;

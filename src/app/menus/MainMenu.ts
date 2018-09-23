@@ -1,8 +1,8 @@
-import Runner from "../interfaces/Runner";
 import Master from "../interfaces/Master";
 import Controls from "../interfaces/Controls";
-import { WIN_LEVEL_NAME_STYLE, DEFAULT_SYSTEM_STYLE, DEFAULT_TEXT_STYLE } from "../text/Fonts";
+import { WIN_LEVEL_NAME_STYLE, DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import Menu from "../text/Menu";
+import Runner from "../interfaces/Runner";
 
 export default class MainMenu implements Runner {
     public drawables : PIXI.Container = new PIXI.Container();
@@ -12,7 +12,7 @@ export default class MainMenu implements Runner {
     constructor(master : Master) {
         this.master = master;
 
-        this.menu = new Menu(this.master, {options: this.getOptions()});
+        this.menu = new Menu({options: this.getOptions()});
         this.drawables.addChild(this.menu.drawables);
 
         this.drawTitle();

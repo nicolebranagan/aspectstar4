@@ -1,9 +1,8 @@
-import GenericRunner from "../system/GenericRunner";
 import Master from "../interfaces/Master";
-import Runner from "../interfaces/Runner";
 import Worldfile from '../data/Worldfile';
 import Attributes from "../interfaces/Attributes";
 import { DEFAULT_SYSTEM_STYLE, LOAD_LEVEL_NAME_STYLE } from "../text/Fonts";
+import Runner from "../interfaces/Runner";
 
 const INITIAL_LOAD_TEXT = "Loading...";
 const AFTER_LOAD_TEXT = "Nya!"
@@ -14,7 +13,10 @@ const ABOVE_NAME_TEXT = "Now loading...";
 const TEXT_ZONE_HEIGHT = 24;
 const TIMER_HEIGHT = 112;
 
-export default class LevelPreload extends GenericRunner {
+export default class LevelPreload implements Runner {
+    public drawables : PIXI.Container;
+
+    private master : Master;
     private underlay : PIXI.Graphics;
     private level : Runner;
     private loaded : boolean = false;
@@ -25,7 +27,8 @@ export default class LevelPreload extends GenericRunner {
     private scrollerTexts : PIXI.Text[] = [];
     
     constructor(master : Master) {
-        super(master);
+        this.master = master;
+        this.drawables = new PIXI.Container();
         this.attributes = Worldfile.levels[0].attributes;
 
         this.drawInitialLoad();
@@ -116,7 +119,7 @@ export default class LevelPreload extends GenericRunner {
     }
 
     loadLevel() {
-        import(/* webpackChunkName: "level" */ '../level/Level').then(
+        import(/* webpackChunkName: "level" */ './Level').then(
             Level => {
                 // The reason for the pause is that it results in gameplay being smoother after initial load
                 this.level = new Level.default(this.master, 0, (callback) => {

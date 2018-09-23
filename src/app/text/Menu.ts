@@ -1,21 +1,20 @@
-import GenericRunner from "../system/GenericRunner";
 import Controls from "../interfaces/Controls";
-import Master from "../interfaces/Master";
 import MenuOptions from "../interfaces/MenuOptions";
 import { DEFAULT_SYSTEM_STYLE, GOLD_COLOR } from './Fonts';
 import Point from "../system/Point";
+import Runner from "../interfaces/Runner";
 
 const OPTION_SEPARATOR = 0;
 
-export default class Menu extends GenericRunner {
+export default class Menu implements Runner {
     private selected : number;
+    public drawables : PIXI.Container;
 
-    constructor(master : Master, private menuOptions : MenuOptions) {
-        super(master);
-
+    constructor(private menuOptions : MenuOptions) {
         const { defaultSelected } = menuOptions;
         this.selected = defaultSelected || 0;
 
+        this.drawables = new PIXI.Container();
         this.renderOptions();
     }
 
@@ -81,4 +80,6 @@ export default class Menu extends GenericRunner {
             controls.release();
         }
     }
+
+    update() {;}
 };

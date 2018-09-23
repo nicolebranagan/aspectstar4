@@ -1,5 +1,5 @@
-import Runner from './Runner';
+import Drawable from './Drawable';
 
-export default interface Background extends Runner {
+export default interface Background extends Drawable {
     updatePos(x : number, y : number, offset : number) : void,
 };

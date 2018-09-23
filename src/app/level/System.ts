@@ -1,7 +1,7 @@
 import Master from '../interfaces/Master';
 import Aspect from '../constants/Aspect';
 import Player from '../interfaces/Player';
-import Runner from '../interfaces/Runner';
+import Drawable from '../interfaces/Drawable';
 
 class CachedSprite {
     private sprite : PIXI.Sprite;
@@ -66,7 +66,7 @@ const getNumber : (number : number, x : number, y: number) => PIXI.Sprite = (num
     return sprite;
 };
 
-export default class System implements Runner {
+export default class System implements Drawable {
     public drawables : PIXI.Container
     private aspects : Aspect[]
     private selectedAspect : Aspect
@@ -106,10 +106,6 @@ export default class System implements Runner {
         this.drawables.addChild(getNumber(digit2, 400-16, 0));
         this.drawables.addChild(getNumber(digit3, 400-8, 0));
     }
-
-    respond() {}
-
-    update() {}
 
     updateSystem(player : Player, bellCountMax : number) {
         if (player.aspect !== this.selectedAspect 

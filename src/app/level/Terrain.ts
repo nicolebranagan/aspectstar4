@@ -1,16 +1,16 @@
-import Master from '../interfaces/Master';
-import GenericRunner from '../system/GenericRunner';
-
-import Worldfile from '../data/Worldfile';
+import Drawable from '../interfaces/Drawable';
 import Attributes from '../interfaces/Attributes';
+import Worldfile from '../data/Worldfile';
 
 const TILESETS = ['level1'];
 
 /* The terrain object is in charge of drawing the level. */
 
-export default class Terrain extends GenericRunner {
-    constructor(master : Master, level : any) {
-        super(master);
+export default class Terrain implements Drawable {
+    public drawables : PIXI.Container;
+
+    constructor(level : any) {
+        this.drawables = new PIXI.Container();
         const drawables = this.drawables;
         const attributes : Attributes = level.attributes;
         const text = PIXI.loader.resources[TILESETS[attributes.tileset]].texture.baseTexture;

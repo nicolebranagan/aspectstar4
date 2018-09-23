@@ -1,21 +1,21 @@
-import GenericRunner from "../system/GenericRunner";
-import Master from "../interfaces/Master";
-import Runner from "../interfaces/Runner";
 import { LevelOptions } from "./Level";
 import Controls from "../interfaces/Controls";
 import Menu from "../text/Menu";
+import Runner from "../interfaces/Runner";
 
-export default class PauseMenu extends GenericRunner implements Master {
-    private menu : Runner;
+export default class PauseMenu implements Runner {
+    public drawables : PIXI.Container;
+
+    private menu : Menu;
     private overlay : PIXI.Graphics;
 
-    constructor(master : Master, private levelOptions: LevelOptions) {
-        super(master);
+    constructor(private levelOptions: LevelOptions) {
+        this.drawables = new PIXI.Container();
         this.prepareOverlay();
-        this.menu = new Menu(this, {
+        this.menu = new Menu({
             options: this.getOptions()
-        })
-        this.addRunner(this.menu);
+        });
+        this.drawables.addChild(this.menu.drawables);
         this.update = this.rampUpRed;
     }
 
@@ -94,14 +94,5 @@ export default class PauseMenu extends GenericRunner implements Master {
             this.overlay.tint = 0x000000;
             this.update = this.rampUpRed;
         }
-    }
-
-    /* Implements Master interface */
-    addRunner(runner : Runner) : void {
-        this.drawables.addChild(runner.drawables);
-    }
-
-    removeRunner(runner : Runner) : void {
-        this.drawables.removeChild(runner.drawables);
     }
 }

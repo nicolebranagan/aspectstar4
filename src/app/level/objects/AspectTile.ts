@@ -1,13 +1,13 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
 import Master from '../../interfaces/Master';
-import Runner from '../../interfaces/Runner';
 import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
 import Stage from '../Stage';
 import { LevelOptions } from '../Level';
+import Runner from '../../interfaces/Runner';
 
 export default class AspectTile implements LevelObject, Master {
     active = true;

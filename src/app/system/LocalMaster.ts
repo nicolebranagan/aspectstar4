@@ -1,7 +1,7 @@
 import Master from '../interfaces/Master';
-import Runner from '../interfaces/Runner';
 import Controls from '../interfaces/Controls';
 import KeyboardControls from './KeyboardControls';
+import Runner from '../interfaces/Runner';
 
 /* LocalMaster is the parent of everything.
  * A single local master is created at the time the game loads,
@@ -41,7 +41,7 @@ export default class LocalMaster implements Master {
     update() : void {
         setTimeout(this.update, 1000/60);
         this.runners.forEach((e) => {
-            e.respond(this.controls);
+            e.respond && e.respond(this.controls);
             e.update();
         })
         this.controls.release();

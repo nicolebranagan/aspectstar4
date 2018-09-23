@@ -1,5 +1,4 @@
-import Master from '../interfaces/Master';
-import GenericRunner from "../system/GenericRunner";
+import Runner from '../interfaces/Runner';
 import { DEFAULT_SYSTEM_STYLE, DEFAULT_TEXT_STYLE, WIN_LEVEL_NAME_STYLE, GOLD_COLOR } from '../text/Fonts';
 import Aspect from '../constants/Aspect';
 
@@ -28,21 +27,22 @@ const getAspect : (aspect : Aspect) => PIXI.Sprite = (aspect : Aspect) => {
 
 const delay = (t : number) => new Promise(resolve => setTimeout(resolve, t));
 
-export default class WinSystem extends GenericRunner {
+export default class WinSystem implements Runner {
+    public drawables : PIXI.Container;
+
     private firstLine1 : PIXI.Text;
     private firstLine2 : PIXI.Text;
     private levelName : PIXI.Text;
     private scrollerText : PIXI.Text;
 
     constructor(
-        master : Master, 
         private name : string,
         private aspects : Aspect[], 
         private bellCount : number, 
         private bellCountMax : number,
         private deaths : number,
     ) {
-        super(master);
+        this.drawables = new PIXI.Container();
 
         this.scrollInFirstLine = this.scrollInFirstLine.bind(this);
         this.scrollInFirstLine();
