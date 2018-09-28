@@ -29,7 +29,6 @@ const LEVEL_NAME_HEIGHT = 6;
 export default class Map implements Runner {
     public drawables : PIXI.Container;
 
-    private master : Master;
     private graphics : PIXI.Graphics
     private frame : number = 0;
     private flatMap : {x : number, y : number}[];
@@ -39,8 +38,7 @@ export default class Map implements Runner {
     private row : number = 0;
     private level : number = 0;
 
-    constructor(master : Master, maxLevel : number, maxRow : number) {
-        this.master = master;
+    constructor(private master : Master, private maxLevel : number, private maxRow : number) {
         this.flatMap = flattenMap(TestMap);
 
         this.drawables = new PIXI.Container();
@@ -56,7 +54,11 @@ export default class Map implements Runner {
         this.mapSprite.update();
 
         this.drawables.removeChild(this.graphics);
-        this.graphics = MapDrawer(this.flatMap, this.frame);
+        this.graphics = MapDrawer(
+            this.flatMap, 
+            this.frame,
+            this.maxRow * 3 + this.maxLevel,
+        );
         this.drawables.addChildAt(this.graphics, 0);
 
         this.frame++;
@@ -71,7 +73,8 @@ export default class Map implements Runner {
             this.drawLevelName();
         }
         if (controls.Right) {
-            this.level = Math.min(this.level + 1, 3 - 1)
+            const maxLevel = this.row === this.maxRow ? this.maxLevel : 2;
+            this.level = Math.min(this.level + 1, maxLevel)
             controls.Right = false;
             this.refreshMapSprite();
             this.drawLevelName();

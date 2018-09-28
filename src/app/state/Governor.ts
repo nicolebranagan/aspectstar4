@@ -16,7 +16,7 @@ export const enterWorldMap = (master : Master) => {
             // @ts-ignore This is valid, and TypeScript should be able to tell that
             master.addRunner(new Map.default(master, ...getMapState()));
         }
-    ).catch(nya => console.log(nya));
+    );
 };
 
 export const winLevel = () => {

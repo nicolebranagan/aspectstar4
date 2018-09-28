@@ -50,20 +50,20 @@ const drawCircle = (
     graphics.drawEllipse(x, y, CIRCLE_WIDTH, CIRCLE_HEIGHT);
 };
 
-const frameShift = (frame : number, shift : number) => (frame - shift + frameCycle) % frameCycle;
-
 export default function MapDrawer(
     map : {x : number, y : number}[],
-    frame : number
+    frame : number,
+    activeEnd : number,
 ) : PIXI.Graphics {
     const graphics = new PIXI.Graphics();
     //graphics.lineStyle(CIRCLE_BORDER_WIDTH, CIRCLE_BORDER_COLOR);
     map.forEach((level, index) => {
+        const colorFrame = index <= activeEnd ? Math.floor(frame / frameMultiplier) : 0;
         drawCircle(
             graphics,
             level.x,
             level.y,
-            frameShift(Math.floor(frame / frameMultiplier), 0)
+            colorFrame,
         )
     })
 
