@@ -19,6 +19,7 @@ export const enterWorldMap = (master : Master) => {
     );
 };
 
-export const winLevel = () => {
+export const winLevel = (master : Master) => {
     setWinState();
+    enterWorldMap(master);
 };

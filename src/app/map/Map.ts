@@ -7,6 +7,7 @@ import Point from "../system/Point";
 import Updatable from "../interfaces/Updatable";
 import Worldfile from "../data/Worldfile";
 import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
+import { winLevel } from "../state/Governor";
 
 const TestMap : {levels: [number, number, number][], rows: [number, number][]} = {
     levels: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
@@ -35,8 +36,8 @@ export default class Map implements Runner {
     private mapSprite : Updatable;
     private levelName : PIXI.Text;
 
-    private row : number = 0;
-    private level : number = 0;
+    private row : number;
+    private level : number;
 
     constructor(private master : Master, private maxLevel : number, private maxRow : number) {
         this.flatMap = flattenMap(TestMap);
@@ -45,6 +46,9 @@ export default class Map implements Runner {
         this.flatMap.forEach(level => {
             this.drawables.addChild(drawCircle(level.x, level.y));
         });
+
+        this.row = this.maxRow;
+        this.level = this.maxLevel;
 
         this.refreshMapSprite();
         this.drawLevelName();
@@ -90,7 +94,7 @@ export default class Map implements Runner {
         import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
             Level => {
                 this.master.removeRunner(this);
-                this.master.addRunner(new Level.default(this.master, index));
+                this.master.addRunner(new Level.default(this.master, index, winLevel.bind(null, this.master)));
             }
         );
     }

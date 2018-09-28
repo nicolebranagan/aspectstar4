@@ -27,7 +27,7 @@ export default class LevelPreload implements Runner {
 
     private scrollerTexts : PIXI.Text[] = [];
     
-    constructor(master : Master, index : number) {
+    constructor(master : Master, index : number, private onwin : () => void) {
         this.master = master;
         this.index = index;
         this.drawables = new PIXI.Container();
@@ -130,7 +130,7 @@ export default class LevelPreload implements Runner {
                     this.scrollerTexts.forEach(scrollerText => scrollerText.text = AFTER_LOAD_TEXT);
                     this.updateTimerText();
                     callback();
-                });
+                }, this.onwin);
             }
         );
     }
