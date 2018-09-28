@@ -13,7 +13,7 @@ export const getMapState : () => [number, number] = () => [
 
 // Setters (and a resetter)
 export const resetState = () => {
-    state = initialState;
+    state = {...initialState};
 };
 
 export const setWinState = () => {
