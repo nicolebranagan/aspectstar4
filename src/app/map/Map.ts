@@ -149,9 +149,10 @@ export default class Map implements Runner {
         for (let i = 0; i < 3; i++) {
             if (params[i]) {
                 const sprite = new PIXI.Sprite(text);
-                sprite.x = 16 * i; 
-                sprite.y = 16;
+                sprite.x = 352 + 16 * i; 
+                sprite.y = 225 - 16;
                 this.drawables.addChild(sprite);
+                newCrowns.push(sprite);
             }
         }
         this.crowns = newCrowns;

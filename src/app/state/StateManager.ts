@@ -38,7 +38,7 @@ export const setLevelMarkers = (
 ) => {
     if (state.levelMarkers[row][level]) {
         const oldMarkers = state.levelMarkers[row][level];
-        markers = [oldMarkers[0] && markers[0], oldMarkers[1] && markers[1], oldMarkers[2] && markers[2]];
+        markers = [oldMarkers[0] || markers[0], oldMarkers[1] || markers[1], oldMarkers[2] || markers[2]];
     }
     state.levelMarkers[row][level] = markers;
 };
