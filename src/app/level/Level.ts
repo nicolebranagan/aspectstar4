@@ -64,7 +64,12 @@ export default class Level implements Runner, Master {
     private deaths : number = 0;
     private paused : Runner;
 
-    constructor(master : Master, levelid : number, private onload : (callback : () => void) => void, private onwin : () => void) {
+    constructor(
+        master : Master, 
+        levelid : number, 
+        private onload : (callback : () => void) => void, 
+        private onwin : (params : [boolean, boolean, boolean]) => void
+    ) {
         this.master = master;
         this.drawables = new PIXI.Container;
 
@@ -158,7 +163,11 @@ export default class Level implements Runner, Master {
         } else if (!!this.winSystem) {
             if (controls.Start) {
                 this.master.removeRunner(this);
-                this.onwin();
+                this.onwin([
+                    this.player.aspects.length === 3,
+                    this.player.bells === this.bellCount,
+                    this.deaths === 0,
+                ]);
             }
         } else if (controls.Start) {
             if (!this.paused) {

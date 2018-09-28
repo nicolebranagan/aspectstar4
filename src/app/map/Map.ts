@@ -39,7 +39,14 @@ export default class Map implements Runner {
     private row : number;
     private level : number;
 
-    constructor(private master : Master, private maxLevel : number, private maxRow : number) {
+    private crowns : PIXI.Sprite[] = [];
+
+    constructor(
+        private master : Master, 
+        private maxLevel : number, 
+        private maxRow : number, 
+        private levelParams : [boolean, boolean, boolean][][]
+    ) {
         this.flatMap = flattenMap(TestMap);
 
         this.drawables = new PIXI.Container();
@@ -52,6 +59,7 @@ export default class Map implements Runner {
 
         this.refreshMapSprite();
         this.drawLevelName();
+        this.drawCrowns();
     }
 
     update() {
@@ -75,6 +83,7 @@ export default class Map implements Runner {
             controls.Left = false;
             this.refreshMapSprite();
             this.drawLevelName();
+            this.drawCrowns();
         }
         if (controls.Right) {
             const maxLevel = this.row === this.maxRow ? this.maxLevel : 2;
@@ -82,6 +91,7 @@ export default class Map implements Runner {
             controls.Right = false;
             this.refreshMapSprite();
             this.drawLevelName();
+            this.drawCrowns();
         }
         if (controls.ButtonA || controls.Start) {
             this.onSelectLevel();
@@ -94,7 +104,11 @@ export default class Map implements Runner {
         import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
             Level => {
                 this.master.removeRunner(this);
-                this.master.addRunner(new Level.default(this.master, index, winLevel.bind(null, this.master)));
+                this.master.addRunner(new Level.default(
+                    this.master, 
+                    index, 
+                    winLevel.bind(null, this.master, this.level, this.row)
+                ));
             }
         );
     }
@@ -122,5 +136,25 @@ export default class Map implements Runner {
         const position = this.flatMap[this.row * 3 + this.level];
         this.mapSprite = new MapSprite(new Point(position.x, position.y));
         this.drawables.addChild(this.mapSprite.drawables);
+    }
+
+    private drawCrowns() {
+        this.crowns.forEach(crown => this.drawables.removeChild(crown));
+        const newCrowns : PIXI.Sprite[] = [];
+        const params = this.levelParams[this.row][this.level];
+        const allTrue = params.reduce((prev, curr) => prev && curr, true);
+        const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
+        const rect = new PIXI.Rectangle(allTrue ? 0 : 16, 120, 16, 16);
+        text.frame = rect;
+        for (let i = 0; i < 3; i++) {
+            if (params[i]) {
+                const sprite = new PIXI.Sprite(text);
+                sprite.x = 352 + 16 * i; 
+                sprite.y = 225 - 16;
+                this.drawables.addChild(sprite);
+                newCrowns.push(sprite);
+            }
+        }
+        this.crowns = newCrowns;
     }
 }
