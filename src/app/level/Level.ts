@@ -64,7 +64,7 @@ export default class Level implements Runner, Master {
     private deaths : number = 0;
     private paused : Runner;
 
-    constructor(master : Master, levelid : number, private onload? : (callback : () => void) => void) {
+    constructor(master : Master, levelid : number, private onload : (callback : () => void) => void, private onwin : () => void) {
         this.master = master;
         this.drawables = new PIXI.Container;
 
@@ -156,7 +156,10 @@ export default class Level implements Runner, Master {
                 this.interaction = null;
             });
         } else if (!!this.winSystem) {
-            // Have ability to progress
+            if (controls.Start) {
+                this.master.removeRunner(this);
+                this.onwin();
+            }
         } else if (controls.Start) {
             if (!this.paused) {
                 this.paused = new PauseMenu(this.options);

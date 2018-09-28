@@ -28,7 +28,7 @@ export default class LocalMaster implements Master {
     initialize() : void {
         // Everything that needs to go after resources have loaded
         import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
-            MainMenu => {
+             MainMenu => {
                 this.addRunner(new MainMenu.default(this));
                 this.update(); 
             }
