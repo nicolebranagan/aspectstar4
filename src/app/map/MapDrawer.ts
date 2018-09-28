@@ -2,6 +2,7 @@ const CIRCLE_WIDTH = 10;
 const CIRCLE_HEIGHT = 6;
 const CIRCLE_BORDER_WIDTH = 1;
 const CIRCLE_BORDER_COLOR = 0xCFB358;
+const CIRCLE_SEPARATOR = 8;
 
 const PALETTE_CYCLE = [
     0x000022,
@@ -25,6 +26,23 @@ const PALETTE_CYCLE = [
 const frameMultiplier = 6;
 export const frameCycle = PALETTE_CYCLE.length * frameMultiplier;
 
+
+export const flattenMap = (
+    {levels, rows} : {levels: number[][], rows: [number, number][]}
+) => {
+    const outMap = [];
+    for (const i in rows) {
+        const row = rows[i];
+        for (let j = 0; j < levels[i].length; j++) {
+            outMap.push({
+                x: row[0] + j*(2*CIRCLE_WIDTH + CIRCLE_SEPARATOR),
+                y: row[1]
+            })
+        }
+    }
+    return outMap;
+};
+
 const drawCircle = (
     graphics : PIXI.Graphics, x : number, y : number, frame : number
 ) => {
@@ -32,10 +50,10 @@ const drawCircle = (
     graphics.drawEllipse(x, y, CIRCLE_WIDTH, CIRCLE_HEIGHT);
 };
 
-const frameShift = (frame : number, shift : number) => (frame + shift) % frameCycle;
+const frameShift = (frame : number, shift : number) => (frame - shift + frameCycle) % frameCycle;
 
 export default function MapDrawer(
-    map : {x : number, y : number, level : number}[],
+    map : {x : number, y : number}[],
     frame : number
 ) : PIXI.Graphics {
     const graphics = new PIXI.Graphics();

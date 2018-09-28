@@ -1,21 +1,11 @@
 import Runner from "../interfaces/Runner";
 import Controls from "../interfaces/Controls";
 import Master from "../interfaces/Master";
-import MapDrawer, { frameCycle } from "./MapDrawer";
+import MapDrawer, { frameCycle, flattenMap } from "./MapDrawer";
 
-const TestMap = {
-    levels: [[
-        {
-            x: 100,
-            y: 100,
-            level: 0,
-        },
-        {
-            x: 100,
-            y: 125,
-            level: 0,
-        }
-    ]]
+const TestMap : {levels: number[][], rows: [number, number][]} = {
+    levels: [[0, 0, 0]],
+    rows: [[50, 50]],
 };
 
 export default class Map implements Runner {
@@ -24,13 +14,11 @@ export default class Map implements Runner {
     private master : Master;
     private graphics : PIXI.Graphics
     private frame : number = 0;
-    private flatMap : {x : number, y : number, level : number}[];
+    private flatMap : {x : number, y : number}[];
 
     constructor(master : Master) {
         this.master = master;
-        this.flatMap = TestMap.levels.reduce((prev, curr) => {
-            return [...prev, ...curr]
-        }, []);
+        this.flatMap = flattenMap(TestMap);
 
         this.drawables = new PIXI.Container();
     }
