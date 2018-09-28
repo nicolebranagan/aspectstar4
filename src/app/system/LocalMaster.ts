@@ -15,7 +15,7 @@ export default class LocalMaster implements Master {
     constructor() {
         PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
         this.gamescreen = new PIXI.Application(400, 225, {
-            "backgroundColor": 0x050022,
+            "backgroundColor": 0x002200,
             "resolution": 2,
         });
         this.gamescreen.view.id = "gamecanvas";

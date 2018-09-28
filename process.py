@@ -73,4 +73,4 @@ with open("src/images/background.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))
 filen = designation + "background.gif"
 pixelgrid.changepage(0)
-pixelgrid.getTkImage(1, False).write(filen, format='gif')
+pixelgrid.getTkImage(1, True).write(filen, format='gif')
