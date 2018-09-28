@@ -27,9 +27,15 @@ export default class LocalMaster implements Master {
 
     initialize() : void {
         // Everything that needs to go after resources have loaded
-        import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
-            MainMenu => {
+        //import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
+        /*    MainMenu => {
                 this.addRunner(new MainMenu.default(this));
+                this.update(); 
+            }
+        );*/
+        import(/* webpackChunkName: "map" */ '../map/Map').then(
+            Map => {
+                this.addRunner(new Map.default(this));
                 this.update(); 
             }
         );
