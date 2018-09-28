@@ -3,7 +3,7 @@ const initialState = {
     maxRow: 0,
 };
 
-let state = initialState;
+let state = {...initialState};
 
 // Getters
 export const getMapState : () => [number, number] = () => [
