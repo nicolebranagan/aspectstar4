@@ -1,7 +1,8 @@
 import { 
     getMapState,
     setWinState, 
-    resetState
+    resetState,
+    setLevelMarkers
 } from './StateManager';
 import Master from '../interfaces/Master';
 
@@ -19,7 +20,8 @@ export const enterWorldMap = (master : Master) => {
     );
 };
 
-export const winLevel = (master : Master) => {
+export const winLevel = (master : Master, level : number, row : number, params : [boolean, boolean, boolean]) => {
     setWinState();
+    setLevelMarkers(level, row, params);
     enterWorldMap(master);
 };
