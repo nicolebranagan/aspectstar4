@@ -42,7 +42,7 @@ class Editor(tk.Frame):
         self.selected_tile = 0
         self.selected_bigtile = 0
         self.currentlevel = wf.levels[0]
-        self.tileset = self.currentlevel.attributes.get("tileset");
+        self.tileset = self.currentlevel.attributes.get("tileset")
         self.bigtiles = wf.bigtiles[self.currentlevel.attributes.get("bigtileset")]
         try:
             self.levelname.set(self.currentlevel.attributes['name'])
@@ -55,6 +55,19 @@ class Editor(tk.Frame):
             self.selectBigtile(0)
             self.drawroom()
             self.buildBigTileset()
+    
+    def openlevel(self, levelid):
+        if levelid < 0:
+            return
+        self.level = levelid
+        self.currentlevel = self.worldfile.get_or_create_level(levelid)
+        self.tileset = self.currentlevel.attributes.get("tileset")
+        self.bigtiles = self.worldfile.bigtiles[self.currentlevel.attributes.get("bigtileset")]
+        self.levelname.set(self.currentlevel.attributes['name'])
+        self.selectTile(0)
+        self.selectBigtile(0)
+        self.drawroom()
+        self.buildBigTileset()
     
     def buildGUI(self):
         commandbar = tk.Frame(self)
@@ -104,17 +117,32 @@ class Editor(tk.Frame):
 
         leveloptionspanel = tk.Frame(tilegrid)
         leveloptionspanel.pack()
-        tk.Label(leveloptionspanel, text="Level Name:").grid(row=0, column=0)
+
+        prevlevelbutton = tk.Button(
+            leveloptionspanel, 
+            text="<<<",
+            command=lambda: self.openlevel(self.level - 1)
+        )
+        prevlevelbutton.grid(row=0, column=0, sticky=tk.W + tk.E)
+
+        nextlevelbutton = tk.Button(
+            leveloptionspanel, 
+            text=">>>",
+            command=lambda: self.openlevel(self.level + 1)
+        )
+        nextlevelbutton.grid(row=0, column=1, sticky=tk.W + tk.E)
+
+        tk.Label(leveloptionspanel, text="Level Name:").grid(row=1, column=0)
         self.levelname = tk.StringVar()
         self.levelname.set(self.currentlevel.attributes['name'])
         def setName(name, *args):
             self.currentlevel.attributes['name'] = self.levelname.get()
         self.levelname.trace_add("write", setName)
         levelnameentry = tk.Entry(leveloptionspanel, textvariable=self.levelname)
-        levelnameentry.grid(row=0, column=1)
+        levelnameentry.grid(row=1, column=1)
         
         levelstartpointpanel = tk.Frame(leveloptionspanel)
-        levelstartpointpanel.grid(row=1, column=0, columnspan=2)
+        levelstartpointpanel.grid(row=2, column=0, columnspan=2)
         levelstartx = tk.StringVar()
         levelstarty = tk.StringVar()
         levelstartx.set(str(self.currentlevel.attributes['start'][0]))

@@ -22,6 +22,11 @@ class Worldfile():
             "bigtiles": bigtiles,
             "levels": levels
         }
+
+    def get_or_create_level(self, index):
+        while index >= len(self.levels):
+            self.levels.append(Level(64, 16))
+        return self.levels[index]   
     
     @staticmethod
     def deserialize(indict):
