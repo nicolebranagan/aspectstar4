@@ -3,6 +3,7 @@ import Controls from "../interfaces/Controls";
 import { WIN_LEVEL_NAME_STYLE, DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import Menu from "../text/Menu";
 import Runner from "../interfaces/Runner";
+import { newGame } from "../state/Governor";
 
 export default class MainMenu implements Runner {
     public drawables : PIXI.Container = new PIXI.Container();
@@ -46,13 +47,8 @@ export default class MainMenu implements Runner {
     }
 
     onNewGame() {
-        import(/* webpackChunkName: "map" */ '../map/Map').then(
-            Map => {
-                this.master.removeRunner(this);
-                this.master.addRunner(new Map.default(this.master));
-                this.update(); 
-            }
-        );
+        this.master.removeRunner(this);
+        newGame(this.master);
     }
 
     respond(controls : Controls) {

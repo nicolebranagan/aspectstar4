@@ -39,7 +39,7 @@ export default class Map implements Runner {
     private row : number = 0;
     private level : number = 0;
 
-    constructor(master : Master) {
+    constructor(master : Master, maxLevel : number, maxRow : number) {
         this.master = master;
         this.flatMap = flattenMap(TestMap);
 
