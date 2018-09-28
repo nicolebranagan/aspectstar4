@@ -46,10 +46,11 @@ export default class MainMenu implements Runner {
     }
 
     onNewGame() {
-        import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
-            Level => {
+        import(/* webpackChunkName: "map" */ '../map/Map').then(
+            Map => {
                 this.master.removeRunner(this);
-                this.master.addRunner(new Level.default(this.master));
+                this.master.addRunner(new Map.default(this.master));
+                this.update(); 
             }
         );
     }

@@ -17,6 +17,7 @@ export default class LevelPreload implements Runner {
     public drawables : PIXI.Container;
 
     private master : Master;
+    private index : number;
     private underlay : PIXI.Graphics;
     private level : Runner;
     private loaded : boolean = false;
@@ -26,8 +27,9 @@ export default class LevelPreload implements Runner {
 
     private scrollerTexts : PIXI.Text[] = [];
     
-    constructor(master : Master) {
+    constructor(master : Master, index : number) {
         this.master = master;
+        this.index = index;
         this.drawables = new PIXI.Container();
         this.attributes = Worldfile.levels[0].attributes;
 
@@ -122,7 +124,7 @@ export default class LevelPreload implements Runner {
         import(/* webpackChunkName: "level" */ './Level').then(
             Level => {
                 // The reason for the pause is that it results in gameplay being smoother after initial load
-                this.level = new Level.default(this.master, 0, (callback) => {
+                this.level = new Level.default(this.master, this.index, (callback) => {
                     this.loaded = true;
                     this.timer = 200;
                     this.scrollerTexts.forEach(scrollerText => scrollerText.text = AFTER_LOAD_TEXT);

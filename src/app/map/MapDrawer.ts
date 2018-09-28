@@ -57,13 +57,13 @@ export default function MapDrawer(
     frame : number
 ) : PIXI.Graphics {
     const graphics = new PIXI.Graphics();
-    graphics.lineStyle(CIRCLE_BORDER_WIDTH, CIRCLE_BORDER_COLOR);
+    //graphics.lineStyle(CIRCLE_BORDER_WIDTH, CIRCLE_BORDER_COLOR);
     map.forEach((level, index) => {
         drawCircle(
             graphics,
             level.x,
             level.y,
-            frameShift(Math.floor(frame / frameMultiplier), index * 2)
+            frameShift(Math.floor(frame / frameMultiplier), 0)
         )
     })
 

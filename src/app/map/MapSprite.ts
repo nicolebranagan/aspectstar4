@@ -10,7 +10,7 @@ export default class MapSprite implements Updatable {
     private sprite : PIXI.Sprite;
     private timer : number = 0
 
-    constructor(point : Point, private facingLeft : boolean) {
+    constructor(point : Point) {
         this.drawables = new PIXI.Container;
 
         const text = PIXI.loader.resources['player'].texture;
@@ -38,10 +38,6 @@ export default class MapSprite implements Updatable {
         const text = PIXI.loader.resources['player'].texture;
         const frame = 8 + ((this.timer - WAIT_TIME_MAX > WAIT_FRAME_CHANGE) ? 1 : 0);
         text.frame = new PIXI.Rectangle(16*frame, 0, 16, 40);
-        if (this.facingLeft)
-            this.sprite.scale.x = -1;
-        else
-            this.sprite.scale.x = 1;
         this.sprite.texture = text;
     }
 }
