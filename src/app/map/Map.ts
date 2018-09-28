@@ -10,7 +10,7 @@ import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import { winLevel } from "../state/Governor";
 
 const TestMap : {levels: [number, number, number][], rows: [number, number][]} = {
-    levels: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    levels: [[0, 1, 0], [0, 0, 0], [0, 0, 0]],
     rows: [[150, 62], [250, 132], [40, 190]],
 };
 
