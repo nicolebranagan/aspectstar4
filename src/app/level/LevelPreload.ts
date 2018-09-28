@@ -31,7 +31,7 @@ export default class LevelPreload implements Runner {
         this.master = master;
         this.index = index;
         this.drawables = new PIXI.Container();
-        this.attributes = Worldfile.levels[0].attributes;
+        this.attributes = Worldfile.levels[index].attributes;
 
         this.drawInitialLoad();
         this.loadLevel();
