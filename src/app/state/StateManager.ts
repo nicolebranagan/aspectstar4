@@ -43,10 +43,12 @@ export const setLevelMarkers = (
     state.levelMarkers[row][level] = markers;
 };
 
-export const setWinState = () => {
-    state.maxLevel++;
-    if (state.maxLevel >= 3) {
-        state.maxRow++;
-        state.maxLevel = 0;
+export const setWinState = (level : number, row : number) => {
+    if (level === state.maxLevel && row === state.maxRow) {
+        state.maxLevel++;
+        if (state.maxLevel >= 3) {
+            state.maxRow++;
+            state.maxLevel = 0;
+        }
     }
 };
