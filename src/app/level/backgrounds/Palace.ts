@@ -23,6 +23,7 @@ import Background from "../../interfaces/Background";
  const SMALL_BRICKS = [0, 48, 96, 16];
  const LARGE_BRICKS = [0, 64, 96, 32];
  const GIANT_BRICKS = [0, 96, 96, 48];
+ const STARRY_SKY = [96, 0, 32, 32];
 
 const generateSprite = (rect : number[], x : number, y : number) => {
     const texture = PIXI.Texture.from(PIXI.loader.resources['background'].texture.baseTexture); 
@@ -41,7 +42,12 @@ export default class Palace implements Background  {
 
     constructor() {
         this.drawables = new PIXI.Container;
+        this.drawFixedBackground();
         this.initializeRows();
+    }
+
+    drawFixedBackground() {
+        this.drawables.addChild(this.generateRow(STARRY_SKY, -16+48+32+16, 32));
     }
 
     initializeRows() {
@@ -55,11 +61,11 @@ export default class Palace implements Background  {
         this.rows.forEach(row => this.drawables.addChild(row));
     }
 
-    generateRow(rect : number[], y : number) {
+    generateRow(rect : number[], y : number, width : number = 96) {
         const centerPillars = new PIXI.Container();
-        for (let i = -1; i < 6; i++) {
+        for (let i = -1; i < (Math.ceil(width + 400 / width)); i++) {
             centerPillars.addChild(generateSprite(
-                rect, 96*i, y
+                rect, width*i, y
             ))
         }
         return centerPillars;
