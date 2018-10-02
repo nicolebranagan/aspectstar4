@@ -79,13 +79,12 @@ class Level():
             "width": self.width,
             "height": self.height,
             "objects": self.objects,
-            "attributes": self.attributes
         }
-
+    
     @staticmethod
-    def deserialize(indict):
+    def deserialize(indict, attributes):
         lvl = Level(indict["width"], indict["height"])
         lvl.grid = indict["grid"]
         lvl.objects = indict["objects"]
-        lvl.attributes = indict["attributes"]
+        lvl.attributes = attributes
         return lvl

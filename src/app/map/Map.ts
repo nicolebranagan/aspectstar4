@@ -5,10 +5,10 @@ import MapDrawer, { frameCycle, flattenMap } from "./MapDrawer";
 import MapSprite from "./MapSprite";
 import Point from "../system/Point";
 import Updatable from "../interfaces/Updatable";
-import Worldfile from "../data/Worldfile";
 import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import { winLevel } from "../state/Governor";
 import MapData from "../data/Map";
+import Attributes from "../data/Attributes";
 
 const drawCircle = (x : number, y : number) => {
     const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
@@ -134,7 +134,7 @@ export default class Map implements Runner {
             this.drawables.removeChild(this.levelName);
         }
         const levelIndex = MapData[this.mapIndex].levels[this.row][this.level];
-        const { name } = Worldfile.levels[levelIndex].attributes;
+        const { name } = Attributes[levelIndex];
         const metrics = PIXI.TextMetrics.measureText(name, DEFAULT_TEXT_STYLE);
         const x = 200-metrics.width;
         this.levelName = new PIXI.Text(name, DEFAULT_TEXT_STYLE);

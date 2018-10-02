@@ -1,6 +1,6 @@
 import Drawable from '../interfaces/Drawable';
 import Attributes from '../interfaces/Attributes';
-import Worldfile from '../data/Worldfile';
+import Bigtiles from '../data/Bigtiles';
 
 const TILESETS = ['level1'];
 
@@ -9,10 +9,9 @@ const TILESETS = ['level1'];
 export default class Terrain implements Drawable {
     public drawables : PIXI.Container;
 
-    constructor(level : any) {
+    constructor(level : any, attributes : Attributes) {
         this.drawables = new PIXI.Container();
         const drawables = this.drawables;
-        const attributes : Attributes = level.attributes;
         const text = PIXI.loader.resources[TILESETS[attributes.tileset]].texture.baseTexture;
 
         function getTile(i : number) : PIXI.Texture {
@@ -27,7 +26,7 @@ export default class Terrain implements Drawable {
             drawables.addChild(sprite);
         }
 
-        const bigtileset : any = Worldfile.bigtiles[attributes.bigtileset].bigtiles;
+        const bigtileset : any = Bigtiles[attributes.bigtileset].bigtiles;
         function drawBigtile(i : number, x : number, y : number) : void {
             const bigtile = bigtileset[i];
             if (bigtile == -1) {

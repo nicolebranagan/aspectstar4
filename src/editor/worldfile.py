@@ -18,9 +18,11 @@ class Worldfile():
     def serialize(self):
         bigtiles = [i.serialize() for i in self.bigtiles]
         levels = [i.serialize() for i in self.levels]
+        attributes = [i.attributes for i in self.levels]
         return {
-            "bigtiles": bigtiles,
-            "levels": levels
+            "Bigtiles": bigtiles,
+            "Levels": levels,
+            "Attributes": attributes
         }
 
     def get_or_create_level(self, index):
@@ -29,9 +31,9 @@ class Worldfile():
         return self.levels[index]   
     
     @staticmethod
-    def deserialize(indict):
-        bigtiles = [Bigtiles.deserialize(i, tilesets.tiles[0]) for i in indict["bigtiles"]]
-        levels = [Level.deserialize(i) for i in indict["levels"]]
+    def deserialize(bigtiles, levels, attributes):
+        bigtiles = [Bigtiles.deserialize(i, tilesets.tiles[0]) for i in bigtiles]
+        levels = [Level.deserialize(val, attributes[i]) for i, val in enumerate(levels)]
         return Worldfile(bigtiles, levels)
     
     @staticmethod

@@ -15,6 +15,23 @@ from level import Level
 from worldfile import Worldfile
 from objects import Objects
 
+def saveData(filename, data):
+    with open(filename, "w") as fileo:
+        fileo.seek(0)
+        fileo.write(
+            "export default\n"+json.dumps(data, indent=2, sort_keys=True)+"\n"
+        )
+        fileo.truncate()
+
+def openData(filename):
+    with open(filename, "r") as fileo:
+        header = fileo.readline()
+        if header != "export default\n":
+            self.statusbar.config(text="Can't load "+filename+", improper data!")
+            return []
+        data = fileo.read()
+        return json.loads(data)
+
 class SolidityType(Enum):
     EMPTY = 0
     SOLID = 1
@@ -74,41 +91,27 @@ class Editor(tk.Frame):
         commandbar.grid(row=0, column=0, columnspan=2)
 
         def openfile():
-            filen = filedialog.askopenfilename(
-                defaultextension=".js",
-                initialfile="Worldfile.js",
+            dirn = filedialog.askdirectory(
                 initialdir="../app/data/",
-                filetypes=(("Javascript files", "*.js"),
-                           ("All files", "*")),
-                title="Open")
-            if filen != () and filen != "":
-                with open(filen, "r") as fileo:
-                    header = fileo.readline()
-                    if header != "export default\n":
-                        self.statusbar.config(text="Not a proper worldfile!")
-                        return
-                    data = fileo.read()
-                    wf = Worldfile.deserialize(json.loads(data))
+                title="Open directory")
+            if dirn != () and dirn != "":
+                    wf = Worldfile.deserialize(
+                        openData(dirn+"/Bigtiles.js"),
+                        openData(dirn+"/Levels.js"),
+                        openData(dirn+"/Attributes.js"),
+                    )
                     self.openworldfile(wf, True)
         loadbutton = tk.Button(commandbar, text="Open", command=openfile)
         loadbutton.grid(row=0, column=0)
         
         def savefile():
-            filen = filedialog.asksaveasfilename(
-                defaultextension=".js",
-                initialfile="Worldfile.js",
+            dirn = filedialog.askdirectory(
                 initialdir="../app/data/",
-                filetypes=(("Javascript files", "*.js"),
-                           ("All files", "*")),
-                title="Save")
-            if filen != () and filen != "":
-                with open(filen, "w") as fileo:
-                    fileo.seek(0)
-                    fileo.write("export default\n"+
-                                json.dumps(
-                                    self.worldfile.serialize(), indent=2, sort_keys=True
-                                )+"\n")
-                    fileo.truncate()
+                title="Save directory")
+            if dirn != () and dirn != "":
+                worlddata = self.worldfile.serialize()
+                for key in worlddata:
+                    saveData(dirn+"/"+key+".js", worlddata[key])
         savebutton = tk.Button(commandbar, text="Save", command=savefile)
         savebutton.grid(row=0, column=1)
 
