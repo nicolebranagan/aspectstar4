@@ -1,19 +1,18 @@
 import LevelObject from '../interfaces/LevelObject';
 import Point from '../system/Point';
 import Terrain from './Terrain';
-import Level from './Level';
 import Stage from './Stage';
-
 import Objects from '../data/Objects';
-import Worldfile from '../data/Worldfile';
+import Levels from '../data/Levels';
+import Attributes from '../data/Attributes';
 
 /**
  * Loader will load everything from the worldfile
  */
 export default function Loader(index : number) : { terrain : Terrain, stage : Stage, objects : Promise<LevelObject>[]} {
-    const terrain = new Terrain(Worldfile.levels[index]);
-    const stage = new Stage(Worldfile.levels[index]);
-    const objects = Worldfile.levels[index].objects.map(async e => await parseObject(stage, e));
+    const terrain = new Terrain(Levels[index], Attributes[index]);
+    const stage = new Stage(Levels[index], Attributes[index]);
+    const objects = Levels[index].objects.map(async e => await parseObject(stage, e));
      return {
         terrain,
         stage,

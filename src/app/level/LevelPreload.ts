@@ -1,8 +1,8 @@
 import Master from "../interfaces/Master";
-import Worldfile from '../data/Worldfile';
 import Attributes from "../interfaces/Attributes";
 import { DEFAULT_SYSTEM_STYLE, LOAD_LEVEL_NAME_STYLE } from "../text/Fonts";
 import Runner from "../interfaces/Runner";
+import AttributeData from "../data/Attributes";
 
 const INITIAL_LOAD_TEXT = "Loading...";
 const AFTER_LOAD_TEXT = "Nya!"
@@ -31,7 +31,7 @@ export default class LevelPreload implements Runner {
         this.master = master;
         this.index = index;
         this.drawables = new PIXI.Container();
-        this.attributes = Worldfile.levels[index].attributes;
+        this.attributes = AttributeData[index];
 
         this.drawInitialLoad();
         this.loadLevel();

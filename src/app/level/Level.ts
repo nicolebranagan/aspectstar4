@@ -14,10 +14,10 @@ import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
 import PauseMenu from './PauseMenu';
-import Worldfile from '../data/Worldfile';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
+import AttributeData from '../data/Attributes';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -74,7 +74,7 @@ export default class Level implements Runner, Master {
         this.drawables = new PIXI.Container;
 
         this.levelid = levelid;
-        const attributes : Attributes = Worldfile.levels[levelid].attributes;
+        const attributes : Attributes = AttributeData[levelid];
 
         this.background = new BACKGROUNDS[attributes.background]();
         this.addRunner(this.background);
