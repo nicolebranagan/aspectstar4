@@ -10,7 +10,7 @@ import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import { winLevel } from "../state/Governor";
 
 const TestMap : {levels: [number, number, number][], rows: [number, number][]} = {
-    levels: [[0, 1, 0], [0, 0, 0], [0, 0, 0]],
+    levels: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
     rows: [[150, 62], [250, 132], [40, 190]],
 };
 
@@ -35,6 +35,7 @@ export default class Map implements Runner {
     private flatMap : {x : number, y : number}[];
     private mapSprite : Updatable;
     private levelName : PIXI.Text;
+    private active : boolean = true;
 
     private row : number;
     private level : number;
@@ -93,6 +94,21 @@ export default class Map implements Runner {
             this.drawLevelName();
             this.drawCrowns();
         }
+        if (controls.Up) {
+            this.row = Math.max(this.row - 1, 0);
+            if (this.row === this.maxRow && this.level > this.maxLevel) {
+                this.level = this.maxLevel;
+            }
+            this.refreshMapSprite();
+            this.drawLevelName();
+            this.drawCrowns();
+        };
+        if (controls.Down) {
+            this.row = Math.min(this.maxRow, this.row + 1);
+            this.refreshMapSprite();
+            this.drawLevelName();
+            this.drawCrowns();
+        }
         if (controls.ButtonA || controls.Start) {
             this.onSelectLevel();
             controls.release();
@@ -101,16 +117,19 @@ export default class Map implements Runner {
 
     private onSelectLevel() {
         const index = TestMap.levels[this.row][this.level];
-        import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
-            Level => {
-                this.master.removeRunner(this);
-                this.master.addRunner(new Level.default(
-                    this.master, 
-                    index, 
-                    winLevel.bind(null, this.master, this.level, this.row)
-                ));
-            }
-        );
+        if (this.active) {
+            this.active = false;
+            import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
+                Level => {
+                    this.master.removeRunner(this);
+                    this.master.addRunner(new Level.default(
+                        this.master, 
+                        index, 
+                        winLevel.bind(null, this.master, this.level, this.row)
+                    ));
+                }
+            );
+        }
     }
 
     private drawLevelName() {
