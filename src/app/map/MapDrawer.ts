@@ -28,7 +28,7 @@ export const frameCycle = PALETTE_CYCLE.length * frameMultiplier;
 
 
 export const flattenMap = (
-    {levels, rows} : {levels: number[][], rows: [number, number][]}
+    {levels, rows} : {levels: number[][], rows: number[][]}
 ) => {
     const outMap = [];
     for (const i in rows) {
@@ -36,7 +36,7 @@ export const flattenMap = (
         for (let j = 0; j < levels[i].length; j++) {
             outMap.push({
                 x: row[0] + j*(2*CIRCLE_WIDTH + CIRCLE_SEPARATOR),
-                y: row[1]
+                y: row[1],
             })
         }
     }

@@ -15,7 +15,7 @@ export const enterWorldMap = (master : Master) => {
     import(/* webpackChunkName: "map" */ '../map/Map').then(
         Map => {
             // @ts-ignore This is valid, and TypeScript should be able to tell that
-            master.addRunner(new Map.default(master, ...getMapState()));
+            master.addRunner(new Map.default(master, 0, ...getMapState()));
         }
     );
 };

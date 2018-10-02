@@ -8,11 +8,7 @@ import Updatable from "../interfaces/Updatable";
 import Worldfile from "../data/Worldfile";
 import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import { winLevel } from "../state/Governor";
-
-const TestMap : {levels: [number, number, number][], rows: [number, number][]} = {
-    levels: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-    rows: [[150, 62], [250, 132], [40, 190]],
-};
+import MapData from "../data/Map";
 
 const drawCircle = (x : number, y : number) => {
     const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
@@ -44,11 +40,12 @@ export default class Map implements Runner {
 
     constructor(
         private master : Master, 
+        private mapIndex : number,
         private maxLevel : number, 
         private maxRow : number, 
         private levelParams : [boolean, boolean, boolean][][]
     ) {
-        this.flatMap = flattenMap(TestMap);
+        this.flatMap = flattenMap(MapData[mapIndex]);
 
         this.drawables = new PIXI.Container();
         this.flatMap.forEach(level => {
@@ -116,7 +113,7 @@ export default class Map implements Runner {
     }
 
     private onSelectLevel() {
-        const index = TestMap.levels[this.row][this.level];
+        const index = MapData[this.mapIndex].levels[this.row][this.level];
         if (this.active) {
             this.active = false;
             import(/* webpackChunkName: "level-preload" */ '../level/LevelPreload').then(
@@ -136,7 +133,7 @@ export default class Map implements Runner {
         if (this.levelName) {
             this.drawables.removeChild(this.levelName);
         }
-        const levelIndex = TestMap.levels[this.row][this.level];
+        const levelIndex = MapData[this.mapIndex].levels[this.row][this.level];
         const { name } = Worldfile.levels[levelIndex].attributes;
         const metrics = PIXI.TextMetrics.measureText(name, DEFAULT_TEXT_STYLE);
         const x = 200-metrics.width;
