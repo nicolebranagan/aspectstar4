@@ -1,13 +1,12 @@
 import LevelObject from '../interfaces/LevelObject';
 import Point from '../system/Point';
-import Levels from '../data/Levels';
 import Stage from '../interfaces/Stage';
 
 /**
  * Loader will load in the objects
  */
-export default function Loader(index : number, stage : Stage) : Promise<LevelObject>[] {
-    return Levels[index].objects.map(async e => await parseObject(stage, e));
+export default function Loader( stage : Stage, objects : ((number | boolean)[] | (string | number)[])[]) : Promise<LevelObject>[] {
+    return objects.map(async e => await parseObject(stage, e));
 }
 
 async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {

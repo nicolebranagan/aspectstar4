@@ -62,6 +62,7 @@ export default class Level implements Runner, Master {
     private winSystem : Updatable;
     private deaths : number = 0;
     private paused : Runner;
+    private objectMemory : ((number | boolean)[] | (string | number)[])[];
 
     constructor(
         master : Master, 
@@ -85,7 +86,7 @@ export default class Level implements Runner, Master {
         this.levelFrame.position.set(0, 0);
         this.drawables.addChild(this.levelFrame);
 
-        this.initializeStage(attributes).then(() => this.resetObjects());
+        this.initializeStage(attributes).then(objects => this.resetObjects(objects));
 
         this.system = new System(this.lastState, this.bellCount);
         this.addRunner(this.system);
@@ -102,7 +103,7 @@ export default class Level implements Runner, Master {
             },
 
             loadState: () => {
-                this.resetObjects();
+                this.resetObjects(this.objectMemory);
             },
 
             getAspect: (aspect : Aspect) => {
@@ -225,7 +226,7 @@ export default class Level implements Runner, Master {
             this.deathTimer++;
             if (this.deathTimer > 300) {
                 this.deathTimer = 0;
-                this.resetObjects();
+                this.resetObjects(this.objectMemory);
             }
         }
     }
@@ -252,13 +253,16 @@ export default class Level implements Runner, Master {
         this.stage = new FunctionalStage(levelData, bigtile);
         const terrain = new Terrain(levelData, attributes, bigtile.bigtiles);
         this.levelFrame.addChildAt(terrain.drawables, 0);
+        this.objectMemory = levelData.objects;
+
+        return levelData.objects;
     }
 
-    private resetObjects() {
+    private resetObjects(objects : ((number | boolean)[] | (string | number)[])[]) {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
-        const data = Loader(this.levelid, this.stage);
+        const data = Loader(this.stage, objects);
         this.player = new ActivePlayer(this.stage, this.lastState);
 
         let count = 0;
