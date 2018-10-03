@@ -117,7 +117,9 @@ export default class Level implements Runner, Master {
 
             setInteraction: (interaction : Interaction[]) => {
                 import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
-                    this.textBox = new TextBox.default(this, interaction);
+                    this.textBox = new TextBox.default(interaction, () => {
+                        this.removeRunner(this.textBox);
+                    });
                     this.addRunner(this.textBox);
                     this.interaction = null;
                 });
@@ -153,7 +155,9 @@ export default class Level implements Runner, Master {
             this.textBox.respond(controls)
         else if (!!this.interaction) {
             import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
-                this.textBox = new TextBox.default(this, this.interaction);
+                this.textBox = new TextBox.default(this.interaction, () => {
+                    this.removeRunner(this.textBox);
+                });
                 this.addRunner(this.textBox);
                 this.interaction = null;
             });
