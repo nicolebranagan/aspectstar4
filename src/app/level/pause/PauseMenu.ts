@@ -1,13 +1,21 @@
-import { LevelOptions } from "./Level";
-import Controls from "../interfaces/Controls";
-import Menu from "../text/Menu";
-import Runner from "../interfaces/Runner";
+import { LevelOptions } from "../Level";
+import Controls from "../../interfaces/Controls";
+import Menu from "../../text/Menu";
+import Runner from "../../interfaces/Runner";
+import PauseSprite from './PauseSprite';
+import Point from "../../system/Point";
+
+const SPRITE_X = 64;
+const SPRITE_MAX_Y = 124;
 
 export default class PauseMenu implements Runner {
     public drawables : PIXI.Container;
 
     private menu : Menu;
     private overlay : PIXI.Graphics;
+
+    private sprite : PauseSprite;
+    private updateFunc : () => void;
 
     constructor(private levelOptions: LevelOptions) {
         this.drawables = new PIXI.Container();
@@ -16,7 +24,7 @@ export default class PauseMenu implements Runner {
             options: this.getOptions()
         });
         this.drawables.addChild(this.menu.drawables);
-        this.update = this.rampUpRed;
+        this.updateFunc = this.rampUpRed;
     }
 
     prepareOverlay() {
@@ -43,7 +51,11 @@ export default class PauseMenu implements Runner {
             }                    
         }, {
             name : "Give Up",
-            onChoose: () => {throw "Not implemented"}
+            onChoose: () => {
+                this.sprite = new PauseSprite(new Point(SPRITE_X, -32));
+                this.drawables.addChild(this.sprite.drawables);
+                this.moveSprite();
+            }
         }, {
             name : "Exit",
             onChoose: () => {
@@ -54,7 +66,7 @@ export default class PauseMenu implements Runner {
     }
 
     respond(controls : Controls) {
-        if (!this.menu) {
+        if (!this.menu || this.sprite) {
             return;
         }
         this.menu.respond(controls);
@@ -62,37 +74,60 @@ export default class PauseMenu implements Runner {
     }
 
     update() {
+        if (this.sprite) {
+            this.sprite.update();
+        }
+        this.updateFunc();
     }
 
-    rampUpRed() {
+    private rampUpRed() {
         this.overlay.tint += 0x010000;
         if (this.overlay.tint >= 0x888888) {
             this.overlay.tint = 0x880000;
-            this.update = this.rampDownRed;
+            this.updateFunc = this.rampDownRed;
         }
     }
 
-    rampDownRed() {
+    private rampDownRed() {
         this.overlay.tint -= 0x010000;
         if (this.overlay.tint <= 0x000000) {
             this.overlay.tint = 0x000000;
-            this.update = this.rampUpBlue;
+            this.updateFunc = this.rampUpBlue;
         }
     }
 
-    rampUpBlue() {
+    private rampUpBlue() {
         this.overlay.tint += 0x000001;
         if (this.overlay.tint >= 0x000088) {
             this.overlay.tint = 0x000088;
-            this.update = this.rampDownBlue;
+            this.updateFunc = this.rampDownBlue;
         }
     }
 
-    rampDownBlue() {
+    private rampDownBlue() {
         this.overlay.tint -= 0x000001;
         if (this.overlay.tint <= 0x000000) {
             this.overlay.tint = 0x000000;
-            this.update = this.rampUpRed;
+            this.updateFunc = this.rampUpRed;
         }
+    }
+
+    private beginDeath() {
+        
+    }
+
+    private moveSprite() {
+        let pos = -32;
+        const callback = () => {
+            pos++;
+            this.sprite.move(new Point(SPRITE_X, pos))
+            if (pos < SPRITE_MAX_Y) {
+                setTimeout(callback, 10);
+            } else {
+                this.updateFunc = this.beginDeath;
+                this.levelOptions.win();
+            }
+        };
+        callback();
     }
 }

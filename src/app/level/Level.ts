@@ -13,7 +13,7 @@ import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
-import PauseMenu from './PauseMenu';
+import PauseMenu from './pause/PauseMenu';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
