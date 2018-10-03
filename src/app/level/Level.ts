@@ -17,6 +17,7 @@ import PauseMenu from './PauseMenu';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
+import { enterWorldMap } from '../state/Governor';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -132,12 +133,8 @@ export default class Level implements Runner, Master {
             },
 
             exit: () => {
-                import(/* webpackChunkName: "main-menu" */ '../menus/MainMenu').then(
-                    MainMenu => {
-                        this.master.removeRunner(this);
-                        this.master.addRunner(new MainMenu.default(this.master))
-                    }
-                );
+                this.master.removeRunner(this);
+                enterWorldMap(this.master);
             },
 
             closePauseWindow: () => {
