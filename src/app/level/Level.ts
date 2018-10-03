@@ -8,7 +8,7 @@ import Background from '../interfaces/Background';
 import Interaction from '../interfaces/Interaction';
 import Point from '../system/Point';
 import ActivePlayer from './objects/ActivePlayer';
-import Stage from './Stage';
+import Stage from '../interfaces/Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
@@ -17,7 +17,6 @@ import PauseMenu from './PauseMenu';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
-import AttributeData from '../data/Attributes';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -67,6 +66,7 @@ export default class Level implements Runner, Master {
     constructor(
         master : Master, 
         levelid : number, 
+        attributes : Attributes,
         private onload : (callback : () => void) => void, 
         private onwin : (params : [boolean, boolean, boolean]) => void
     ) {
@@ -74,25 +74,24 @@ export default class Level implements Runner, Master {
         this.drawables = new PIXI.Container;
 
         this.levelid = levelid;
-        const attributes : Attributes = AttributeData[levelid];
 
         this.background = new BACKGROUNDS[attributes.background]();
         this.addRunner(this.background);
         this.lastState = {
-            //@ts-ignore This is perfectly safe but there's no good way for typescript to realize that
-            point: new Point(...attributes.start),
+            point: new Point(attributes.start[0], attributes.start[1]),
             aspect: Aspect.ASPECT_PLUS,
             aspects: [Aspect.ASPECT_PLUS],
         };
-        const data = this.resetObjects();
-        this.levelFrame.addChildAt(data.terrain.drawables, 0);
         this.levelFrame.position.set(0, 0);
         this.drawables.addChild(this.levelFrame);
 
-        this.system = new System(this.player, this.bellCount);
+        this.initializeStage(attributes).then(() => this.resetObjects());
+
+        this.system = new System(this.lastState, this.bellCount);
         this.addRunner(this.system);
 
-        this.camera = this.player.point;
+        this.camera = this.lastState.point;
+        
         this.options = {
             saveState: () => {
                 this.lastState = {
@@ -243,22 +242,33 @@ export default class Level implements Runner, Master {
         this.levelFrame.removeChild(obj.drawables);
     }
 
+    private async initializeStage(attributes : Attributes) {
+        const levelData = (await import(/* webpackChunkName: "levels" */ '../data/Levels')).default[this.levelid];
+        const bigtile = (await import(/* webpackChunkName: "bigtiles" */ '../data/Bigtiles')).default[attributes.bigtileset];
+
+        const FunctionalStage = (await import(/* webpackChunkName: "functional-stage" */ './FunctionalStage')).default;
+        const Terrain = (await import(/* webpackChunkName: "terrain" */ './Terrain')).default;
+
+        this.stage = new FunctionalStage(levelData, bigtile);
+        const terrain = new Terrain(levelData, attributes, bigtile.bigtiles);
+        this.levelFrame.addChildAt(terrain.drawables, 0);
+    }
+
     private resetObjects() {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
-        const data = Loader(this.levelid);
-        this.stage = data.stage;
+        const data = Loader(this.levelid, this.stage);
         this.player = new ActivePlayer(this.stage, this.lastState);
 
         let count = 0;
-        data.objects.forEach( e => (e.then( obj => {
+        data.forEach( e => (e.then( obj => {
             this.addObject(obj);
             if (obj.constructor.name === "Bell") {
                 this.bellCount += 1;
             }
             count++;
-            if (count === data.objects.length) {
+            if (count === data.length) {
                 const callback = () => {
                     this.loaded = true;
                     this.addObject(this.player)
@@ -271,8 +281,6 @@ export default class Level implements Runner, Master {
                 }
             }
         })));
-
-        return data;
     }
 
     /* Implements Master interface */

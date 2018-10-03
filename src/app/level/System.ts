@@ -1,6 +1,7 @@
 import Aspect from '../constants/Aspect';
 import Player from '../interfaces/Player';
 import Drawable from '../interfaces/Drawable';
+import PlayerState from './PlayerState';
 
 class CachedSprite {
     private sprite : PIXI.Sprite;
@@ -72,10 +73,10 @@ export default class System implements Drawable {
     private bellCount : number
     private bellCountMax : number
 
-    constructor(player : Player, bellCountMax : number) {
+    constructor(playerState : PlayerState, bellCountMax : number) {
         this.drawables = new PIXI.Container();
-        this.selectedAspect = player.aspect;
-        this.aspects = player.aspects;
+        this.selectedAspect = playerState.aspect;
+        this.aspects = playerState.aspects;
         this.bellCountMax = bellCountMax;
         this.reset();
     }

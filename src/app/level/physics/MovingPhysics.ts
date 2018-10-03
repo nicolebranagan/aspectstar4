@@ -2,7 +2,7 @@ import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
 import Physics from '../../interfaces/Physics';
 import Point from '../../system/Point';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 
 export default class MovingPhysics implements Physics {
     constructor(public stage : Stage,

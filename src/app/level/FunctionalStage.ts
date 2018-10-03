@@ -3,23 +3,22 @@ import SolidityType from '../constants/SolidityType';
 import LevelObject from '../interfaces/LevelObject';
 import Point from '../system/Point';
 import Solidity from './Solidity';
-import Attributes from '../interfaces/Attributes';
-import Bigtiles from '../data/Bigtiles';
+import Stage from '../interfaces/Stage';
 
 /* Stage represents the level, but solely as far as game logic is concerned;
  * actually drawing the level is the responsibility of the Terrain object.
  * */
-export default class Stage {
+export default class FunctionalStage implements Stage {
     private level : number[];
     private bigtiles : number[][];
     private width : number;
     private key : SolidityType[]
     private platforms : [LevelObject, Aspect, boolean][] = [];
 
-    constructor(level : any, attributes : Attributes) {
+    constructor(level : any, bigtile : {bigtiles : number[][], key: number[]}) {
         this.level = level.grid;
-        this.bigtiles = Bigtiles[attributes.bigtileset].bigtiles;
-        this.key = Bigtiles[attributes.bigtileset].key;
+        this.bigtiles = bigtile.bigtiles;
+        this.key = bigtile.key;
         this.width = level.width;
     }
 

@@ -1,6 +1,5 @@
 import Drawable from '../interfaces/Drawable';
 import Attributes from '../interfaces/Attributes';
-import Bigtiles from '../data/Bigtiles';
 
 const TILESETS = ['level1'];
 
@@ -9,7 +8,7 @@ const TILESETS = ['level1'];
 export default class Terrain implements Drawable {
     public drawables : PIXI.Container;
 
-    constructor(level : any, attributes : Attributes) {
+    constructor(level : any, attributes : Attributes, bigtileset : number[][]) {
         this.drawables = new PIXI.Container();
         const drawables = this.drawables;
         const text = PIXI.loader.resources[TILESETS[attributes.tileset]].texture.baseTexture;
@@ -26,12 +25,8 @@ export default class Terrain implements Drawable {
             drawables.addChild(sprite);
         }
 
-        const bigtileset : any = Bigtiles[attributes.bigtileset].bigtiles;
         function drawBigtile(i : number, x : number, y : number) : void {
             const bigtile = bigtileset[i];
-            if (bigtile == -1) {
-                throw new Error("Can't load bigtile");
-            }
             // Cartesian coordinates
             const cartx = x * 32;
             const carty = y * 32;
