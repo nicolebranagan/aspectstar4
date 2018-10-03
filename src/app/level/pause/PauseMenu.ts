@@ -4,14 +4,19 @@ import Menu from "../../text/Menu";
 import Runner from "../../interfaces/Runner";
 import PauseSprite from './PauseSprite';
 import Point from "../../system/Point";
+import TextBox from "../../text/TextBox";
+import Interactions from "../../data/Interactions";
 
 const SPRITE_X = 64;
-const SPRITE_MAX_Y = 124;
+const SPRITE_MAX_Y = 100;
+const SPRITE_MAX_Y_2 = 138;
 
 export default class PauseMenu implements Runner {
     public drawables : PIXI.Container;
 
     private menu : Menu;
+    private textBox : TextBox;
+
     private overlay : PIXI.Graphics;
 
     private sprite : PauseSprite;
@@ -54,7 +59,7 @@ export default class PauseMenu implements Runner {
             onChoose: () => {
                 this.sprite = new PauseSprite(new Point(SPRITE_X, -32));
                 this.drawables.addChild(this.sprite.drawables);
-                this.moveSprite();
+                this.moveSprite1();
             }
         }, {
             name : "Exit",
@@ -66,6 +71,10 @@ export default class PauseMenu implements Runner {
     }
 
     respond(controls : Controls) {
+        if (this.textBox) {
+            this.textBox.respond(controls);
+        }
+
         if (!this.menu || this.sprite) {
             return;
         }
@@ -113,10 +122,17 @@ export default class PauseMenu implements Runner {
     }
 
     private beginDeath() {
-        
+        this.overlay.tint -= 0x200000;
+        if (this.overlay.tint <= 0x000000) {
+            this.overlay.tint = 0x000000;
+        }
+        this.overlay.alpha += 0.01;
+        if (this.overlay.alpha >= 1.0) {
+            this.overlay.alpha = 1.0;
+        }
     }
 
-    private moveSprite() {
+    private moveSprite1() {
         let pos = -32;
         const callback = () => {
             pos++;
@@ -124,8 +140,29 @@ export default class PauseMenu implements Runner {
             if (pos < SPRITE_MAX_Y) {
                 setTimeout(callback, 10);
             } else {
+                this.textBox = new TextBox(Interactions.giveUp, () => {
+                    this.drawables.removeChild(this.textBox.drawables);
+                    this.moveSprite2();
+                });
+                this.drawables.addChild(this.textBox.drawables);
+                this.drawables.removeChild(this.menu.drawables);
+                this.menu = null;
+            }
+        };
+        callback();
+    }
+
+    private moveSprite2() {
+        let pos = SPRITE_MAX_Y;
+        const callback = () => {
+            pos++;
+            this.sprite.move(new Point(SPRITE_X, pos))
+            if (pos < SPRITE_MAX_Y_2) {
+                setTimeout(callback, 10);
+            } else {
                 this.updateFunc = this.beginDeath;
-                this.levelOptions.win();
+                this.sprite.setFrame(2);
+                setTimeout(this.levelOptions.win, 1000);
             }
         };
         callback();

@@ -32,9 +32,13 @@ export default class PauseSprite implements Updatable {
         this.sprite.y = pos.y;
     }
 
+    setFrame(frame : number) {
+        this.frame = frame;
+    }
+
     update() : void {
         this.timer++;
-        if (this.timer > FRAME_TIME) {
+        if (this.timer > FRAME_TIME && this.frame < 2) {
             this.timer = 0;
             this.frame = (this.frame + 1) % 2;
         }
