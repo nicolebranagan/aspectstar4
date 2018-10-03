@@ -1,6 +1,6 @@
 import Physics from '../../interfaces/Physics';
 import Point from '../../system/Point';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 
 export default class SolidPhysics implements Physics {
     constructor(public stage : Stage,

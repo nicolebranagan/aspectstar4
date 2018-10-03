@@ -1,9 +1,8 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
-import Player from '../../interfaces/Player';
 import Point from '../../system/Point';
 import MovingPhysics from '../physics/MovingPhysics';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 import { LevelOptions } from '../Level';
 
 export default class Platform implements LevelObject {

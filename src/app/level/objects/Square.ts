@@ -1,9 +1,8 @@
 import Aspect from '../../constants/Aspect';
 import LevelObject from '../../interfaces/LevelObject';
-import Player from '../../interfaces/Player';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 import { LevelOptions } from '../Level';
 
 export default class Square implements LevelObject {

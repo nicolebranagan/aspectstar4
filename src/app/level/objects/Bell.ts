@@ -1,10 +1,8 @@
 import Aspect from '../../constants/Aspect';
-import Runner from '../../interfaces/Runner';
-import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 import BaseLevelObject from './BaseLevelObject';
 import { LevelOptions } from '../Level';
 

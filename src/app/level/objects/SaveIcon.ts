@@ -4,7 +4,7 @@ import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';
-import Stage from '../Stage';
+import Stage from '../../interfaces/Stage';
 import { LevelOptions } from '../Level';
 import BaseLevelObject from './BaseLevelObject';
 import Updatable from '../../interfaces/Updatable';

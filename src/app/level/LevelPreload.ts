@@ -124,7 +124,7 @@ export default class LevelPreload implements Runner {
         import(/* webpackChunkName: "level" */ './Level').then(
             Level => {
                 // The reason for the pause is that it results in gameplay being smoother after initial load
-                this.level = new Level.default(this.master, this.index, (callback) => {
+                this.level = new Level.default(this.master, this.index, this.attributes, (callback) => {
                     this.loaded = true;
                     this.timer = 200;
                     this.scrollerTexts.forEach(scrollerText => scrollerText.text = AFTER_LOAD_TEXT);
@@ -132,7 +132,7 @@ export default class LevelPreload implements Runner {
                     callback();
                 }, this.onwin);
             }
-        );
+        ).catch(err => console.log(err));
     }
 
     updateTimerText() {
