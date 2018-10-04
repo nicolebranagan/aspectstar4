@@ -122,13 +122,22 @@ export default class PauseMenu implements Runner {
     }
 
     private beginDeath() {
-        this.overlay.tint -= 0x200000;
-        if (this.overlay.tint <= 0x000000) {
-            this.overlay.tint = 0x000000;
-        }
-        this.overlay.alpha += 0.01;
-        if (this.overlay.alpha >= 1.0) {
-            this.overlay.alpha = 1.0;
+        if (this.overlay.alpha !== 1.0) {
+            this.overlay.alpha += 0.005;
+            if (this.overlay.alpha >= 1.0) {
+                this.overlay.alpha = 1.0;
+                this.overlay.beginFill(0xFF0000);
+                this.overlay.drawRect(0, 0, 400, 225);
+                this.overlay.tint = 0;
+                this.overlay.blendMode = PIXI.BLEND_MODES.NORMAL;
+            }
+        } else {
+            const tintOffset = (this.overlay.tint % 256) + 1;
+            if (tintOffset > 255) {
+                this.overlay.tint = 0xFFFFFF;
+            } else {
+                this.overlay.tint = tintOffset*256*256 + tintOffset*256 + tintOffset;
+            }
         }
     }
 
@@ -162,7 +171,7 @@ export default class PauseMenu implements Runner {
             } else {
                 this.updateFunc = this.beginDeath;
                 this.sprite.setFrame(2);
-                setTimeout(this.levelOptions.win, 1000);
+                setTimeout(this.levelOptions.win.bind(null, false), 1000);
             }
         };
         callback();

@@ -28,7 +28,7 @@ export interface LevelOptions {
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
-    win: () => void;
+    win: (fairGame : boolean) => void;
     exit: () => void;
     getPlayer: () => Player;
     getObjects: () => LevelObject[];
@@ -46,7 +46,7 @@ export default class Level implements Runner, Master {
 
     private master : Master;
     private levelid : number;
-    private objects : LevelObject[] = []
+    private objects : LevelObject[] = [];
     private stage : Stage
     private player : Player
     private camera : Point
@@ -125,12 +125,18 @@ export default class Level implements Runner, Master {
                 });
             },
 
-            win: () => {
+            win: (fairGame : boolean) => {
                 import(/* webpackChunkName: "win-system" */ './WinSystem').then(WinSystem => {
                     this.winSystem = new WinSystem.default(
-                        attributes.name, this.player.aspects, this.player.bells, this.bellCount, this.deaths
+                        attributes.name, fairGame, this.player.aspects, this.player.bells, this.bellCount, this.deaths
                     );
                     this.addRunner(this.winSystem);
+                    if (!fairGame) {
+                        // Remove credit
+                        this.player.aspects = [];
+                        this.deaths = Number.MAX_SAFE_INTEGER;
+                        this.player.bells = -1;
+                    }
                 })
             },
 
@@ -191,6 +197,9 @@ export default class Level implements Runner, Master {
         this.system.updateSystem(this.player, this.bellCount);
         if (!!this.winSystem) {
             this.winSystem.update();
+            if (this.paused) {
+                this.paused.update();
+            }
             return;
         }
         this.camera = this.player.point;
