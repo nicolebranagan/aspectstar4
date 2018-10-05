@@ -135,9 +135,13 @@ export default class Map implements Runner {
         }
         const levelIndex = MapData[this.mapIndex].levels[this.row][this.level];
         const { name } = Attributes[levelIndex];
-        const metrics = PIXI.TextMetrics.measureText(name, DEFAULT_TEXT_STYLE);
+        const params = this.levelParams[this.row][this.level];
+        const allTrue = params.reduce((prev, curr) => prev && curr, true);
+
+        const displayName = allTrue ? `❤ ${name} ❤` : name;
+        const metrics = PIXI.TextMetrics.measureText(displayName, DEFAULT_TEXT_STYLE);
         const x = 200-metrics.width;
-        this.levelName = new PIXI.Text(name, DEFAULT_TEXT_STYLE);
+        this.levelName = new PIXI.Text(displayName, DEFAULT_TEXT_STYLE);
         this.levelName.x = Math.floor(x);
         this.levelName.y = LEVEL_NAME_HEIGHT;
         this.levelName.scale.x = 2;
