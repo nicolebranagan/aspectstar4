@@ -21,6 +21,7 @@
   "dependencies": {
     "fontfaceobserver": "^2.0.13",
     "howler": "^2.0.15",
+    "localforage": "^1.7.2",
     "pixi.js": "^4.8.1"
   }
 }

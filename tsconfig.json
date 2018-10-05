@@ -4,6 +4,7 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "esNext",
+    "moduleResolution": "node",
     "lib": ["es2015", "dom", "scripthost", "dom.iterable"],
     "target": "es2015",
     "allowJs": true,

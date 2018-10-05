@@ -18,6 +18,10 @@ let state : {
     levelMarkers: [boolean, boolean, boolean][][],
 };
 
+export const getStateString : () => string = () => JSON.stringify(state);
+
+export const setStateFromString : (string : string) => void = string => { state = JSON.parse(string); };
+
 // Getters
 export const getMapState : () => [number, number, [boolean, boolean, boolean][][]] = () => [
     state.maxLevel,

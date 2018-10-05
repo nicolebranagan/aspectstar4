@@ -9,6 +9,7 @@ import { DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import { winLevel } from "../state/Governor";
 import MapData from "../data/Map";
 import Attributes from "../data/Attributes";
+import MapMenu from "./MapMenu";
 
 const drawCircle = (x : number, y : number) => {
     const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
@@ -35,6 +36,8 @@ export default class Map implements Runner {
 
     private row : number;
     private level : number;
+
+    private menu : Runner;
 
     private crowns : PIXI.Sprite[] = [];
 
@@ -76,6 +79,10 @@ export default class Map implements Runner {
     }
 
     respond(controls : Controls) {
+        if (this.menu) {
+            this.menu.respond(controls);
+            return;
+        }
         if (controls.Left) {
             this.level = Math.max(this.level - 1, 0);
             controls.Left = false;
@@ -106,9 +113,16 @@ export default class Map implements Runner {
             this.drawLevelName();
             this.drawCrowns();
         }
-        if (controls.ButtonA || controls.Start) {
+        if (controls.ButtonA || controls.ButtonB) {
             this.onSelectLevel();
             controls.release();
+        }
+        if (controls.Start) {
+            this.menu = new MapMenu(this.master, this, () => {
+                this.menu = null;
+                this.drawables.removeChild(this.menu.drawables);
+            })
+            this.drawables.addChild(this.menu.drawables);
         }
     }
 
