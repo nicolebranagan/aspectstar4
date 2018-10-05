@@ -1,10 +1,32 @@
+import * as localForage from "localforage";
 import { 
     getMapState,
     setWinState, 
     resetState,
-    setLevelMarkers
+    setLevelMarkers,
+    getStateString,
+    setStateFromString
 } from './StateManager';
 import Master from '../interfaces/Master';
+
+const saveKey = (slot : number) => `ASPECT_STAR_4_SLOT_${slot.toString()}`;
+
+export const saveState : (slot : number) => Promise<void> = async (slot : number) => {
+    await localForage.setItem(saveKey(slot), JSON.stringify(
+        getStateString()
+    ));
+    return;
+};
+
+export const loadState : (slot : number) => Promise<boolean> = async (slot : number) => {
+    try {
+        const stateString = await localForage.getItem(saveKey(slot));
+        setStateFromString(stateString.toString());
+        return true;
+    } catch(ex) {
+        return false;
+    }
+};
 
 export const newGame = (master : Master) => {
     resetState();
