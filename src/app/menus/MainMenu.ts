@@ -60,6 +60,7 @@ export default class MainMenu implements Runner {
         this.locked = true;
         loadState(0).then(success => {
             if (success) {
+                this.master.removeRunner(this);
                 enterWorldMap(this.master)
             } else {
                 this.locked = false;

@@ -12,9 +12,7 @@ import Master from '../interfaces/Master';
 const saveKey = (slot : number) => `ASPECT_STAR_4_SLOT_${slot.toString()}`;
 
 export const saveState : (slot : number) => Promise<void> = async (slot : number) => {
-    await localForage.setItem(saveKey(slot), JSON.stringify(
-        getStateString()
-    ));
+    await localForage.setItem(saveKey(slot), getStateString());
     return;
 };
 
@@ -39,7 +37,7 @@ export const enterWorldMap = (master : Master) => {
             // @ts-ignore This is valid, and TypeScript should be able to tell that
             master.addRunner(new Map.default(master, 0, ...getMapState()));
         }
-    );
+    ).catch(nya => console.error(nya));
 };
 
 export const winLevel = (master : Master, level : number, row : number, params : [boolean, boolean, boolean]) => {
