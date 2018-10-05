@@ -8,6 +8,19 @@ export default
         name: 'Nicole',
         text: 'Sounds perfectly normal to me!'
     }],
+    giveUp: [{
+        name: 'Mary',
+        text: 'THIS LEVEL IS QUITE EASY, ISN\'T IT?',
+        font: 'machine'
+    }, {
+        name: 'Mary',
+        text: 'I WILL PREVENT IT FROM WASTING YOUR TIME ANY\nFURTHER.',
+        font: 'machine'
+    }, {
+        name: 'Mary',
+        text: 'PLEASE WAIT...',
+        font: 'machine'
+    }],
     firstVictory: [{
         name: 'Zip',
         text: 'You\'ve made it out of the virtual world!\nI\'m stunned.'

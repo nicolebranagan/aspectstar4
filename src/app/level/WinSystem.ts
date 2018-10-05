@@ -4,6 +4,8 @@ import Updatable from '../interfaces/Updatable';
 
 const FIRST_LINE_1 = "Nicole";
 const FIRST_LINE_2 = "has passed";
+const UNFAIR_LINE_1 = "Mary";
+const UNFAIR_LINE_2 = "has destroyed";
 const ASPECT_LABEL = "Aspects: ";
 const BELLS_LABEL = (
     bellCount : number, 
@@ -37,6 +39,7 @@ export default class WinSystem implements Updatable {
 
     constructor(
         private name : string,
+        private fairGame : boolean,
         private aspects : Aspect[], 
         private bellCount : number, 
         private bellCountMax : number,
@@ -67,7 +70,9 @@ export default class WinSystem implements Updatable {
         if (this.firstLine1) {
             this.drawables.removeChild(this.firstLine1);
         }
-        this.firstLine1 = new PIXI.Text(FIRST_LINE_1, DEFAULT_SYSTEM_STYLE);
+        this.firstLine1 = new PIXI.Text(
+            this.fairGame ? FIRST_LINE_1 : UNFAIR_LINE_1, DEFAULT_SYSTEM_STYLE
+        );
         this.firstLine1.y = y;
         this.firstLine1.x = x;
         this.firstLine1.scale.x = 2;
@@ -76,9 +81,9 @@ export default class WinSystem implements Updatable {
     }
 
     drawFirstLine2() {
-        const metrics1 = PIXI.TextMetrics.measureText(FIRST_LINE_1, DEFAULT_SYSTEM_STYLE);
+        const metrics1 = PIXI.TextMetrics.measureText(this.fairGame ? FIRST_LINE_1 : UNFAIR_LINE_1, DEFAULT_SYSTEM_STYLE);
 
-        this.firstLine2 = new PIXI.Text(FIRST_LINE_2, DEFAULT_TEXT_STYLE);
+        this.firstLine2 = new PIXI.Text(this.fairGame ? FIRST_LINE_2 : UNFAIR_LINE_2, DEFAULT_TEXT_STYLE);
         this.firstLine2.y = this.firstLine1.y + 4;
         this.firstLine2.x = this.firstLine1.x + metrics1.width*2;
         this.firstLine2.scale.x = 2;

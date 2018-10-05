@@ -13,7 +13,7 @@ import Loader from './Loader';
 import PlayerState from './PlayerState';
 import System from './System';
 import Palace from './backgrounds/Palace';
-import PauseMenu from './PauseMenu';
+import PauseMenu from './pause/PauseMenu';
 import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
@@ -28,7 +28,7 @@ export interface LevelOptions {
     getAspect: (aspect : Aspect) => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
-    win: () => void;
+    win: (fairGame : boolean) => void;
     exit: () => void;
     getPlayer: () => Player;
     getObjects: () => LevelObject[];
@@ -46,7 +46,7 @@ export default class Level implements Runner, Master {
 
     private master : Master;
     private levelid : number;
-    private objects : LevelObject[] = []
+    private objects : LevelObject[] = [];
     private stage : Stage
     private player : Player
     private camera : Point
@@ -117,18 +117,26 @@ export default class Level implements Runner, Master {
 
             setInteraction: (interaction : Interaction[]) => {
                 import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
-                    this.textBox = new TextBox.default(this, interaction);
+                    this.textBox = new TextBox.default(interaction, () => {
+                        this.removeRunner(this.textBox);
+                    });
                     this.addRunner(this.textBox);
                     this.interaction = null;
                 });
             },
 
-            win: () => {
+            win: (fairGame : boolean) => {
                 import(/* webpackChunkName: "win-system" */ './WinSystem').then(WinSystem => {
                     this.winSystem = new WinSystem.default(
-                        attributes.name, this.player.aspects, this.player.bells, this.bellCount, this.deaths
+                        attributes.name, fairGame, this.player.aspects, this.player.bells, this.bellCount, this.deaths
                     );
                     this.addRunner(this.winSystem);
+                    if (!fairGame) {
+                        // Remove credit
+                        this.player.aspects = [];
+                        this.deaths = Number.MAX_SAFE_INTEGER;
+                        this.player.bells = -1;
+                    }
                 })
             },
 
@@ -153,7 +161,9 @@ export default class Level implements Runner, Master {
             this.textBox.respond(controls)
         else if (!!this.interaction) {
             import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
-                this.textBox = new TextBox.default(this, this.interaction);
+                this.textBox = new TextBox.default(this.interaction, () => {
+                    this.removeRunner(this.textBox);
+                });
                 this.addRunner(this.textBox);
                 this.interaction = null;
             });
@@ -187,6 +197,9 @@ export default class Level implements Runner, Master {
         this.system.updateSystem(this.player, this.bellCount);
         if (!!this.winSystem) {
             this.winSystem.update();
+            if (this.paused) {
+                this.paused.update();
+            }
             return;
         }
         this.camera = this.player.point;

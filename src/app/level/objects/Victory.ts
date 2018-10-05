@@ -16,6 +16,6 @@ export default class Victory extends Character {
     }
 
     deactivate(levelOptions : LevelOptions) {
-        levelOptions.win();
+        levelOptions.win(true);
     }
 };

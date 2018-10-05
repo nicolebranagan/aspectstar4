@@ -1,5 +1,4 @@
 import Controls from '../interfaces/Controls';
-import Master from '../interfaces/Master';
 import Interaction from '../interfaces/Interaction';
 import { DEFAULT_TEXT_STYLE, DEFAULT_TITLE_STYLE, CustomFonts } from './Fonts';
 import Runner from '../interfaces/Runner';
@@ -21,15 +20,13 @@ const TEXT_BOX_HEIGHT = 99;
 
 export default class TextBox implements Runner {
     public drawables : PIXI.Container;
-    private master : Master;
     private graphics : PIXI.Graphics;
     private state : TextBoxState = TextBoxState.OPENING;
     private openingHeight : number = 0;
     private interaction : Interaction[];
     private marker : number = 0;
 
-    constructor(master : Master, interaction : Interaction[]) {
-        this.master = master;
+    constructor(interaction : Interaction[], private onComplete : () => void) {
         this.interaction = interaction;
         this.drawables = new PIXI.Container();
 
@@ -107,7 +104,7 @@ export default class TextBox implements Runner {
                 this.marker++;
                 controls.release();
                 if (this.marker === this.interaction.length) {
-                    this.master.removeRunner(this);
+                    this.onComplete();
                 } else {
                     this.drawText();
                 }
