@@ -3,12 +3,13 @@ import Controls from "../interfaces/Controls";
 import { WIN_LEVEL_NAME_STYLE, DEFAULT_TEXT_STYLE } from "../text/Fonts";
 import Menu from "../text/Menu";
 import Runner from "../interfaces/Runner";
-import { newGame } from "../state/Governor";
+import { newGame, loadState, enterWorldMap } from "../state/Governor";
 
 export default class MainMenu implements Runner {
     public drawables : PIXI.Container = new PIXI.Container();
     private master : Master;
     private menu : Menu;
+    private locked : boolean = false;
 
     constructor(master : Master) {
         this.master = master;
@@ -41,6 +42,9 @@ export default class MainMenu implements Runner {
             name: "New Game",
             onChoose: () => this.onNewGame(),
         }, {
+            name: "Continue",
+            onChoose: () => this.onContinue(),
+        }, {
             name: "Options",
             onChoose: () => {throw "Not implemented"}
         }]
@@ -51,8 +55,23 @@ export default class MainMenu implements Runner {
         newGame(this.master);
     }
 
+    onContinue() {
+        // This is temporary code; eventually we want a menu and multiple slots.
+        this.locked = true;
+        loadState(0).then(success => {
+            if (success) {
+                enterWorldMap(this.master)
+            } else {
+                this.locked = false;
+                console.error("FAILED TO LOAD STATE 0");
+            }
+        });
+    }
+
     respond(controls : Controls) {
-        this.menu.respond(controls);
+        if (!this.locked) {
+            this.menu.respond(controls);
+        }
     }
 
     update() {
