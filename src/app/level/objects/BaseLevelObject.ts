@@ -2,7 +2,6 @@ import LevelObject from "../../interfaces/LevelObject";
 import Aspect from "../../constants/Aspect";
 import Physics from "../../interfaces/Physics";
 import Point from "../../system/Point";
-import Player from "./ActivePlayer";
 import { LevelOptions } from "../Level";
 import Updatable from "../../interfaces/Updatable";
 import UpdatableHolder from "../../interfaces/UpdatableHolder";

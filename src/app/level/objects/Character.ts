@@ -2,7 +2,6 @@ import LevelObject from '../../interfaces/LevelObject';
 import Aspect from '../../constants/Aspect';
 import NullPhysics from '../physics/NullPhysics';
 import Point from '../../system/Point';
-import Player from '../../interfaces/Player';
 import { LevelOptions } from '../Level';
 import Interaction from '../../interfaces/Interaction';
 import Interactions from '../../data/Interactions';

@@ -6,7 +6,6 @@ import Stage from '../../interfaces/Stage';
 import PlayerState from '../PlayerState';
 import SFX from '../../audio/SFX';
 import BaseLevelObject from './BaseLevelObject';
-import Player from '../../interfaces/Player';
 
 /* Class Player is a LevelObject that additionally implements the method 
  * respond() in order to respond to player input. 
@@ -18,7 +17,7 @@ import Player from '../../interfaces/Player';
 const WAIT_TIME_MAX = 300;
 const WAIT_FRAME_CHANGE = 20;
 
-export default class ActivePlayer extends BaseLevelObject implements Player {
+export default class Player extends BaseLevelObject {
     active = true
     aspects : Aspect[];
     physics : PlatformerPhysics;

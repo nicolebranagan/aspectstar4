@@ -57,7 +57,7 @@ export default class AspectTile extends BaseLevelObject {
                 this.sprite.y--;
         }
 
-        if (player.aspects.indexOf(this.aspect) != -1)
+        if (options.hasAspect(this.aspect))
             this.active = false;
         else if (player.physics.inrange(player.point, this.point)) {
             options.getAspect(this.aspect);

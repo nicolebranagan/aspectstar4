@@ -1,7 +1,7 @@
 import Aspect from '../constants/Aspect';
-import Player from '../interfaces/Player';
 import Drawable from '../interfaces/Drawable';
 import PlayerState from './PlayerState';
+import Player from './objects/Player';
 
 class CachedSprite {
     private sprite : PIXI.Sprite;
