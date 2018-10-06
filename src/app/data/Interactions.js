@@ -64,5 +64,12 @@ export default
         name: 'Mary',
         text: 'NONE CAN STOP THEIR RIGHTEOUS MISSION.',
         font: 'machine'
-    }]
+    }, {
+        name: 'Mary',
+        text: 'EXCEPT FOR SMALL WALLS, OR SLOPES THAT ARE TOO\nSTEEP.',
+        font: 'machine'
+    }, {
+        name: 'Nicole',
+        text: 'Good thing the Empire joined that international treaty to\nban all the world\'s slopes!'
+    }],
 }
