@@ -22,6 +22,7 @@ export default class Character implements LevelObject {
     private frame : number = 0
     protected timer : number = 0
     protected interaction : Interaction[];
+    private talkSprite : PIXI.Sprite;
 
     constructor(point : Point, row : number, interactionKey : string, oneTimeUse : boolean) {
         this.point = point;
@@ -40,6 +41,16 @@ export default class Character implements LevelObject {
         this.sprite.y = this.point.y;
 
         this.interaction = Interactions[interactionKey];
+        this.talkSprite = this.generateTalkSprite();
+    }
+
+    generateTalkSprite() : PIXI.Sprite {
+        const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
+        text.frame = new PIXI.Rectangle(0, 136, 16, 16);
+        const sprite = new PIXI.Sprite(text);
+        sprite.x = this.point.x;
+        sprite.y = this.point.y - 40;
+        return sprite;
     }
 
     update(levelOptions : LevelOptions) {
@@ -68,6 +79,7 @@ export default class Character implements LevelObject {
         ) {
             this.activate(levelOptions);
         } else {
+            this.drawables.removeChild(this.talkSprite);
             levelOptions.prepareInteraction(null);
         }
     }
@@ -78,7 +90,8 @@ export default class Character implements LevelObject {
             this.spoken = true;
             this.timer = 0;
         } else {
-            levelOptions.prepareInteraction(this.interaction)
+            this.drawables.addChild(this.talkSprite);
+            levelOptions.prepareInteraction(this.interaction);
         }
     }
 

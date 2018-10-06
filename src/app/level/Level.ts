@@ -175,7 +175,7 @@ export default class Level implements Runner, Master {
     respond(controls : Controls) : void {
         if (this.textBox)
             this.textBox.respond(controls)
-        else if (!!this.interaction) {
+        else if (!!this.interaction && controls.ButtonB) {
             import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
                 this.textBox = new TextBox.default(this.interaction, () => {
                     this.removeRunner(this.textBox);

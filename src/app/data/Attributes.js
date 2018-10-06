@@ -13,7 +13,7 @@ export default
   {
     "background": 0,
     "bigtileset": 0,
-    "name": "Level 2: Electric Boogaloo",
+    "name": "Palace of Marion 2",
     "start": [
       100,
       287

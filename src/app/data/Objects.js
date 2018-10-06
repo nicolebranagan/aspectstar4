@@ -145,5 +145,13 @@ export default
     "height" : 24,
     "frameCount" : 4,
     "aspect": 0
+  },
+  {
+    "name" : "Multipurpose Mary-bot",
+    "type" : "character",
+    "texture" : "characters",
+    "rect" : [0, 0, 16, 32],
+    "row" : 0,
+    "oneTimeUse" : false
   }
 ]
