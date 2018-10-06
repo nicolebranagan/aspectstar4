@@ -135,5 +135,14 @@ export default
     "texture" : "characters",
     "rect" : [0, 32, 16, 32],
     "row" : 1
+  },
+  {
+    "name" : "Roomba-chan",
+    "type" : "landmover",
+    "texture" : "object1",
+    "rect" : [0, 112, 24, 24],
+    "width" : 24,
+    "height" : 24,
+    "frameCount" : 4
   }
 ]
