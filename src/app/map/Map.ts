@@ -119,8 +119,8 @@ export default class Map implements Runner {
         }
         if (controls.Start) {
             this.menu = new MapMenu(this.master, this, () => {
-                this.menu = null;
                 this.drawables.removeChild(this.menu.drawables);
+                this.menu = null;
             })
             this.drawables.addChild(this.menu.drawables);
         }

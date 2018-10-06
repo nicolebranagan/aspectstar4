@@ -12,6 +12,7 @@ export default class MapMenu implements Runner {
     private overlay : PIXI.Graphics;
 
     private locked : boolean = false;
+    private saved : boolean = false;
 
     constructor(private master : Master, private map : Runner, private onClose : () => void) {
         this.drawables = new PIXI.Container();
@@ -19,19 +20,30 @@ export default class MapMenu implements Runner {
         this.onExit = this.onExit.bind(this);
 
         this.prepareOverlay();
+        this.resetMenu();
+    }
+
+    resetMenu() {
+        if (this.menu) {
+            this.drawables.removeChild(this.menu.drawables);
+        }
         this.menu = new Menu({
-            options: [{
-                name: "Return",
-                onChoose: onClose
-            }, {
-                name: "Save game",
-                onChoose: this.onSave,
-            }, {
-                name: "Exit",
-                onChoose: this.onExit,
-            }]
+            options: this.getOptions()
         });
         this.drawables.addChild(this.menu.drawables);
+    }
+
+    getOptions() {
+        return [{
+            name: "Return to map",
+            onChoose: this.onClose,
+        }, {
+            name: this.saved ? "Saved!" : "Save game",
+            onChoose: this.onSave,
+        }, {
+            name: "Exit to Main Menu",
+            onChoose: this.onExit,
+        }];
     }
 
     prepareOverlay() {
@@ -45,8 +57,15 @@ export default class MapMenu implements Runner {
     }
 
     onSave() {
+        if (this.saved) {
+            return;
+        }
         this.locked = true;
-        saveState(0).then(() => this.locked = false);
+        saveState(0).then(() => {
+            this.locked = false;
+            this.saved = true;
+            this.resetMenu();
+        });
     }
 
     onExit() {

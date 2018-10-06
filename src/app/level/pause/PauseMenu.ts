@@ -44,25 +44,25 @@ export default class PauseMenu implements Runner {
 
     getOptions() : {name: string, onChoose: ()=>void }[] {
         return [{
-            name : "Return",
+            name : "Return to level",
             onChoose: () => {
                 this.levelOptions.closePauseWindow();
             }
         }, {
-            name : "Restart",
+            name : "Restart level",
             onChoose: () => {
                 this.levelOptions.loadState();
                 this.levelOptions.closePauseWindow();
             }                    
         }, {
-            name : "Give Up",
+            name : "Give up",
             onChoose: () => {
                 this.sprite = new PauseSprite(new Point(SPRITE_X, -32));
                 this.drawables.addChild(this.sprite.drawables);
                 this.moveSprite1();
             }
         }, {
-            name : "Exit",
+            name : "Exit to Map",
             onChoose: () => {
                 this.levelOptions.exit();
                 this.levelOptions.closePauseWindow();
