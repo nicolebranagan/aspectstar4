@@ -3,6 +3,7 @@ import Aspect from "../../constants/Aspect";
 import PlatformerPhysics from "../physics/PlatformerPhysics";
 import Point from "../../system/Point";
 import Stage from "../../interfaces/Stage";
+import { LevelOptions } from "../Level";
 
 export default class LandMover implements LevelObject {
     active = true;
@@ -27,7 +28,7 @@ export default class LandMover implements LevelObject {
         private height : number,
         private frameCount : number,
     ) {
-        this.point = point;
+        this.point = new Point(point.x, point.y - 0.1);
         this.aspect = aspect;
         this.physics = new PlatformerPhysics(stage, 2, 6, this.width, this.height);
         this.spriteFrame = new PIXI.Rectangle(...rect);
@@ -45,9 +46,9 @@ export default class LandMover implements LevelObject {
         return sprite;
     }
 
-    update() {
+    update(levelOptions : LevelOptions) {
         this.timer++;
-        if (this.timer > 10) {
+        if (this.timer > 8) {
             this.timer = 0;
             this.frame++;
             if (this.frameCount === this.frame) {
@@ -61,9 +62,23 @@ export default class LandMover implements LevelObject {
             );
         }
 
-        this.point = this.physics.step(this.point, this.aspect);
+        if (this.movingLeft) {
+            this.physics.xvel = -1;
+        } else {
+            this.physics.xvel = 1;
+        }
+        let newpt = this.physics.step(this.point, this.aspect);
+        if (this.point.equals(newpt)) {
+            this.movingLeft = !this.movingLeft;
+        }
+        this.point = newpt;
         const rnd = this.point.round();
         this.sprite.x = rnd.x;
-        this.sprite.y = rnd.y;
+        this.sprite.y = rnd.y + 2;
+
+        const playerPoint = levelOptions.getPlayer().point;
+        if (playerPoint.inRect(this.point, this.width, this.height)) {
+            levelOptions.die();
+        }
     }
 };

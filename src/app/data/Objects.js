@@ -143,6 +143,7 @@ export default
     "rect" : [0, 112, 24, 24],
     "width" : 24,
     "height" : 24,
-    "frameCount" : 4
+    "frameCount" : 4,
+    "aspect": 0
   }
 ]

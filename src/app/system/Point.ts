@@ -67,4 +67,10 @@ export default class Point {
             this._y - p.y
         )
     }
+
+    inRect(p: Point, width : number, height : number) : boolean {
+        const practicalWidth = width / 2;
+        const delta_y = p.y - this._y;
+        return (Math.abs(p.x - this._x) <= practicalWidth) && delta_y >= 0 && delta_y <= height; 
+    }
 };

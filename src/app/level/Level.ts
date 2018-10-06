@@ -29,6 +29,7 @@ export interface LevelOptions {
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
     win: (fairGame : boolean) => void;
+    die: () => void;
     exit: () => void;
     getPlayer: () => Player;
     getObjects: () => LevelObject[];
@@ -138,6 +139,12 @@ export default class Level implements Runner, Master {
                         this.player.bells = -1;
                     }
                 })
+            },
+
+            die: () => {
+                if (this.player.active) {
+                    this.player.die();
+                }
             },
 
             exit: () => {
