@@ -161,7 +161,6 @@ export default class Player extends BaseLevelObject {
     }
 
     private determineFrame() : void {
-        //TODO: Do animations better than this
         const text = PIXI.loader.resources['player'].texture;
         const aspect = (this.aspect - 1) * 40;
         let rect;
@@ -188,6 +187,5 @@ export default class Player extends BaseLevelObject {
             this.sprite.scale.x = -1;
         else
             this.sprite.scale.x = 1;
-        this.sprite.texture = text;
     }
 }

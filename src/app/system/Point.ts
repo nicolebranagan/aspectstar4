@@ -73,4 +73,10 @@ export default class Point {
         const delta_y = p.y - this._y;
         return (Math.abs(p.x - this._x) <= practicalWidth) && delta_y >= 0 && delta_y <= height; 
     }
+
+    inCenteredRect(p: Point, width : number, height : number) : boolean {
+        const practicalWidth = width / 2;
+        const practicalHeight = height / 2;
+        return (Math.abs(p.x - this._x) <= practicalWidth) && (Math.abs(p.y - this._y) <= practicalHeight); 
+    }
 };

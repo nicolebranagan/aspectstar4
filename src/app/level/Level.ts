@@ -236,13 +236,14 @@ export default class Level implements Runner, Master {
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
         );
-        this.objects.slice().forEach( 
-            e => {
+        this.objects
+            .slice()
+            .filter(obj => obj.point.inCenteredRect(truecamera, 432, 256))
+            .forEach(e => {
                 e.update(this.options);
                 if (e !== this.player && !e.active)
                     this.removeObject(e);
-            }
-        );
+            });
         if (this.player.active) {
             if (this.stage.isDeath(this.player.point)) {
                 this.player.die();
