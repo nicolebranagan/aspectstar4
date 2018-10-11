@@ -237,7 +237,6 @@ export default class Level implements Runner, Master {
             160 - truecamera.y
         );
         this.objects
-            .slice()
             .filter(obj => obj.point.inCenteredRect(truecamera, 432, 256))
             .forEach(e => {
                 e.update(this.options);
