@@ -29,8 +29,9 @@ export default class FunctionalStage implements Stage {
     public isSolid(pt : Point, asp : Aspect) : boolean {
         for (const pair of this.platforms) {
             if (pair[1] == Aspect.NONE || !pair[2] && pair[1] == asp || pair[2] && pair[1] != asp) {
-                if (pair[0].physics.inrange(pair[0].point, pt))
-                    return true;
+                if (pair[0].physics.inrange(pair[0].point, pt)) {
+                     return true;
+                }
             }
         }
         const bigtilept = pt.floor(32);

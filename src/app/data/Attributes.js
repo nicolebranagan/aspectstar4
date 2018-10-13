@@ -16,7 +16,7 @@ export default
     "name": "Palace of Marion 2",
     "start": [
       100,
-      287
+      414
     ],
     "tileset": 0
   }

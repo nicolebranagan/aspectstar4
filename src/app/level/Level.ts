@@ -170,6 +170,7 @@ export default class Level implements Runner, Master {
 
             getObjects: () => this.objects,
         };
+        console.log('level initialized')
     }
 
     respond(controls : Controls) : void {
@@ -237,7 +238,7 @@ export default class Level implements Runner, Master {
             160 - truecamera.y
         );
         this.objects
-            .filter(obj => obj.point.inCenteredRect(truecamera, 432, 256))
+            .filter(obj => obj.point.inCenteredRect(truecamera, 500, 356))
             .forEach(e => {
                 e.update(this.options);
                 if (e !== this.player && !e.active)
