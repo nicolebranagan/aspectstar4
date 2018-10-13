@@ -22,6 +22,10 @@ export default class FunctionalStage implements Stage {
         this.width = level.width;
     }
 
+    reset() {
+        this.platforms = [];
+    }
+
     public register(object : LevelObject, aspect : Aspect, xor : boolean) {
         this.platforms.push([object, aspect, xor]);
     }

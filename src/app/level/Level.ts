@@ -289,6 +289,7 @@ export default class Level implements Runner, Master {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
+        this.stage.reset();
         const data = Loader(this.stage, objects);
         this.player = new Player(this.stage, this.lastState);
 
