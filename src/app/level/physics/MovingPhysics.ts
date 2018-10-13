@@ -24,9 +24,9 @@ export default class MovingPhysics implements Physics {
 
         move.forEach(e => {
             e.point = e.point.add(delta);
-            if (delta.y) {
+            /*if (delta.y) {
                 e.point = e.point.round();
-            }
+            }*/
         });
         return point.add(delta);
     }
