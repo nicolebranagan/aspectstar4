@@ -49,7 +49,7 @@ export default class KeyboardControls implements Controls {
         if (event.keyCode == 39) {
             this.Right = true;
         }
-        if (event.keyCode == 8) {
+        if (event.keyCode == 90) {
             this.ButtonB = true;
         }
         if (event.keyCode == 13) {
@@ -82,7 +82,7 @@ export default class KeyboardControls implements Controls {
         if (event.keyCode == 39) {
             this.Right = false;
         }
-        if (event.keyCode == 8) {
+        if (event.keyCode == 90) {
             this.ButtonB = false;
         }
         if (event.keyCode == 13) {

@@ -24,14 +24,15 @@ export default class MovingPhysics implements Physics {
 
         move.forEach(e => {
             e.point = e.point.add(delta);
-            if (delta.y) {
+            /*if (delta.y) {
                 e.point = e.point.round();
-            }
+            }*/
         });
         return point.add(delta);
     }
 
     inrange(point : Point, other : Point) {
-        return (Math.abs(point.x - other.x) < this.width/2) && ((point.y - other.y) < this.height);
+        const dely = point.y - other.y;
+        return (Math.abs(point.x - other.x) < this.width/2) && (dely < this.height) && (dely > 0);
     }
 };

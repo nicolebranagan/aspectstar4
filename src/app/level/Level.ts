@@ -3,11 +3,10 @@ import Controls from '../interfaces/Controls';
 import LevelObject from '../interfaces/LevelObject';
 import Master from '../interfaces/Master';
 import Drawable from '../interfaces/Drawable';
-import Player from '../interfaces/Player';
 import Background from '../interfaces/Background';
 import Interaction from '../interfaces/Interaction';
 import Point from '../system/Point';
-import ActivePlayer from './objects/ActivePlayer';
+import Player from './objects/Player';
 import Stage from '../interfaces/Stage';
 import Loader from './Loader';
 import PlayerState from './PlayerState';
@@ -25,12 +24,15 @@ import { enterWorldMap } from '../state/Governor';
 export interface LevelOptions {
     saveState: () => void;
     loadState: () => void;
+    hasAspect: (aspect : Aspect) => boolean;
     getAspect: (aspect : Aspect) => void;
+    getBell: () => void;
     prepareInteraction: (text : Interaction[]) => void;
     setInteraction: (text : Interaction[]) => void;
     win: (fairGame : boolean) => void;
+    die: () => void;
     exit: () => void;
-    getPlayer: () => Player;
+    getPlayer: () => LevelObject;
     getObjects: () => LevelObject[];
     closePauseWindow: () => void;
 };
@@ -48,7 +50,7 @@ export default class Level implements Runner, Master {
     private levelid : number;
     private objects : LevelObject[] = [];
     private stage : Stage
-    private player : Player
+    private player : Player;
     private camera : Point
     private system : System;
     private deathTimer = 0;
@@ -107,8 +109,16 @@ export default class Level implements Runner, Master {
                 this.resetObjects(this.objectMemory);
             },
 
+            hasAspect: (aspect : Aspect) => {
+                return this.player.aspects.indexOf(aspect) !== -1;
+            },
+
             getAspect: (aspect : Aspect) => {
                 this.player.getAspect(aspect);
+            },
+
+            getBell: () => {
+                this.player.getBell();
             },
 
             prepareInteraction: (interaction : Interaction[]) => {
@@ -140,6 +150,12 @@ export default class Level implements Runner, Master {
                 })
             },
 
+            die: () => {
+                if (this.player.active) {
+                    this.player.die();
+                }
+            },
+
             exit: () => {
                 this.master.removeRunner(this);
                 enterWorldMap(this.master);
@@ -154,12 +170,13 @@ export default class Level implements Runner, Master {
 
             getObjects: () => this.objects,
         };
+        console.log('level initialized')
     }
 
     respond(controls : Controls) : void {
         if (this.textBox)
             this.textBox.respond(controls)
-        else if (!!this.interaction) {
+        else if (!!this.interaction && controls.ButtonB) {
             import(/* webpackChunkName: "text-box" */'../text/TextBox').then(TextBox => {
                 this.textBox = new TextBox.default(this.interaction, () => {
                     this.removeRunner(this.textBox);
@@ -220,13 +237,13 @@ export default class Level implements Runner, Master {
             Math.min(200 - truecamera.x,0),
             160 - truecamera.y
         );
-        this.objects.slice().forEach( 
-            e => {
+        this.objects
+            .filter(obj => obj.point.inCenteredRect(truecamera, 500, 356))
+            .forEach(e => {
                 e.update(this.options);
                 if (e !== this.player && !e.active)
                     this.removeObject(e);
-            }
-        );
+            });
         if (this.player.active) {
             if (this.stage.isDeath(this.player.point)) {
                 this.player.die();
@@ -272,8 +289,9 @@ export default class Level implements Runner, Master {
         this.loaded = false;
         this.bellCount = 0;
         this.objects.slice().forEach(e => this.removeObject(e));
+        this.stage.reset();
         const data = Loader(this.stage, objects);
-        this.player = new ActivePlayer(this.stage, this.lastState);
+        this.player = new Player(this.stage, this.lastState);
 
         let count = 0;
         data.forEach( e => (e.then( obj => {

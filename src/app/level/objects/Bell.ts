@@ -60,7 +60,7 @@ export default class Bell extends BaseLevelObject {
 
         if (player.physics.inrange(player.point, this.point)) {
             this.active = false;
-            player.getBell();
+            options.getBell();
         }
     }
 }

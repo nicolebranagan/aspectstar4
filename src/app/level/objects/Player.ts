@@ -6,7 +6,6 @@ import Stage from '../../interfaces/Stage';
 import PlayerState from '../PlayerState';
 import SFX from '../../audio/SFX';
 import BaseLevelObject from './BaseLevelObject';
-import Player from '../../interfaces/Player';
 
 /* Class Player is a LevelObject that additionally implements the method 
  * respond() in order to respond to player input. 
@@ -18,7 +17,7 @@ import Player from '../../interfaces/Player';
 const WAIT_TIME_MAX = 300;
 const WAIT_FRAME_CHANGE = 20;
 
-export default class ActivePlayer extends BaseLevelObject implements Player {
+export default class Player extends BaseLevelObject {
     active = true
     aspects : Aspect[];
     physics : PlatformerPhysics;
@@ -162,7 +161,6 @@ export default class ActivePlayer extends BaseLevelObject implements Player {
     }
 
     private determineFrame() : void {
-        //TODO: Do animations better than this
         const text = PIXI.loader.resources['player'].texture;
         const aspect = (this.aspect - 1) * 40;
         let rect;
@@ -189,6 +187,5 @@ export default class ActivePlayer extends BaseLevelObject implements Player {
             this.sprite.scale.x = -1;
         else
             this.sprite.scale.x = 1;
-        this.sprite.texture = text;
     }
 }

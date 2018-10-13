@@ -42,4 +42,8 @@ async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {
         const Victory = (await import(/* webpackChunkName: "character" */ './objects/Victory')).default;
         return new Victory(point, data[3]);
     }
+    else if (objdata.type === "landmover") {
+        const LandMover = (await import(/* webpackChunkName: "land-mover" */ './objects/LandMover')).default;
+        return new LandMover(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.width, objdata.height, objdata.frameCount);
+    }
 };

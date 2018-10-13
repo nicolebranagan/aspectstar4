@@ -1,6 +1,4 @@
 import Aspect from '../../constants/Aspect';
-import LevelObject from '../../interfaces/LevelObject';
-import Player from '../../interfaces/Player';
 import Particle from '../../graphics/Particle';
 import Point from '../../system/Point';
 import SolidPhysics from '../physics/SolidPhysics';

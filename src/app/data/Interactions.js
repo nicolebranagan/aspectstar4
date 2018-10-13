@@ -45,5 +45,31 @@ export default
     }, {
         name: 'Zip',
         text: '(I can\'t believe she actually agreed to that....)'
-    }]
+    }],
+    level2: [{
+        name: 'Mary',
+        text: 'IN THE ABSENCE OF MARY, THE CLEANING ROBOTS HAVE \nDECIDED TO CLEANSE THE WORLD OF ORGANIC\nLIFEFORMS.',
+        font: 'machine'
+    }, {
+        name: 'Nicole',
+        text: 'Wait, I thought you were Mary?'
+    }, {
+        name: 'Mary',
+        text: '...AFFIRMATIVE.',
+        font: 'machine'
+    }, {
+        name: 'Nicole',
+        text: 'Can\'t you stop them?'
+    }, {
+        name: 'Mary',
+        text: 'NONE CAN STOP THEIR RIGHTEOUS MISSION.',
+        font: 'machine'
+    }, {
+        name: 'Mary',
+        text: 'EXCEPT FOR SMALL WALLS, OR SLOPES THAT ARE TOO\nSTEEP.',
+        font: 'machine'
+    }, {
+        name: 'Nicole',
+        text: 'Good thing the Empire joined that international treaty to\nban all the world\'s slopes!'
+    }],
 }
