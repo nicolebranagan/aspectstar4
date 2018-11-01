@@ -81,5 +81,24 @@ export default
     }, {
         name: 'Scientist',
         text: '...what'
+    }],
+    fishspeaker: [{
+        name: 'Guard',
+        text: "Nicole! I didn't expect to see you here, apologies for\nthe state of the castle. We'll get this under\ncontrol."
+    }, {
+        name: 'Guard',
+        text: "We've managed to give the bots in this wing the circle\naspect. These special blocks are solid to anyone without\nthat aspect, so you'll be safe here."
+    }, {
+        name: 'Nicole',
+        text: 'Oh cool! But I have a question.'
+    }, {
+        name: 'Guard',
+        text: 'Of course.'
+    }, {
+        name: 'Nicole',
+        text: 'Is it only fish you can talk to? Or does that include, like,\ndolphins as well? Or squid? I always wondered what\nan octopus would say!'
+    }, {
+        name: 'Guard',
+        text: '...'
     }]
 }
