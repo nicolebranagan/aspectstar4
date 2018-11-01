@@ -153,5 +153,21 @@ export default
     "rect" : [0, 0, 16, 32],
     "row" : 0,
     "oneTimeUse" : false
+  },
+  {
+    "name" : "Scientist",
+    "type" : "character",
+    "texture" : "characters",
+    "rect" : [0, 64, 16, 32],
+    "row" : 2,
+    "oneTimeUse" : false
+  },
+  {
+    "name" : "Fish speaker",
+    "type" : "character",
+    "texture" : "characters",
+    "rect" : [0, 96, 16, 32],
+    "row" : 3,
+    "oneTimeUse" : false
   }
 ]

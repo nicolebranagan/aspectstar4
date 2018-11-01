@@ -72,4 +72,14 @@ export default
         name: 'Nicole',
         text: 'Good thing the Empire joined that international treaty to\nban all the world\'s slopes!'
     }],
+    scientist: [{
+        name: 'Scientist',
+        text: 'They\'re everywhere... I don\'t know what to do...'
+    }, {
+        name: 'Nicole',
+        text: 'Oh, they\'re not too bad after the first few deaths.'
+    }, {
+        name: 'Scientist',
+        text: '...what'
+    }]
 }
