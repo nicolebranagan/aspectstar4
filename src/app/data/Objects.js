@@ -169,5 +169,16 @@ export default
     "rect" : [0, 96, 16, 32],
     "row" : 3,
     "oneTimeUse" : false
+  },
+  {
+    "name" : "Spiky Friend Circle",
+    "type" : "spikyplatform",
+    "texture" : "object1",
+    "rect" : [0, 160, 24, 24],
+    "width" : 24,
+    "height" : 11,
+    "damageHeight" : 24,
+    "frameCount" : 4,
+    "aspect": 3
   }
 ]
