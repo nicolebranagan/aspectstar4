@@ -87,7 +87,7 @@ export default
         text: "Nicole! I didn't expect to see you here, apologies for\nthe state of the castle. We'll get this under\ncontrol."
     }, {
         name: 'Guard',
-        text: "We've managed to give the bots in this wing the circle\naspect. These special blocks are solid to anyone without\nthat aspect, so you'll be safe here."
+        text: "We've managed to give the bot in this wing the circle\naspect. We've locked it in with plus blocks, so you'll \nbe safe here as long as you don't change aspects."
     }, {
         name: 'Nicole',
         text: 'Oh cool! But I have a question.'
