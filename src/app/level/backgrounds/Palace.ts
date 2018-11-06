@@ -58,6 +58,9 @@ export default class Palace implements Background  {
         this.rows.push(this.generateRow(SMALL_BRICKS, -16+48+32+16+48));
         this.rows.push(this.generateRow(LARGE_BRICKS, -16+48+32+16+48+16));
         this.rows.push(this.generateRow(GIANT_BRICKS, -16+48+32+16+48+16+32));
+        // Extra rows, only visible on textbox opening
+        this.rows.push(this.generateRow(GIANT_BRICKS, 224));
+        this.rows.push(this.generateRow(GIANT_BRICKS, 224+48));
         this.rows.forEach(row => this.drawables.addChild(row));
     }
 
