@@ -100,5 +100,17 @@ export default
     }, {
         name: 'Guard',
         text: '...'
+    }],
+    marybot2: [{
+        name: 'Mary',
+        text: 'MY SENSORS DETECT THAT THE PALACE IS NO LONGER SAFE.\nWE SHOULD HEAD TOWARDS THE CAPITAL CITY.',
+        font: 'machine'
+    }, {
+        name: 'Mary',
+        text: 'MY SENSORS DETECT THAT THE PEOPLE OF THE CAPITAL CITY\nARE WEAK-WILLED AND WILL POSE NO THREAT TO OUR\nCOMBINED WILL.',
+        font: 'machine' 
+    }, {
+        name: 'Nicole',
+        text: 'After seeing what a mess the castle has become, I\'m not\nsure I want to see what\'s outside...'
     }]
 }
