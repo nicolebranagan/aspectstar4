@@ -107,10 +107,36 @@ export default
         font: 'machine'
     }, {
         name: 'Mary',
-        text: 'MY SENSORS DETECT THAT THE PEOPLE OF THE CAPITAL CITY\nARE WEAK-WILLED AND WILL POSE NO THREAT TO OUR\nCOMBINED WILL.',
-        font: 'machine' 
+        text: 'THE ABANDONED FLOATING CITY SOUTH OF THE CAPITAL \nPLATEAU SHOULD BE SAFE. SAFETY OF NICOLE IS \nFIRST PRIORITY.',
+        font: 'machine'
     }, {
         name: 'Nicole',
         text: 'After seeing what a mess the castle has become, I\'m not\nsure I want to see what\'s outside...'
+    }, {
+        name: 'Mary',
+        text: 'MY SENSORS DETECT THAT THE PEOPLE OF THE CAPITAL CITY\nARE WEAK-WILLED AND WILL POSE NO THREAT TO OUR\nCOMBINED WILL.',
+        font: 'machine' 
+    },],
+    zipcastle: [{
+        name: 'Nicole',
+        text: 'Why is the exit to the castle here, anyway? Kind of out of\nthe way, isn\'t it?'
+    }, {
+        name: 'Zip',
+        text: 'Don\'t ask me, I\'m just a stuffed animal.'
+    }, {
+        name: 'Nicole',
+        text: 'Good point. Sometimes I forget you aren\'t sentient, or \neven capable of speech.'
+    }, {
+        name: 'Zip',
+        text: 'Guess that makes two of us!'
+    }, {
+        name: 'Zip',
+        text: 'Anyway, you sure you want to go out there? I hear the\nLeague of Nations has hired a vampire to go looking for\nyou.'
+    }, {
+        name: 'Nicole',
+        text: 'That statement made no sense, so I\'m just going to ignore\nit.'
+    }, {
+        name: 'Zip',
+        text: 'Suit yourself.'
     }]
 }

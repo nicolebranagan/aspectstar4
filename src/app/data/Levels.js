@@ -4144,6 +4144,12 @@ export default
         1,
         1016,
         232
+      ],
+      [
+        16,
+        704,
+        352,
+        "zipcastle"
       ]
     ],
     "width": 64
