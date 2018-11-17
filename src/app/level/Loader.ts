@@ -46,4 +46,8 @@ async function parseObject(stage : Stage, data : any[]) : Promise<LevelObject> {
         const LandMover = (await import(/* webpackChunkName: "land-mover" */ './objects/LandMover')).default;
         return new LandMover(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.width, objdata.height, objdata.frameCount);
     }
+    else if (objdata.type === "spikyplatform") {
+        const SpikyPlatform = (await import(/* webpackChunkName: "spiky-platform" */ './objects/SpikyPlatform')).default;
+        return new SpikyPlatform(stage, point, objdata.aspect, objdata.texture, objdata.rect, objdata.width, objdata.height, objdata.damageHeight, objdata.frameCount, data[4]);
+    }
 };

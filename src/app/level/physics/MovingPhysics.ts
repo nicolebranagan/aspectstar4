@@ -14,14 +14,14 @@ export default class MovingPhysics implements Physics {
         const move : LevelObject[] = [];
         for (const obj of objects) {
             if (obj !== self) {
-                if (Math.round(obj.point.y) == Math.round(point.y - 16) 
+                if (Math.round(obj.point.y) == Math.round(point.y - this.height) 
                     && Math.abs(point.x - obj.point.x) < this.width/2
                     && (asp == Aspect.NONE || asp == obj.aspect)) {
                     move.push(obj);
                 }
             }
         }
-
+        
         move.forEach(e => {
             e.point = e.point.add(delta);
             /*if (delta.y) {
