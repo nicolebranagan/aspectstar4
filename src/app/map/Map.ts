@@ -10,6 +10,7 @@ import { winLevel } from "../state/Governor";
 import MapData from "../data/Map";
 import Attributes from "../data/Attributes";
 import MapMenu from "./MapMenu";
+import Music from '../audio/Music';
 
 const drawCircle = (x : number, y : number) => {
     const text = new PIXI.Texture(PIXI.loader.resources['system'].texture.baseTexture);
@@ -61,6 +62,7 @@ export default class Map implements Runner {
         this.refreshMapSprite();
         this.drawLevelName();
         this.drawCrowns();
+        Music(); // TODO: Have this play the map's music
     }
 
     update() {

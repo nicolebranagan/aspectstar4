@@ -3,6 +3,7 @@ import Attributes from "../interfaces/Attributes";
 import { DEFAULT_SYSTEM_STYLE, LOAD_LEVEL_NAME_STYLE } from "../text/Fonts";
 import Runner from "../interfaces/Runner";
 import AttributeData from "../data/Attributes";
+import Music from "../audio/Music";
 
 const INITIAL_LOAD_TEXT = "Loading...";
 const AFTER_LOAD_TEXT = "Nya!"
@@ -35,6 +36,7 @@ export default class LevelPreload implements Runner {
 
         this.drawInitialLoad();
         this.loadLevel();
+        Music('disco');
     }
 
     prepareUnderlay() {
@@ -153,6 +155,7 @@ export default class LevelPreload implements Runner {
             if (this.timer === 0) {
                 this.master.removeRunner(this);
                 this.master.addRunner(this.level);
+                Music(); // TODO: Have this play the level's music
             } else {
                 this.updateTimerText();
             }

@@ -1,6 +1,7 @@
 import { DEFAULT_SYSTEM_STYLE, DEFAULT_TEXT_STYLE, WIN_LEVEL_NAME_STYLE, GOLD_COLOR } from '../text/Fonts';
 import Aspect from '../constants/Aspect';
 import Updatable from '../interfaces/Updatable';
+import Music from "../audio/Music";
 
 const FIRST_LINE_1 = "Nicole";
 const FIRST_LINE_2 = "has passed";
@@ -49,6 +50,7 @@ export default class WinSystem implements Updatable {
 
         this.scrollInFirstLine = this.scrollInFirstLine.bind(this);
         this.scrollInFirstLine();
+        Music('win');
     }
 
     scrollInFirstLine() {

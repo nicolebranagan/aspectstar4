@@ -17,6 +17,7 @@ import Attributes from '../interfaces/Attributes';
 import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
 import { enterWorldMap } from '../state/Governor';
+import Music from '../audio/Music';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -303,7 +304,7 @@ export default class Level implements Runner, Master {
             if (count === data.length) {
                 const callback = () => {
                     this.loaded = true;
-                    this.addObject(this.player)
+                    this.addObject(this.player);
                 };
                 if (this.onload) {
                     this.onload(callback);
