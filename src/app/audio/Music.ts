@@ -1,5 +1,5 @@
 const music = ['disco', 'win'];
-let currentlyPlaying : any = null;
+let currentlyPlaying : { stop: () => void } = null;
 
 const play = (key? : string) => {
     if (currentlyPlaying) {
