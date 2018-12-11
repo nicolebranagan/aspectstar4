@@ -520,15 +520,16 @@ class Editor(tk.Frame):
         self.statusbar.grid(row=3, column=0, columnspan=4, sticky=tk.W+tk.E)
     
     def buildTileset(self):
-        tiles = self.currentlevel.attributes.get("tileset")
-        self.tiles = ImageTk.PhotoImage(tilesets.tilesets2x[tiles])
+        self.tileset = self.currentlevel.attributes.get("tileset")
+        self.tiles = ImageTk.PhotoImage(tilesets.tilesets2x[self.tileset])
         self.tilecanvas.itemconfig(
             self.tilecanvas.img, image=self.tiles
         )
 
     def buildBigTileset(self):
+        tiles = tilesets.tiles[self.currentlevel.attributes.get("tileset")]
         self.bigtiles = self.worldfile.bigtiles[self.currentlevel.attributes.get("bigtileset")]
-        self.bigtilesimg = ImageTk.PhotoImage(self.bigtiles.draw())
+        self.bigtilesimg = ImageTk.PhotoImage(self.bigtiles.draw(tiles))
         self.bigtilecanvas.itemconfig(
             self.bigtilecanvas.img, image=self.bigtilesimg
         )
@@ -543,17 +544,19 @@ class Editor(tk.Frame):
         self.soliditylabel.config(text="Solidity: "+solidity.name)
 
     def selectBigtile(self, i=-1):
+        tiles = tilesets.tiles[self.tileset]
         if i == -1:
             i = self.selected_bigtile
         else:
             self.selected_bigtile = i
-        self.selectedbigtile.img = ImageTk.PhotoImage(self.bigtiles.drawtile2x(i))
+        self.selectedbigtile.img = ImageTk.PhotoImage(self.bigtiles.drawtile2x(tiles, i))
         self.selectedbigtile.itemconfig(
             self.selectedbigtile.image, 
             image=self.selectedbigtile.img)
 
     def forcedrawroom(self):
-        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw_full(self.bigtiles))
+        tiles = tilesets.tiles[self.tileset]
+        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw_full(tiles, self.bigtiles))
         self.levelcanvas.itemconfig(
             self.levelcanvas.image,
             image=self.levelcanvas.img,
@@ -563,7 +566,8 @@ class Editor(tk.Frame):
         )
 
     def drawroom(self):
-        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw(self.bigtiles))
+        tiles = tilesets.tiles[self.tileset]
+        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw(tiles, self.bigtiles))
         self.levelcanvas.itemconfig(
             self.levelcanvas.image,
             image=self.levelcanvas.img,
@@ -573,7 +577,8 @@ class Editor(tk.Frame):
         )
     
     def drawtile(self, x, y, i):
-        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw(self.bigtiles))
+        tiles = tilesets.tiles[self.tileset]
+        self.levelcanvas.img = ImageTk.PhotoImage(self.currentlevel.draw(tiles, self.bigtiles))
         self.levelcanvas.itemconfig(
             self.levelcanvas.image,
             image=self.levelcanvas.img,

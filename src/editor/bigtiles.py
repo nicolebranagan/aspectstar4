@@ -3,9 +3,8 @@ from PIL import Image
 """Bigtiles handles a set of 32x32 tiles"""
 
 class Bigtiles():
-    def __init__(self, length, tiles, key):
+    def __init__(self, length, key):
         self.length = length
-        self.tiles = tiles
         self.key = key
 
         self._bigtiles = {}
@@ -29,7 +28,7 @@ class Bigtiles():
         self._drawcache.pop(i, None)
         self._fullcache = None
     
-    def drawtile(self, i):
+    def drawtile(self, tiles, i):
         if i not in self._bigtiles:
             return self._nulldraw
         if i in self._drawcache:
@@ -37,7 +36,7 @@ class Bigtiles():
         img = Image.new("RGB", (16*2, 16*2))
 
         def drawTile(x, y, j):
-            img.paste(self.tiles[j], box=(x*16, y*16))
+            img.paste(tiles[j], box=(x*16, y*16))
 
         for k in range(0,4):
             drawTile(k % 2, k // 2, self._bigtiles[i][k])
@@ -45,18 +44,18 @@ class Bigtiles():
         self._drawcache[i] = img
         return img
     
-    def drawtile2x(self, i):
-        img = self.drawtile(i)
+    def drawtile2x(self, tiles, i):
+        img = self.drawtile(tiles, i)
         return img.resize((img.width*2, img.height*2), Image.NEAREST)
     
-    def draw(self):
+    def draw(self, tiles):
         if self._fullcache is not None:
             return self._fullcache
 
         img = Image.new("RGB", (16*2*self.length, 16*2))
 
         for i in range(0, self.length):
-            img.paste(self.drawtile(i), box=(i*32, 0))
+            img.paste(self.drawtile(tiles, i), box=(i*32, 0))
 
         self._fullcache = img
         return img
@@ -73,9 +72,9 @@ class Bigtiles():
         return out
     
     @staticmethod
-    def deserialize(indict, tiles):
+    def deserialize(indict):
         inarray = indict["bigtiles"]
-        bigtile = Bigtiles(len(inarray), tiles, indict["key"])
+        bigtile = Bigtiles(len(inarray), indict["key"])
         for i in range(0, len(inarray)):
             if inarray[i] == -1:
                 continue

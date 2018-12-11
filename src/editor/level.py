@@ -32,12 +32,12 @@ class Level():
         self.objects.remove(obj)
         self.img = None
     
-    def draw(self, bigtiles):
+    def draw(self, tiles, bigtiles):
         if (self.img is None):
-            self.draw_full(bigtiles)
+            self.draw_full(tiles, bigtiles)
         else:
             for mod in self.modified:
-                self.img.paste(bigtiles.drawtile(mod[2]), box=(mod[0]*32, mod[1]*32))
+                self.img.paste(bigtiles.drawtile(tiles, mod[2]), box=(mod[0]*32, mod[1]*32))
         self.modified = []
         return self.img
 
@@ -58,11 +58,11 @@ class Level():
         draw.text(self.attributes.get('start'), 'X')
         return img
 
-    def draw_full(self, bigtiles):
+    def draw_full(self, tiles, bigtiles):
         img = Image.new("RGBA", (32*self.width, 32*self.height))
 
         def paste(x, y, j):
-            img.paste(bigtiles.drawtile(j), box=(x*32, y*32))
+            img.paste(bigtiles.drawtile(tiles, j), box=(x*32, y*32))
 
         for i in range(0, len(self.grid)):
             paste(i % self.width, i // self.width, self.grid[i])

@@ -1,6 +1,5 @@
 from bigtiles import Bigtiles
 from level import Level
-from tilesets import tilesets
 
 """A worldfile is a class which contains a world. This class also handles
    serialization and deserialization.
@@ -32,7 +31,7 @@ class Worldfile():
     
     @staticmethod
     def deserialize(bigtiles, levels, attributes):
-        bigtiles = [Bigtiles.deserialize(i, tilesets.tiles[0]) for i in bigtiles]
+        bigtiles = [Bigtiles.deserialize(i) for i in bigtiles]
         levels = [Level.deserialize(val, attributes[i]) for i, val in enumerate(levels)]
         return Worldfile(bigtiles, levels)
     
@@ -40,7 +39,7 @@ class Worldfile():
     def new():
         return Worldfile(
             [Bigtiles(
-                16, tilesets.tiles[0],
+                16,
                 [0 for _ in range(0, 256)])],
             [Level(64,16)]
         )
