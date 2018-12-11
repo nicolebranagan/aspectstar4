@@ -143,9 +143,34 @@ class Editor(tk.Frame):
         self.levelname.trace_add("write", setName)
         levelnameentry = tk.Entry(leveloptionspanel, textvariable=self.levelname)
         levelnameentry.grid(row=1, column=1)
-        
+
+        leveltilesetpanel = tk.Frame(leveloptionspanel)
+        leveltilesetpanel.grid(row=2, column=0, columnspan=2)
+        leveltileset = tk.StringVar()
+        levelbigtileset = tk.StringVar()
+        leveltileset.set(str(self.currentlevel.attributes['tileset']))
+        levelbigtileset.set(str(self.currentlevel.attributes['bigtileset']))        
+        def setVar(tkVar, attrName):
+            def settingFunc(*args):
+                try:
+                    self.currentlevel.attributes[attrName] = int(tkVar.get())
+                    self.buildTileset()
+                    self.buildBigTileset()
+                    self.forcedrawroom()
+                except ValueError:
+                    tkVar.set(str(self.currentlevel.attributes[attrName]))
+            return settingFunc
+        leveltileset.trace_add("write", setVar(leveltileset, 'tileset'))
+        levelbigtileset.trace_add("write", setVar(levelbigtileset, 'bigtileset'))
+        tk.Label(leveltilesetpanel, text="Tileset:").grid(row=0, column=0)
+        leveltilesetentry = tk.Entry(leveltilesetpanel, textvariable=leveltileset, width=3)
+        leveltilesetentry.grid(row=0, column=1)
+        tk.Label(leveltilesetpanel, text="Bigtileset:").grid(row=0, column=2)
+        levelbigtilesetentry = tk.Entry(leveltilesetpanel, textvariable=levelbigtileset, width=3)
+        levelbigtilesetentry.grid(row=0, column=3)
+
         levelstartpointpanel = tk.Frame(leveloptionspanel)
-        levelstartpointpanel.grid(row=2, column=0, columnspan=2)
+        levelstartpointpanel.grid(row=3, column=0, columnspan=2)
         levelstartx = tk.StringVar()
         levelstarty = tk.StringVar()
         levelstartx.set(str(self.currentlevel.attributes['start'][0]))
@@ -164,9 +189,9 @@ class Editor(tk.Frame):
         levelstartx.trace_add("write", setPos)
         levelstarty.trace_add("write", setPos)
         tk.Label(levelstartpointpanel, text="Start:").grid(row=0, column=0)
-        levelstartxentry = tk.Entry(levelstartpointpanel, textvariable=levelstartx)
+        levelstartxentry = tk.Entry(levelstartpointpanel, textvariable=levelstartx, width=3)
         levelstartxentry.grid(row=0, column=1)
-        levelstartyentry = tk.Entry(levelstartpointpanel, textvariable=levelstarty)
+        levelstartyentry = tk.Entry(levelstartpointpanel, textvariable=levelstarty, width=3)
         levelstartyentry.grid(row=0, column=2)
 
         modepanel = tk.Frame(tilegrid)
@@ -201,7 +226,7 @@ class Editor(tk.Frame):
         self.tilecanvas.pack(fill=tk.X)
         scrolltiles.pack(fill=tk.X)
         scrolltiles.config(command=self.tilecanvas.xview)
-        self.buildTileset(0)
+        self.buildTileset()
         
         def clickTilecanvas(e):
             x = math.floor(self.tilecanvas.canvasx(e.x) / 32)
@@ -251,7 +276,7 @@ class Editor(tk.Frame):
         self.bigtilecanvas.pack(fill=tk.X)
         scrollbigtiles.pack(fill=tk.X)
         scrollbigtiles.config(command=self.bigtilecanvas.xview)
-        self.buildBigTileset(0)
+        self.buildBigTileset()
 
         def clickBigtilecanvas(e):
             x = math.floor(self.bigtilecanvas.canvasx(e.x) / 32)
@@ -494,14 +519,15 @@ class Editor(tk.Frame):
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.grid(row=3, column=0, columnspan=4, sticky=tk.W+tk.E)
     
-    def buildTileset(self, tiles):
+    def buildTileset(self):
+        tiles = self.currentlevel.attributes.get("tileset")
         self.tiles = ImageTk.PhotoImage(tilesets.tilesets2x[tiles])
         self.tilecanvas.itemconfig(
             self.tilecanvas.img, image=self.tiles
         )
 
-    def buildBigTileset(self, tiles=-1):
-        #TODO: Handle different sets of bigtiles
+    def buildBigTileset(self):
+        self.bigtiles = self.worldfile.bigtiles[self.currentlevel.attributes.get("bigtileset")]
         self.bigtilesimg = ImageTk.PhotoImage(self.bigtiles.draw())
         self.bigtilecanvas.itemconfig(
             self.bigtilecanvas.img, image=self.bigtilesimg
