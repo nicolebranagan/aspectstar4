@@ -63,6 +63,12 @@ filen = designation + "level1.gif"
 pixelgrid.changepage(0)
 pixelgrid.getTkStrip(2, False).write(filen, format='gif')
 
+with open("src/images/vaporcity.terra", "r") as fileo:
+    pixelgrid.load(json.load(fileo))
+filen = designation + "level2.gif"
+pixelgrid.changepage(0)
+pixelgrid.getTkStrip(2, False).write(filen, format='gif')
+
 with open("src/images/palace-objects.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))
 filen = designation + "object1.gif"
