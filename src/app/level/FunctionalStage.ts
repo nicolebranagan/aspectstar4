@@ -10,12 +10,12 @@ import Stage from '../interfaces/Stage';
  * */
 export default class FunctionalStage implements Stage {
     private level : number[];
-    private bigtiles : number[][];
+    private bigtiles : (number[] | number)[];
     private width : number;
     private key : SolidityType[]
     private platforms : [LevelObject, Aspect, boolean][] = [];
 
-    constructor(level : any, bigtile : {bigtiles : number[][], key: number[]}) {
+    constructor(level : any, bigtile : {bigtiles : (number[] | number)[], key: number[]}) {
         this.level = level.grid;
         this.bigtiles = bigtile.bigtiles;
         this.key = bigtile.key;
@@ -43,7 +43,8 @@ export default class FunctionalStage implements Stage {
         if (bigtile == 0)
             return false;
         const offsetpt = pt.modulo(32).floor(16);
-        const localtile = this.key[this.bigtiles[bigtile][offsetpt.x + 2*offsetpt.y]];
+        const bigtiledata = <number[]>this.bigtiles[bigtile];
+        const localtile = this.key[bigtiledata[offsetpt.x + 2*offsetpt.y]];
         return Solidity.isSolid(localtile, asp);
     }
 
@@ -53,7 +54,8 @@ export default class FunctionalStage implements Stage {
         if (bigtile == 0)
             return false;
         const offsetpt = pt.modulo(32).floor(16);
-        const localtile = this.key[this.bigtiles[bigtile][offsetpt.x + 2*offsetpt.y]];
+        const bigtiledata = <number[]>this.bigtiles[bigtile];
+        const localtile = this.key[bigtiledata[offsetpt.x + 2*offsetpt.y]];
         return localtile == SolidityType.DEATH;
     }
 };

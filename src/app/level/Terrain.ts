@@ -1,14 +1,14 @@
 import Drawable from '../interfaces/Drawable';
 import Attributes from '../interfaces/Attributes';
 
-const TILESETS = ['level1'];
+const TILESETS = ['level1', 'level2'];
 
 /* The terrain object is in charge of drawing the level. */
 
 export default class Terrain implements Drawable {
     public drawables : PIXI.Container;
 
-    constructor(level : any, attributes : Attributes, bigtileset : number[][]) {
+    constructor(level : any, attributes : Attributes, bigtileset : (number | number[])[]) {
         this.drawables = new PIXI.Container();
         const drawables = this.drawables;
         const text = PIXI.loader.resources[TILESETS[attributes.tileset]].texture.baseTexture;
@@ -26,7 +26,7 @@ export default class Terrain implements Drawable {
         }
 
         function drawBigtile(i : number, x : number, y : number) : void {
-            const bigtile = bigtileset[i];
+            const bigtile = <number[]>bigtileset[i];
             // Cartesian coordinates
             const cartx = x * 32;
             const carty = y * 32;
