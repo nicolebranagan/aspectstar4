@@ -29,5 +29,15 @@ export default
       189
     ],
     "tileset": 0
+  },
+  {
+    "background": 0,
+    "bigtileset": 1,
+    "name": "Vaporcity 1",
+    "start": [
+      24,
+      478
+    ],
+    "tileset": 1
   }
 ]

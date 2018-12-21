@@ -527,8 +527,14 @@ class Editor(tk.Frame):
         )
 
     def buildBigTileset(self):
+        print(self.currentlevel.attributes.get("tileset"))
         tiles = tilesets.tiles[self.currentlevel.attributes.get("tileset")]
-        self.bigtiles = self.worldfile.bigtiles[self.currentlevel.attributes.get("bigtileset")]
+        index = self.currentlevel.attributes.get("bigtileset")
+        if (len(self.worldfile.bigtiles) == index):
+            self.worldfile.bigtiles.append(
+                Bigtiles(16, [0 for _ in range(0, 256)])
+            )
+        self.bigtiles = self.worldfile.bigtiles[index]
         self.bigtilesimg = ImageTk.PhotoImage(self.bigtiles.draw(tiles))
         self.bigtilecanvas.itemconfig(
             self.bigtilecanvas.img, image=self.bigtilesimg

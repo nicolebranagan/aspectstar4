@@ -12,6 +12,7 @@ class Bigtiles():
         self._fullcache = None
         self._null = [0 for i in range(0, 2*2)]
         self._nulldraw = Image.new("RGB", (16*2, 16*2))
+        self._lasttiles = None
 
     def get(self, i, x, y):
         if i in self._bigtiles:
@@ -32,7 +33,8 @@ class Bigtiles():
         if i not in self._bigtiles:
             return self._nulldraw
         if i in self._drawcache:
-            return self._drawcache[i]
+            if self._lasttiles is tiles:
+                return self._drawcache[i]
         img = Image.new("RGB", (16*2, 16*2))
 
         def drawTile(x, y, j):
@@ -50,7 +52,8 @@ class Bigtiles():
     
     def draw(self, tiles):
         if self._fullcache is not None:
-            return self._fullcache
+            if self._lasttiles is tiles:
+                return self._fullcache
 
         img = Image.new("RGB", (16*2*self.length, 16*2))
 
@@ -58,6 +61,7 @@ class Bigtiles():
             img.paste(self.drawtile(tiles, i), box=(i*32, 0))
 
         self._fullcache = img
+        self._lasttiles = tiles
         return img
     
     def serialize(self):
