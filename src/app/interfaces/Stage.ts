@@ -5,6 +5,6 @@ import Point from "../system/Point";
 export default interface Stage {
     reset() : void;
     register(object : LevelObject, aspect : Aspect, xor : boolean) : void;
-    isSolid(pt : Point, asp : Aspect) : boolean;
+    isSolid(pt : Point, asp : Aspect, upwardMomentum : boolean) : boolean;
     isDeath(pt : Point) : boolean;
 }

@@ -79,6 +79,7 @@ export default class PlatformerPhysics implements Physics {
     }
 
     private isSolid(pt : Point, asp : Aspect) : boolean {
+        const upwardMomentum = this.yvel <= 0;
         const checks : Point[] = [pt];
         if (this.xvel < 0)
             checks.push(new Point(pt.x - this.width/2, pt.y - this.height/2));
@@ -92,7 +93,7 @@ export default class PlatformerPhysics implements Physics {
             checks.push(new Point(pt.x - this.width/2, pt.y - this.height));
         if (this.yvel < 0 || this.xvel > 0)
             checks.push(new Point(pt.x + this.width/2, pt.y - this.height));
-        return checks.map((e) => {return this.stage.isSolid(e, asp)})
+        return checks.map((e) => {return this.stage.isSolid(e, asp, upwardMomentum)})
                      .some((e) => {return e});
     }
 }

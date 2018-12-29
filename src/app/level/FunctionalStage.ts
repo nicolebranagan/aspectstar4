@@ -30,7 +30,7 @@ export default class FunctionalStage implements Stage {
         this.platforms.push([object, aspect, xor]);
     }
 
-    public isSolid(pt : Point, asp : Aspect) : boolean {
+    public isSolid(pt : Point, asp : Aspect, upwardMomentum : boolean) : boolean {
         for (const pair of this.platforms) {
             if (pair[1] == Aspect.NONE || !pair[2] && pair[1] == asp || pair[2] && pair[1] != asp) {
                 if (pair[0].physics.inrange(pair[0].point, pt)) {
@@ -45,7 +45,7 @@ export default class FunctionalStage implements Stage {
         const offsetpt = pt.modulo(32).floor(16);
         const bigtiledata = <number[]>this.bigtiles[bigtile];
         const localtile = this.key[bigtiledata[offsetpt.x + 2*offsetpt.y]];
-        return Solidity.isSolid(localtile, asp);
+        return Solidity.isSolid(localtile, upwardMomentum);
     }
 
     public isDeath(pt : Point) : boolean {
