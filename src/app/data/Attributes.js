@@ -31,7 +31,7 @@ export default
     "tileset": 0
   },
   {
-    "background": 0,
+    "background": 1,
     "bigtileset": 1,
     "name": "Vaporcity 1",
     "start": [

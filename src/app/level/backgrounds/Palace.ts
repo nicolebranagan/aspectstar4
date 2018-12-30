@@ -92,8 +92,4 @@ export default class Palace implements Background  {
         this.offsetRow(this.rows[5], (x / 8 >> 0) % 96);
         this.offsetRow(this.rows[6], (x / 4 >> 0) % 96);
     }
-
-    update() {;}
-
-    respond() {;}
 };
