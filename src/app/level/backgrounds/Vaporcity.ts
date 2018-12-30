@@ -23,9 +23,10 @@ export default class Vaporcity implements Background {
 
         const ctx = this.canvas.getContext('2d');
         const gradient = ctx.createLinearGradient(0,0, 0,225);
-        gradient.addColorStop(0, '#FF00DD');
+        gradient.addColorStop(0, '#FF00FF');
+        gradient.addColorStop(0.1, '#BB0088');
         gradient.addColorStop(0.4, '#000000');
-        gradient.addColorStop(1, '#00DDFF');
+        gradient.addColorStop(1, '#0088AA');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 400, 225);
     }

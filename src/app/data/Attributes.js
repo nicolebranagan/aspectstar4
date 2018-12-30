@@ -36,7 +36,7 @@ export default
     "name": "Vaporcity 1",
     "start": [
       24,
-      478
+      446
     ],
     "tileset": 1
   }
