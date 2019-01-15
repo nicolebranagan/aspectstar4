@@ -83,10 +83,11 @@ class Editor(tk.Frame):
         self.levelname.set(self.currentlevel.attributes['name'])
         self.leveltileset.set(self.currentlevel.attributes['tileset'])
         self.levelbigtileset.set(self.currentlevel.attributes['bigtileset'])
+        self.widthstring.set(self.currentlevel.width)
+        self.heightstring.set(self.currentlevel.height)
         self.selectTile(0)
         self.selectBigtile(0)
         self.drawroom()
-        self.buildBigTileset()
     
     def buildGUI(self):
         commandbar = tk.Frame(self)
@@ -195,6 +196,22 @@ class Editor(tk.Frame):
         levelstartxentry.grid(row=0, column=1)
         levelstartyentry = tk.Entry(levelstartpointpanel, textvariable=levelstarty, width=3)
         levelstartyentry.grid(row=0, column=2)
+
+        def resetlevel():
+            newlevel = Level(int(self.widthstring.get()), int(self.heightstring.get()))
+            self.worldfile.levels[self.level] = newlevel
+            self.openlevel(self.level)
+        resetpanel = tk.Frame(leveloptionspanel)
+        resetpanel.grid(row=4, column=0, columnspan=2)
+        self.widthstring = tk.StringVar()
+        self.widthstring.set(self.currentlevel.width)
+        self.heightstring = tk.StringVar()
+        self.heightstring.set(self.currentlevel.height)
+        tk.Label(resetpanel, text="W:").grid(row=0, column=0)
+        tk.Entry(resetpanel, textvariable=self.widthstring, width=2).grid(row=0, column=1)
+        tk.Label(resetpanel, text="H:").grid(row=0, column=2)
+        tk.Entry(resetpanel, textvariable=self.heightstring, width=2).grid(row=0, column=3)
+        tk.Button(resetpanel, text="Reset Level", command=resetlevel).grid(row=0, column=4)
 
         modepanel = tk.Frame(tilegrid)
         modepanel.pack()
