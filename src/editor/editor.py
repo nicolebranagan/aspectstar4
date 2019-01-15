@@ -81,6 +81,8 @@ class Editor(tk.Frame):
         self.tileset = self.currentlevel.attributes.get("tileset")
         self.bigtiles = self.worldfile.bigtiles[self.currentlevel.attributes.get("bigtileset")]
         self.levelname.set(self.currentlevel.attributes['name'])
+        self.leveltileset.set(self.currentlevel.attributes['tileset'])
+        self.levelbigtileset.set(self.currentlevel.attributes['bigtileset'])
         self.selectTile(0)
         self.selectBigtile(0)
         self.drawroom()
@@ -146,10 +148,10 @@ class Editor(tk.Frame):
 
         leveltilesetpanel = tk.Frame(leveloptionspanel)
         leveltilesetpanel.grid(row=2, column=0, columnspan=2)
-        leveltileset = tk.StringVar()
-        levelbigtileset = tk.StringVar()
-        leveltileset.set(str(self.currentlevel.attributes['tileset']))
-        levelbigtileset.set(str(self.currentlevel.attributes['bigtileset']))        
+        self.leveltileset = tk.StringVar()
+        self.levelbigtileset = tk.StringVar()
+        self.leveltileset.set(str(self.currentlevel.attributes['tileset']))
+        self.levelbigtileset.set(str(self.currentlevel.attributes['bigtileset']))        
         def setVar(tkVar, attrName):
             def settingFunc(*args):
                 try:
@@ -160,13 +162,13 @@ class Editor(tk.Frame):
                 except ValueError:
                     tkVar.set(str(self.currentlevel.attributes[attrName]))
             return settingFunc
-        leveltileset.trace_add("write", setVar(leveltileset, 'tileset'))
-        levelbigtileset.trace_add("write", setVar(levelbigtileset, 'bigtileset'))
+        self.leveltileset.trace_add("write", setVar(self.leveltileset, 'tileset'))
+        self.levelbigtileset.trace_add("write", setVar(self.levelbigtileset, 'bigtileset'))
         tk.Label(leveltilesetpanel, text="Tileset:").grid(row=0, column=0)
-        leveltilesetentry = tk.Entry(leveltilesetpanel, textvariable=leveltileset, width=3)
+        leveltilesetentry = tk.Entry(leveltilesetpanel, textvariable=self.leveltileset, width=3)
         leveltilesetentry.grid(row=0, column=1)
         tk.Label(leveltilesetpanel, text="Bigtileset:").grid(row=0, column=2)
-        levelbigtilesetentry = tk.Entry(leveltilesetpanel, textvariable=levelbigtileset, width=3)
+        levelbigtilesetentry = tk.Entry(leveltilesetpanel, textvariable=self.levelbigtileset, width=3)
         levelbigtilesetentry.grid(row=0, column=3)
 
         levelstartpointpanel = tk.Frame(leveloptionspanel)
@@ -527,7 +529,6 @@ class Editor(tk.Frame):
         )
 
     def buildBigTileset(self):
-        print(self.currentlevel.attributes.get("tileset"))
         tiles = tilesets.tiles[self.currentlevel.attributes.get("tileset")]
         index = self.currentlevel.attributes.get("bigtileset")
         if (len(self.worldfile.bigtiles) == index):
