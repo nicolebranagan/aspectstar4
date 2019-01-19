@@ -18,6 +18,7 @@ import Runner from '../interfaces/Runner';
 import Updatable from '../interfaces/Updatable';
 import { enterWorldMap } from '../state/Governor';
 import Music from '../audio/Music';
+import Vaporcity from './backgrounds/Vaporcity';
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -38,7 +39,7 @@ export interface LevelOptions {
     closePauseWindow: () => void;
 };
 
-const BACKGROUNDS = [Palace];
+const BACKGROUNDS = [Palace, Vaporcity];
 
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
