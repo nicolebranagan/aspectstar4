@@ -1,6 +1,8 @@
 import Background from "../../interfaces/Background";
 
 const FALSE_SUNRISE = [0, 144, 72, 40];
+const CITY_OF_CINNAMON = [0, 184, 64, 72];
+const NIKORU = [72, 144, 182, 40];
 
 const generateSprite = (rect : number[], x : number, y : number) => {
     const texture = PIXI.Texture.from(PIXI.loader.resources['background'].texture.baseTexture); 
@@ -13,11 +15,30 @@ const generateSprite = (rect : number[], x : number, y : number) => {
     return sprite;
 };
 
+const generateRow = (rect : number[], y : number, offset : number = 0) => {
+    const row = new PIXI.Container();
+    const width = rect[2];
+    for (let i = -1; i < (Math.ceil(width + 400 / width)); i++) {
+        row.addChild(generateSprite(
+            rect, width*i + offset, y
+        ));
+    }
+    return row;
+};
+
+const offsetRow = (row : PIXI.Container, offset : number, width : number) => {
+    row.children.forEach((child, index ) => {
+        child.x = width*(index - 1) + offset;
+    });
+};
+
 export default class Vaporcity implements Background {
     public drawables : PIXI.Container;
 
     private canvas : HTMLCanvasElement;
     private falseSunrise : PIXI.Sprite;
+    private cityOfCinnamonRow : PIXI.Container[];
+    private nikoru : PIXI.Container;
 
     constructor() {
         this.drawables = new PIXI.Container;
@@ -27,7 +48,10 @@ export default class Vaporcity implements Background {
     }
 
     updatePos(x : number, y : number, offset : number) {
-        this.falseSunrise.x = ((Math.abs(x) + 172 + 72) % 544) - 72;
+        this.cityOfCinnamonRow.forEach((row, index) => 
+            offsetRow(row, (x / ((index+1)*8) >> 0) % CITY_OF_CINNAMON[2], CITY_OF_CINNAMON[2])
+        );
+        offsetRow(this.nikoru, (x / 32 >> 0) % NIKORU[2], NIKORU[2])
     }
 
     private prepareCanvas() {
@@ -56,5 +80,12 @@ export default class Vaporcity implements Background {
 
         this.falseSunrise = generateSprite(FALSE_SUNRISE, 172, 90-40)
         this.drawables.addChild(this.falseSunrise);
+        this.cityOfCinnamonRow = [
+            generateRow(CITY_OF_CINNAMON, 225-64, 0), 
+            generateRow(CITY_OF_CINNAMON, 225-104, 48),
+        ];
+        this.cityOfCinnamonRow.reverse().forEach(drawable => this.drawables.addChild(drawable));
+        this.nikoru = generateRow(NIKORU, 24, 32);
+        this.drawables.addChild(this.nikoru)
     }
 }
