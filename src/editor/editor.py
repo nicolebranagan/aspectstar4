@@ -345,11 +345,32 @@ class Editor(tk.Frame):
         objectselectframe = tk.Frame(tilegrid)
         objectselectframe.pack()
 
+        object_categories = []
+        # A set would make this easier, wouldn't it? But we want to keep the order
+        for e in Objects.data:
+            if (e["category"] not in object_categories):
+                object_categories.append(e["category"])
+        selectedcategory = tk.StringVar()
+        selectedcategory.set(object_categories[0])
+        categoryoption = tk.OptionMenu(objectselectframe, selectedcategory, *object_categories)
+        categoryoption.grid(row=0, column=1)
+
         selectedobj = tk.StringVar()
         objoptions = ["#" + str(Objects.data.index(e)) + ": " + e["name"] for e in Objects.data ]
         selectedobj.set(objoptions[0])
-        option = tk.OptionMenu(objectselectframe, selectedobj, *objoptions)
-        option.grid(row=0, column=1)
+        objectoption = tk.OptionMenu(objectselectframe, selectedobj, *objoptions)
+        objectoption.grid(row=1, column=1)
+
+        def getobjcategory(*args):
+            category = selectedcategory.get()
+            objectoption['menu'].delete(0, 'end')
+            newoptions = ["#" + str(Objects.data.index(e)) + ": " + e["name"] for e in Objects.data if e["category"] == category]
+            selectedobj.set(newoptions[0])
+            for option in newoptions:
+                objectoption['menu'].add_command(label=option, command=tk._setit(selectedobj, option))
+
+        getobjcategory()
+        selectedcategory.trace_add("write", getobjcategory)
 
         def getobj():
             data = selectedobj.get()
