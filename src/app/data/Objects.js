@@ -4,6 +4,7 @@ export default
     "name" : "Save Icon",
     "type" : "saveicon",
     "texture" : "player",
+    "category" : "general",
     "rect" : [192, 0, 16, 16],
     "aspect" : 0
   },
@@ -11,6 +12,7 @@ export default
     "name" : "Bell",
     "type" : "bell",
     "texture" : "player",
+    "category" : "general",
     "rect" : [176, 0, 16, 16],
     "aspect" : 0
   },
@@ -18,6 +20,7 @@ export default
     "name" : "Aspect Plus",
     "type" : "aspecttile",
     "texture" : "player",
+    "category" : "general",
     "rect" : [208, 0, 16, 16],
     "aspect" : 1
   },
@@ -25,6 +28,7 @@ export default
     "name" : "Aspect X",
     "type" : "aspecttile",
     "texture" : "player",
+    "category" : "general",
     "rect" : [224, 0, 16, 16],
     "aspect" : 2
   },
@@ -32,6 +36,7 @@ export default
     "name" : "Aspect Circle",
     "type" : "aspecttile",
     "texture" : "player",
+    "category" : "general",
     "rect" : [240, 0, 16, 16],
     "aspect" : 3
   },
@@ -39,6 +44,7 @@ export default
     "name" : "Palace Platform",
     "type" : "platform",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 0, 48, 16],
     "rect2" : [48, 0, 48, 16],
     "aspect" : 0
@@ -47,6 +53,7 @@ export default
     "name" : "Palace Platform Plus",
     "type" : "platform",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 16, 48, 16],
     "rect2" : [48, 16, 48, 16],
     "aspect" : 1
@@ -55,6 +62,7 @@ export default
     "name" : "Palace Platform X",
     "type" : "platform",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 32, 48, 16],
     "rect2" : [48, 32, 48, 16],
     "aspect" : 2
@@ -63,6 +71,7 @@ export default
     "name" : "Palace Platform Circle",
     "type" : "platform",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 48, 48, 16],
     "rect2" : [48, 48, 48, 16],
     "aspect" : 3
@@ -71,6 +80,7 @@ export default
     "name" : "Palace Square Plus",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 64, 16, 16],
     "rect2" : [16, 64, 16, 16],
     "aspect" : 1,
@@ -80,6 +90,7 @@ export default
     "name" : "Palace Square X",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 80, 16, 16],
     "rect2" : [16, 80, 16, 16],
     "aspect" : 2,
@@ -89,6 +100,7 @@ export default
     "name" : "Palace Square Circle",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 96, 16, 16],
     "rect2" : [16, 96, 16, 16],
     "aspect" : 3,
@@ -98,6 +110,7 @@ export default
     "name" : "Palace Not-Square Plus",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [16, 64, 16, 16],
     "rect2" : [0, 64, 16, 16],
     "aspect" : 1,
@@ -107,6 +120,7 @@ export default
     "name" : "Palace Not-Square X",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [16, 80, 16, 16],
     "rect2" : [0, 80, 16, 16],
     "aspect" : 2,
@@ -116,6 +130,7 @@ export default
     "name" : "Palace Not-Square Circle",
     "type" : "square",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [16, 96, 16, 16],
     "rect2" : [0, 96, 16, 16],
     "aspect" : 3,
@@ -125,6 +140,7 @@ export default
     "name" : "Mary-bot",
     "type" : "character",
     "texture" : "characters",
+    "category" : "general",
     "rect" : [0, 0, 16, 32],
     "row" : 0,
     "oneTimeUse" : true
@@ -133,6 +149,7 @@ export default
     "name" : "Zip",
     "type" : "victory",
     "texture" : "characters",
+    "category" : "general",
     "rect" : [0, 32, 16, 32],
     "row" : 1
   },
@@ -140,6 +157,7 @@ export default
     "name" : "Roomba-chan",
     "type" : "landmover",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 112, 24, 24],
     "width" : 24,
     "height" : 24,
@@ -150,6 +168,7 @@ export default
     "name" : "Multipurpose Mary-bot",
     "type" : "character",
     "texture" : "characters",
+    "category" : "general",
     "rect" : [0, 0, 16, 32],
     "row" : 0,
     "oneTimeUse" : false
@@ -158,6 +177,7 @@ export default
     "name" : "Scientist",
     "type" : "character",
     "texture" : "characters",
+    "category" : "palace",
     "rect" : [0, 64, 16, 32],
     "row" : 2,
     "oneTimeUse" : false
@@ -166,6 +186,7 @@ export default
     "name" : "Fish speaker",
     "type" : "character",
     "texture" : "characters",
+    "category" : "palace",
     "rect" : [0, 96, 16, 32],
     "row" : 3,
     "oneTimeUse" : false
@@ -174,6 +195,7 @@ export default
     "name" : "Spiky Friend Circle",
     "type" : "spikyplatform",
     "texture" : "object1",
+    "category" : "palace",
     "rect" : [0, 160, 24, 24],
     "width" : 24,
     "height" : 11,
