@@ -18,6 +18,7 @@ function loadResources() : void {
         .add('level1', 'images/level1.gif')
         .add('level2', 'images/level2.gif')
         .add('object1', 'images/object1.gif')
+        .add('object2', 'images/object2.gif')
         .load(function() {master.initialize()})
 }
 

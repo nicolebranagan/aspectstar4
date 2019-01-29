@@ -202,5 +202,65 @@ export default
     "damageHeight" : 24,
     "frameCount" : 4,
     "aspect": 3
+  },
+  {
+    "name" : "Vaporcity Square Plus",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 0, 16, 16],
+    "rect2" : [16, 0, 16, 16],
+    "aspect" : 1,
+    "xor" : false
+  },
+  {
+    "name" : "Vaporcity Square X",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 16, 16, 16],
+    "rect2" : [16, 16, 16, 16],
+    "aspect" : 2,
+    "xor" : false
+  },
+  {
+    "name" : "Vaporcity Square Circle",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 32, 16, 16],
+    "rect2" : [16, 32, 16, 16],
+    "aspect" : 3,
+    "xor" : false
+  },
+  {
+    "name" : "Vaporcity Not-Square Plus",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [16, 0, 16, 16],
+    "rect2" : [0, 0, 16, 16],
+    "aspect" : 1,
+    "xor" : true
+  },
+  {
+    "name" : "Vaporcity Not-Square X",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [16, 16, 16, 16],
+    "rect2" : [0, 16, 16, 16],
+    "aspect" : 2,
+    "xor" : true
+  },
+  {
+    "name" : "Vaporcity Not-Square Circle",
+    "type" : "square",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [16, 32, 16, 16],
+    "rect2" : [0, 32, 16, 16],
+    "aspect" : 3,
+    "xor" : true
   }
 ]

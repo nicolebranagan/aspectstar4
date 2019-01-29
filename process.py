@@ -75,6 +75,12 @@ filen = designation + "object1.gif"
 pixelgrid.changepage(0)
 pixelgrid.getTkImage(1, False).write(filen, format='gif')
 
+with open("src/images/vaporcity.terra", "r") as fileo:
+    pixelgrid.load(json.load(fileo))
+filen = designation + "object2.gif"
+pixelgrid.changepage(1)
+pixelgrid.getTkImage(1, False).write(filen, format='gif')
+
 with open("src/images/background.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))
 filen = designation + "background.gif"
