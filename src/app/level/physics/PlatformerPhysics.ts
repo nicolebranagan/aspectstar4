@@ -80,20 +80,30 @@ export default class PlatformerPhysics implements Physics {
 
     private isSolid(pt : Point, asp : Aspect) : boolean {
         const upwardMomentum = this.yvel <= 0;
-        const checks : Point[] = [pt];
+        const checks : [Point, boolean][] = [[pt, upwardMomentum]];
         if (this.xvel < 0)
-            checks.push(new Point(pt.x - this.width/2, pt.y - this.height/2));
+            checks.push(
+                [new Point(pt.x - this.width/2, pt.y - this.height/2), true]
+            );
         if (this.xvel > 0)
-            checks.push(new Point(pt.x + this.width/2, pt.y - this.height/2));
+            checks.push(
+                [new Point(pt.x + this.width/2, pt.y - this.height/2), true]
+            );
         if (this.yvel > 0 || this.xvel < 0) 
-            checks.push(new Point(pt.x - this.width/2, pt.y));
+            checks.push(
+                [new Point(pt.x - this.width/2, pt.y), upwardMomentum]
+            );
         if (this.yvel > 0 || this.xvel > 0) 
-            checks.push(new Point(pt.x + this.width/2, pt.y));
+            checks.push(
+                [new Point(pt.x + this.width/2, pt.y), upwardMomentum]
+            );
         if (this.yvel < 0 || this.xvel < 0)
-            checks.push(new Point(pt.x - this.width/2, pt.y - this.height));
+            checks.push(
+                [new Point(pt.x - this.width/2, pt.y - this.height), true]
+            );
         if (this.yvel < 0 || this.xvel > 0)
-            checks.push(new Point(pt.x + this.width/2, pt.y - this.height));
-        return checks.map((e) => {return this.stage.isSolid(e, asp, upwardMomentum)})
+            checks.push([new Point(pt.x + this.width/2, pt.y - this.height), true]);
+        return checks.map((e) => {return this.stage.isSolid(e[0], asp, e[1])})
                      .some((e) => {return e});
     }
 }
