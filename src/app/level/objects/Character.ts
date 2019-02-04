@@ -47,7 +47,9 @@ export default class Character implements LevelObject {
     this.sprite.x = this.point.x;
     this.sprite.y = this.point.y;
 
-    this.interaction = Interactions[interactionKey];
+    this.interaction = (Interactions as { [key: string]: Interaction[] })[
+      interactionKey
+    ];
     this.talkSprite = this.generateTalkSprite();
   }
 

@@ -8,3 +8,4 @@ yarn.lock
 src/public/images/*.gif
 .DS_Store
 */.DS_Store
+dist/
