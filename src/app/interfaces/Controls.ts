@@ -5,16 +5,16 @@
  * */
 
 export default interface Controls {
-    Up: boolean,
-    Down: boolean,
-    Left: boolean,
-    Right: boolean,
-    ButtonA: boolean,
-    ButtonB: boolean,
-    Start: boolean,
-    ButtonPlus: boolean,
-    ButtonX: boolean,
-    ButtonO: boolean,
+  Up: boolean;
+  Down: boolean;
+  Left: boolean;
+  Right: boolean;
+  ButtonA: boolean;
+  ButtonB: boolean;
+  Start: boolean;
+  ButtonPlus: boolean;
+  ButtonX: boolean;
+  ButtonO: boolean;
 
-    release() : void
-};
+  release(): void;
+}

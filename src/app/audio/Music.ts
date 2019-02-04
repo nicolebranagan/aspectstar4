@@ -1,24 +1,21 @@
-const music = ['disco', 'win'];
-let currentlyPlaying : { stop: () => void } = null;
+const music = ["disco", "win"];
+let currentlyPlaying: { stop: () => void } = null;
 
-const play = (key? : string) => {
-    if (currentlyPlaying) {
-        currentlyPlaying.stop();
-    }
+const play = (key?: string) => {
+  if (currentlyPlaying) {
+    currentlyPlaying.stop();
+  }
 
-    if (key) {
-        import(/* webpackChunkName: "audio-dict" */'./AudioDict').then(
-            ({default: { audioDict }}) => {
-                audioDict[key].play()
-                currentlyPlaying = audioDict[key];
-            }
-        )
-    }
+  if (key) {
+    import(/* webpackChunkName: "audio-dict" */ "./AudioDict").then(
+      ({ default: { audioDict } }) => {
+        audioDict[key].play();
+        currentlyPlaying = audioDict[key];
+      }
+    );
+  }
 };
 
-export {
-    music,
-    play,
-};
+export { music, play };
 
 export default play;

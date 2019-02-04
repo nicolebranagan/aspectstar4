@@ -1,5 +1,5 @@
-import Point from '../system/Point';
+import Point from "../system/Point";
 
 export default interface Physics {
-    inrange(point : Point, other : Point) : boolean
-};
+  inrange(point: Point, other: Point): boolean;
+}

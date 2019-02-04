@@ -1,82 +1,69 @@
 /* A Point is a standard 2d vector. The point should be immutable.
- * 
- * Method round() returns a new point whose children are integers. 
+ *
+ * Method round() returns a new point whose children are integers.
  * */
 
 export default class Point {
-    private _x : number = 0
-    private _y : number = 0
-    
-    constructor(x : number, y : number) {
-        if (x)
-            this._x = x;
-        if (y)
-            this._y = y;
-    }
+  private _x: number = 0;
+  private _y: number = 0;
 
-    get x() : number {
-        return this._x;
-    }
+  constructor(x: number, y: number) {
+    if (x) this._x = x;
+    if (y) this._y = y;
+  }
 
-    get y() : number {
-        return this._y;
-    }
+  get x(): number {
+    return this._x;
+  }
 
-    equals(p : Point) : boolean {
-        return (this._x == p.x) && (this._y == p.y)
-    }
+  get y(): number {
+    return this._y;
+  }
 
-    round() : Point {
-        return new Point(
-            this._x >> 0,
-            this._y >> 0
-        )
-    }
+  equals(p: Point): boolean {
+    return this._x == p.x && this._y == p.y;
+  }
 
-    multiply(j : number) : Point {
-        return new Point(
-            this._x * j,
-            this._y * j
-        )
-    }
+  round(): Point {
+    return new Point(this._x >> 0, this._y >> 0);
+  }
 
-    modulo(j : number) : Point {
-        return new Point(
-            this._x % j,
-            this._y % j
-        )
-    }
+  multiply(j: number): Point {
+    return new Point(this._x * j, this._y * j);
+  }
 
-    floor(j : number) : Point {
-        return new Point(
-            (this._x / j) >> 0,
-            (this._y / j) >> 0
-        )
-    }
+  modulo(j: number): Point {
+    return new Point(this._x % j, this._y % j);
+  }
 
-    add(p : Point) : Point {
-        return new Point(
-            this._x + p.x,
-            this._y + p.y
-        )
-    }
+  floor(j: number): Point {
+    return new Point((this._x / j) >> 0, (this._y / j) >> 0);
+  }
 
-    subtract(p : Point) : Point {
-        return new Point(
-            this._x - p.x,
-            this._y - p.y
-        )
-    }
+  add(p: Point): Point {
+    return new Point(this._x + p.x, this._y + p.y);
+  }
 
-    inRect(p: Point, width : number, height : number) : boolean {
-        const practicalWidth = width / 2;
-        const delta_y = p.y - this._y;
-        return (Math.abs(p.x - this._x) <= practicalWidth) && delta_y >= 0 && delta_y <= height; 
-    }
+  subtract(p: Point): Point {
+    return new Point(this._x - p.x, this._y - p.y);
+  }
 
-    inCenteredRect(p: Point, width : number, height : number) : boolean {
-        const practicalWidth = width / 2;
-        const practicalHeight = height / 2;
-        return (Math.abs(p.x - this._x) <= practicalWidth) && (Math.abs(p.y - this._y) <= practicalHeight); 
-    }
-};
+  inRect(p: Point, width: number, height: number): boolean {
+    const practicalWidth = width / 2;
+    const delta_y = p.y - this._y;
+    return (
+      Math.abs(p.x - this._x) <= practicalWidth &&
+      delta_y >= 0 &&
+      delta_y <= height
+    );
+  }
+
+  inCenteredRect(p: Point, width: number, height: number): boolean {
+    const practicalWidth = width / 2;
+    const practicalHeight = height / 2;
+    return (
+      Math.abs(p.x - this._x) <= practicalWidth &&
+      Math.abs(p.y - this._y) <= practicalHeight
+    );
+  }
+}

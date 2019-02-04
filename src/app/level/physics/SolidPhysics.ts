@@ -1,15 +1,19 @@
-import Physics from '../../interfaces/Physics';
-import Point from '../../system/Point';
-import Stage from '../../interfaces/Stage';
+import Physics from "../../interfaces/Physics";
+import Point from "../../system/Point";
+import Stage from "../../interfaces/Stage";
 
 export default class SolidPhysics implements Physics {
-    constructor(public stage : Stage,
-        public width : number,
-        public height : number) {;}
+  constructor(
+    public stage: Stage,
+    public width: number,
+    public height: number
+  ) {}
 
-    inrange(point : Point, other : Point) {
-        return ((Math.abs(point.x - other.x) < this.width/2) 
-            && (point.y - other.y) < this.height
-            && (point.y - other.y) >= 0);
-    }
-};
+  inrange(point: Point, other: Point) {
+    return (
+      Math.abs(point.x - other.x) < this.width / 2 &&
+      point.y - other.y < this.height &&
+      point.y - other.y >= 0
+    );
+  }
+}

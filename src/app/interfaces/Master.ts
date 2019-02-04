@@ -1,4 +1,4 @@
-import Runner from './Runner';
+import Runner from "./Runner";
 
 /* Master interface
  * All classes that implement "Runner" must have a reference to a class that
@@ -7,6 +7,6 @@ import Runner from './Runner';
  * */
 
 export default interface Master {
-    addRunner(runner : Runner) : void
-    removeRunner(runner : Runner) : void
+  addRunner(runner: Runner): void;
+  removeRunner(runner: Runner): void;
 }

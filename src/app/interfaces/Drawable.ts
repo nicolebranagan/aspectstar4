@@ -3,5 +3,5 @@
  * screen.
  * */
 export default interface Drawable {
-    drawables : PIXI.Container;
+  drawables: PIXI.Container;
 }
