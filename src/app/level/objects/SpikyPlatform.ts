@@ -4,6 +4,7 @@ import MovingPhysics from "../physics/MovingPhysics";
 import Point from "../../system/Point";
 import Stage from "../../interfaces/Stage";
 import { LevelOptions } from "../Level";
+import SolidityType from "../../constants/SolidityType";
 
 export default class SpikyPlatform implements LevelObject {
   active = true;
@@ -39,7 +40,7 @@ export default class SpikyPlatform implements LevelObject {
     this.spriteFrame = new PIXI.Rectangle(...rect);
     this.sprite = this.getSprite(texture);
     this.drawables.addChild(this.sprite);
-    stage.register(this, this.aspect, false);
+    stage.register(this, SolidityType.SOLID, this.aspect, false);
   }
 
   private getSprite(text: string): PIXI.Sprite {

@@ -13,7 +13,7 @@ export default class FunctionalStage implements Stage {
   private bigtiles: (number[] | number)[];
   private width: number;
   private key: SolidityType[];
-  private platforms: [LevelObject, Aspect, boolean][] = [];
+  private platforms: [LevelObject, SolidityType, Aspect, boolean][] = [];
 
   constructor(
     level: any,
@@ -29,19 +29,24 @@ export default class FunctionalStage implements Stage {
     this.platforms = [];
   }
 
-  public register(object: LevelObject, aspect: Aspect, xor: boolean) {
-    this.platforms.push([object, aspect, xor]);
+  public register(
+    object: LevelObject,
+    solidityType: SolidityType,
+    aspect: Aspect,
+    xor: boolean
+  ) {
+    this.platforms.push([object, solidityType, aspect, xor]);
   }
 
   public isSolid(pt: Point, asp: Aspect, upwardMomentum: boolean): boolean {
     for (const pair of this.platforms) {
       if (
-        pair[1] == Aspect.NONE ||
-        (!pair[2] && pair[1] == asp) ||
-        (pair[2] && pair[1] != asp)
+        pair[2] == Aspect.NONE ||
+        (!pair[3] && pair[2] == asp) ||
+        (pair[3] && pair[2] != asp)
       ) {
         if (pair[0].physics.inrange(pair[0].point, pt)) {
-          return true;
+          return Solidity.isSolid(pair[1], upwardMomentum);
         }
       }
     }

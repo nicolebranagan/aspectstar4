@@ -39,5 +39,15 @@ export default
       382
     ],
     "tileset": 1
+  },
+  {
+    "background": 0,
+    "bigtileset": 0,
+    "name": "",
+    "start": [
+      100,
+      287
+    ],
+    "tileset": 0
   }
 ]

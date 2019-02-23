@@ -4,6 +4,7 @@ import Point from "../../system/Point";
 import MovingPhysics from "../physics/MovingPhysics";
 import Stage from "../../interfaces/Stage";
 import { LevelOptions } from "../Level";
+import SolidityType from "../../constants/SolidityType";
 
 export default class Platform implements LevelObject {
   active = true;
@@ -35,7 +36,7 @@ export default class Platform implements LevelObject {
     this.frame2 = new PIXI.Rectangle(...rect2);
     this.sprite = this.getSprite(texture);
     this.drawables.addChild(this.sprite);
-    stage.register(this, this.aspect, false);
+    stage.register(this, SolidityType.OPEN_TOP, this.aspect, false);
   }
 
   private getSprite(text: string): PIXI.Sprite {

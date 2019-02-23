@@ -91,5 +91,19 @@ async function parseObject(stage: Stage, data: any[]): Promise<LevelObject> {
       objdata.frameCount,
       data[4]
     );
+  } else if (objdata.type === "safetypin") {
+    const SafetyPin = (await import(/* webpackChunkName: "safety-pin" */ "./objects/SafetyPin"))
+    .default;
+    return new SafetyPin(
+      stage,
+      point,
+      objdata.aspect,
+      objdata.texture,
+      objdata.rect,
+      objdata.rect2,
+      0,
+      0,
+      false
+    );
   }
 }

@@ -4,6 +4,7 @@ import Point from "../../system/Point";
 import SolidPhysics from "../physics/SolidPhysics";
 import Stage from "../../interfaces/Stage";
 import { LevelOptions } from "../Level";
+import SolidityType from "../../constants/SolidityType";
 
 export default class Square implements LevelObject {
   active = true;
@@ -34,7 +35,7 @@ export default class Square implements LevelObject {
     this.frame2 = new PIXI.Rectangle(...rect2);
     this.sprite = this.getSprite(texture);
     this.drawables.addChild(this.sprite);
-    stage.register(this, this.aspect, solid);
+    stage.register(this, SolidityType.SOLID, this.aspect, solid);
   }
 
   private getSprite(text: string): PIXI.Sprite {
