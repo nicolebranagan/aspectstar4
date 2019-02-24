@@ -271,5 +271,18 @@ export default
     "rect": [0, 144, 32, 16],
     "rect2": [32, 144, 32, 32],
     "aspect": 0,
+    "width" : 32,
+    "height" : 11
+  },
+  {
+    "name": "Safety Pin X",
+    "type": "safetypin",
+    "texture": "object2",
+    "category": "vaporcity",
+    "rect": [0, 192, 32, 16],
+    "rect2": [32, 144, 32, 32],
+    "aspect": 2,
+    "width" : 32,
+    "height" : 11
   }
 ]

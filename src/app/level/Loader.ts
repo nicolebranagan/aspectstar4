@@ -101,8 +101,8 @@ async function parseObject(stage: Stage, data: any[]): Promise<LevelObject> {
       objdata.texture,
       objdata.rect,
       objdata.rect2,
-      0,
-      0,
+      objdata.width,
+      objdata.height,
       false
     );
   }

@@ -1,14 +1,16 @@
 import LevelObject from "../../interfaces/LevelObject";
 import Aspect from "../../constants/Aspect";
-import MovingPhysics from "../physics/MovingPhysics";
 import Point from "../../system/Point";
 import { LevelOptions } from "../Level";
 import Stage from "../../interfaces/Stage";
+import SolidPhysics from "../physics/SolidPhysics";
+import SolidityType from "../../constants/SolidityType";
 
 enum SafetyPinStates {
     BOUNCING,
     CHARGING,
-    STATIONARY
+    STATIONARY,
+    BLOODTHIRSTY
 }
 
 const MAX_CHARGE = 128;
@@ -19,7 +21,7 @@ export default class SafetyPin implements LevelObject {
     active = true;
     drawables: PIXI.Container = new PIXI.Container();
     aspect: Aspect;
-    physics: MovingPhysics;
+    physics: SolidPhysics;
     point: Point;
 
     private home : Point;
@@ -37,14 +39,14 @@ export default class SafetyPin implements LevelObject {
         texture: string,
         private rect: number[],
         private rect2: number[],
-        width: number,
-        height: number,
+        private width: number,
+        private height: number,
         private pointingLeft: boolean
     ) {
         this.point = new Point(point.x, point.y - 0.1);
         this.home = this.point; // But it won't get updated, while this.point will
         this.aspect = aspect;
-        this.physics = new MovingPhysics(stage, width, height);
+        this.physics = new SolidPhysics(stage, width, height);
         this.drawables = new PIXI.Container();
         this.frameTimer = 0;
 
@@ -71,12 +73,18 @@ export default class SafetyPin implements LevelObject {
             this.warningSprite.texture.frame = new PIXI.Rectangle(...rect2);
             this.warningSprite.anchor.set(0.5, 1);
         }
+
+        if (aspect) {
+            stage.register(this, SolidityType.SOLID, this.aspect, false);
+        }
     }
 
     setTextureFrame() {
         const newRect = this.rect.slice(0); // Make a copy of the array
-        if (this.state === SafetyPinStates.CHARGING) {
+        if (this.state === SafetyPinStates.CHARGING || this.state === SafetyPinStates.BLOODTHIRSTY) {
             newRect[1] += 32;
+        } else if (this.state === SafetyPinStates.STATIONARY) {
+            newRect[1] += 48;
         } else if (this.state === SafetyPinStates.BOUNCING && this.frameTimer > (FRAME_TIMER_MAX / 2)) {
             newRect[1] += 16;
         }
@@ -102,7 +110,19 @@ export default class SafetyPin implements LevelObject {
         } else {
             if (player.aspect === aspect) {
                 this.state = SafetyPinStates.STATIONARY;
+                warningSprite && this.drawables.removeChild(warningSprite);
+                return;
             }
+        }
+
+        if (player.point.inRect(this.point, this.width, this.height)) {
+            levelOptions.die();
+            warningSprite && this.drawables.addChild(warningSprite);
+            this.state = SafetyPinStates.BLOODTHIRSTY;
+        }
+
+        if (this.state === SafetyPinStates.BLOODTHIRSTY) {
+            return;
         }
 
         const delta_x = player.point.x - point.x;
