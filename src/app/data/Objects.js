@@ -272,7 +272,20 @@ export default
     "rect2": [32, 144, 32, 32],
     "aspect": 0,
     "width" : 32,
-    "height" : 11
+    "height" : 11,
+    "pointingLeft" : false
+  },
+  {
+    "name": "Safety Pin Facing Left",
+    "type": "safetypin",
+    "texture": "object2",
+    "category": "vaporcity",
+    "rect": [0, 144, 32, 16],
+    "rect2": [32, 144, 32, 32],
+    "aspect": 0,
+    "width" : 32,
+    "height" : 11,
+    "pointingLeft" : true
   },
   {
     "name": "Safety Pin X",
@@ -283,6 +296,19 @@ export default
     "rect2": [32, 144, 32, 32],
     "aspect": 2,
     "width" : 32,
-    "height" : 11
+    "height" : 11,
+    "pointingLeft" : false
+  },
+  {
+    "name": "Safety Pin X Facing Left",
+    "type": "safetypin",
+    "texture": "object2",
+    "category": "vaporcity",
+    "rect": [0, 192, 32, 16],
+    "rect2": [32, 144, 32, 32],
+    "aspect": 2,
+    "width" : 32,
+    "height" : 11,
+    "pointingLeft" : true
   }
 ]
