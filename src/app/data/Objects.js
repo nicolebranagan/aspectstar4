@@ -310,5 +310,34 @@ export default
     "width" : 32,
     "height" : 11,
     "pointingLeft" : true
+  },
+  {
+    "name" : "Civilian",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "vaporcity",
+    "rect" : [0, 128, 16, 32],
+    "row" : 4,
+    "oneTimeUse" : false
+  },
+  {
+    "name" : "Peacekeeper",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "vaporcity",
+    "rect" : [0, 160, 16, 32],
+    "row" : 5,
+    "oneTimeUse" : false
+  },
+  {
+    "name" : "Vaporware Roomba-chan",
+    "type" : "landmover",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [48, 0, 24, 24],
+    "width" : 24,
+    "height" : 24,
+    "frameCount" : 4,
+    "aspect": 0
   }
 ]

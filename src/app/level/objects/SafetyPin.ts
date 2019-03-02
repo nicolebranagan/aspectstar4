@@ -128,7 +128,10 @@ export default class SafetyPin implements LevelObject {
       }
     }
 
-    if (player.point.inRect(this.point, this.width, this.height)) {
+    if (
+      player.point.inRect(this.point, this.width, this.height) ||
+      player.physics.inrange(player.point, this.point)
+    ) {
       levelOptions.die();
       warningSprite && this.drawables.addChild(warningSprite);
       this.state = SafetyPinStates.BLOODTHIRSTY;

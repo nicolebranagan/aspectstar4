@@ -93,7 +93,7 @@ export default class Character implements LevelObject {
       this.activate(levelOptions);
     } else {
       this.drawables.removeChild(this.talkSprite);
-      levelOptions.prepareInteraction(null);
+      levelOptions.clearInteraction(this.interaction);
     }
   }
 

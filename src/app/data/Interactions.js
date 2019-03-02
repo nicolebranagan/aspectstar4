@@ -138,5 +138,39 @@ export default
     }, {
         name: 'Zip',
         text: 'Suit yourself.'
+    }],
+    cityinfo: [{
+        name: 'Man',
+        text: 'Welcome to the capital city, now under occupation by the\nbenevolent League of Nations!'
+    }, {
+        name: 'Marybot',
+        text: 'I\'ll remember your face.'
+    }],
+    pictures: [{
+        name: 'Peacekeeper',
+        text: 'You guys look like the guys in the pictures of the\nwanted...'
+    }, {
+        name: 'Nicole',
+        text: 'Pay no attention to the catgirl in front of the photo.'
+    }, {
+        name: 'Peacekeeper',
+        text: 'Oh yeah, definitely no connection. Just sayin\'.'
+    }],
+    clippy: [{
+        name: 'Marybot',
+        text: 'A project to create the ultimate office assistant...\nIt started so well.'
+    }, {
+        name: 'Marybot',
+        text: 'But one day the Princess didn\'t want to write a letter;\nthe rest is history.'
+    }, {
+        name: 'Nicole',
+        text: 'It\'s so weird that you keep referring to yourself in the\nthird person.'
+    }],
+    warkeeper: [{
+        name: 'Peacekeeper',
+        text: 'Some of these cleaning bots got out of the castle, but\nwe\'ve got it under control.'
+    }, {
+        name: 'Peacekeeper',
+        text: 'And when we do have a problem, hey, that\'s what the\nvampire is for!'
     }]
 }
