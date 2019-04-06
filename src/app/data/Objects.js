@@ -310,5 +310,61 @@ export default
     "width" : 32,
     "height" : 11,
     "pointingLeft" : true
+  },
+  {
+    "name" : "Civilian",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "vaporcity",
+    "rect" : [0, 128, 16, 32],
+    "row" : 4,
+    "oneTimeUse" : false
+  },
+  {
+    "name" : "Peacekeeper",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "vaporcity",
+    "rect" : [0, 160, 16, 32],
+    "row" : 5,
+    "oneTimeUse" : false
+  },
+  {
+    "name" : "Vaporware Roomba-chan",
+    "type" : "landmover",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [48, 0, 24, 24],
+    "width" : 24,
+    "height" : 24,
+    "frameCount" : 4,
+    "aspect": 0
+  },
+  {
+    "name" : "Vapor Platform Plus",
+    "type" : "platform",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 64, 48, 16],
+    "rect2" : [0, 48, 48, 16],
+    "aspect" : 1
+  },
+  {
+    "name" : "Vapor Platform X",
+    "type" : "platform",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 96, 48, 16],
+    "rect2" : [0, 80, 48, 16],
+    "aspect" : 2
+  },
+  {
+    "name" : "Vapor Platform Circle",
+    "type" : "platform",
+    "texture" : "object2",
+    "category" : "vaporcity",
+    "rect" : [0, 112, 48, 16],
+    "rect2" : [0, 128, 48, 16],
+    "aspect" : 3
   }
 ]

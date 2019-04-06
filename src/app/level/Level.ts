@@ -30,6 +30,7 @@ export interface LevelOptions {
   getAspect: (aspect: Aspect) => void;
   getBell: () => void;
   prepareInteraction: (text: Interaction[]) => void;
+  clearInteraction: (text: Interaction[]) => void;
   setInteraction: (text: Interaction[]) => void;
   win: (fairGame: boolean) => void;
   die: () => void;
@@ -127,6 +128,12 @@ export default class Level implements Runner, Master {
 
       prepareInteraction: (interaction: Interaction[]) => {
         this.interaction = interaction;
+      },
+
+      clearInteraction: (interaction: Interaction[]) => {
+        if (interaction === this.interaction) {
+          this.interaction = null;
+        }
       },
 
       setInteraction: (interaction: Interaction[]) => {

@@ -41,13 +41,13 @@ export default
     "tileset": 1
   },
   {
-    "background": 0,
-    "bigtileset": 0,
-    "name": "",
+    "background": 1,
+    "bigtileset": 1,
+    "name": "Vaporcity 2",
     "start": [
-      100,
-      287
+      60,
+      1151
     ],
-    "tileset": 0
+    "tileset": 1
   }
 ]
