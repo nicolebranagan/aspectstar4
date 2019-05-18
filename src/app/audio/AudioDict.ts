@@ -25,7 +25,9 @@ const initializeAudio = () => {
     getPromise(name, `./audio/${name}.wav`, { loop: false })
   );
   promises.concat(
-    music.map(name => getPromise(name, `./audio/${name}.wav`, { loop: true }))
+    music.map(name =>
+      getPromise(name.split(".")[0], `./audio/${name}`, { loop: true })
+    )
   );
   return Promise.all(promises);
 };

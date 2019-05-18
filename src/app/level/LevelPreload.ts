@@ -14,6 +14,8 @@ const ABOVE_NAME_TEXT = "Now loading...";
 const TEXT_ZONE_HEIGHT = 24;
 const TIMER_HEIGHT = 112;
 
+const LEVEL_MUSIC = ["palazzo"];
+
 export default class LevelPreload implements Runner {
   public drawables: PIXI.Container;
 
@@ -182,7 +184,7 @@ export default class LevelPreload implements Runner {
       if (this.timer === 0) {
         this.master.removeRunner(this);
         this.master.addRunner(this.level);
-        Music(); // TODO: Have this play the level's music
+        Music(LEVEL_MUSIC[this.attributes.tileset]); // TODO: Have this play the level's music
       } else {
         this.updateTimerText();
       }

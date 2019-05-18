@@ -17,7 +17,6 @@ import Attributes from "../interfaces/Attributes";
 import Runner from "../interfaces/Runner";
 import Updatable from "../interfaces/Updatable";
 import { enterWorldMap } from "../state/Governor";
-import Music from "../audio/Music";
 import Vaporcity from "./backgrounds/Vaporcity";
 
 /* LevelOptions are options that are passed by the level to its children.
