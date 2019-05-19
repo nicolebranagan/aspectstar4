@@ -58,7 +58,7 @@ export default class PauseMenu implements Runner {
         }
       },
       {
-        name: "Give up",
+        name: "Skip level",
         onChoose: () => {
           this.sprite = new PauseSprite(new Point(SPRITE_X, -32));
           this.drawables.addChild(this.sprite.drawables);
