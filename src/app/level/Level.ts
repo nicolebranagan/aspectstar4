@@ -53,7 +53,6 @@ export default class Level implements Runner, Master {
   private objects: LevelObject[] = [];
   private stage: Stage;
   private player: Player;
-  private camera: Point;
   private system: System;
   private deathTimer = 0;
   private lastState: PlayerState;
@@ -68,6 +67,7 @@ export default class Level implements Runner, Master {
   private deaths: number = 0;
   private paused: Runner;
   private objectMemory: ((number | boolean)[] | (string | number)[])[];
+  private scrollVertical: boolean;
 
   constructor(
     master: Master,
@@ -97,8 +97,6 @@ export default class Level implements Runner, Master {
 
     this.system = new System(this.lastState, this.bellCount);
     this.addRunner(this.system);
-
-    this.camera = this.lastState.point;
 
     this.options = {
       saveState: () => {
@@ -189,7 +187,6 @@ export default class Level implements Runner, Master {
 
       getObjects: () => this.objects
     };
-    console.log("level initialized");
   }
 
   respond(controls: Controls): void {
@@ -238,8 +235,9 @@ export default class Level implements Runner, Master {
       }
       return;
     }
-    this.camera = this.player.point;
-    const truecamera = this.camera.round();
+    const truecamera = this.scrollVertical
+      ? this.player.point.round()
+      : new Point(this.player.point.x, 160);
     this.background.updatePos(
       Math.min(200 - truecamera.x, 0),
       truecamera.y,
@@ -305,6 +303,7 @@ export default class Level implements Runner, Master {
     const terrain = new Terrain(levelData, attributes, bigtile.bigtiles);
     this.levelFrame.addChildAt(terrain.drawables, 0);
     this.objectMemory = levelData.objects;
+    this.scrollVertical = levelData.height > 8;
 
     return levelData.objects;
   }

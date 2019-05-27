@@ -49,5 +49,15 @@ export default
       1151
     ],
     "tileset": 1
+  },
+  {
+    "background": 1,
+    "bigtileset": 1,
+    "name": "Vaporcity 3",
+    "start": [
+      100,
+      32
+    ],
+    "tileset": 1
   }
 ]
