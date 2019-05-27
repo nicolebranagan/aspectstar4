@@ -8,6 +8,7 @@ import Interactions from "../../data/Interactions";
 
 export default class Character implements LevelObject {
   active = true;
+  alwaysActive: boolean = false;
   drawables: PIXI.Container;
   aspect = Aspect.NONE;
   physics = new NullPhysics();

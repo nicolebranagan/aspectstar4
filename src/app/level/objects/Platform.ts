@@ -8,6 +8,7 @@ import SolidityType from "../../constants/SolidityType";
 
 export default class Platform implements LevelObject {
   active = true;
+  alwaysActive: boolean = false;
   drawables: PIXI.Container;
   aspect: Aspect;
   physics: MovingPhysics;

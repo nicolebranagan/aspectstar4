@@ -7,6 +7,7 @@ import { LevelOptions } from "../Level";
 
 export default class LandMover implements LevelObject {
   active = true;
+  alwaysActive: boolean = false;
   drawables: PIXI.Container = new PIXI.Container();
   aspect: Aspect;
   physics: PlatformerPhysics;

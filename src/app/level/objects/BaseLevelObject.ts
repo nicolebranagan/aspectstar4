@@ -13,6 +13,7 @@ import UpdatableHolder from "../../interfaces/UpdatableHolder";
 export default abstract class BaseLevelObject
   implements LevelObject, UpdatableHolder {
   active: boolean = true;
+  alwaysActive: boolean = false;
   aspect: Aspect;
   physics: Physics;
   point: Point;

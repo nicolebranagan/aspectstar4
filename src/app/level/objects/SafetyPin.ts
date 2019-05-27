@@ -20,6 +20,7 @@ const FRAME_TIMER_MAX = 50;
 
 export default class SafetyPin implements LevelObject {
   active = true;
+  alwaysActive: boolean = false;
   drawables: PIXI.Container = new PIXI.Container();
   aspect: Aspect;
   physics: SolidPhysics;

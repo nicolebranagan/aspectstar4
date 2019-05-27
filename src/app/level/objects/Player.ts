@@ -19,6 +19,7 @@ const WAIT_FRAME_CHANGE = 20;
 
 export default class Player extends BaseLevelObject {
   active = true;
+  alwaysActive: boolean = true;
   aspects: Aspect[];
   physics: PlatformerPhysics;
   bells: number = 0;

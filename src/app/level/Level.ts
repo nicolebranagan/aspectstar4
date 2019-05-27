@@ -259,7 +259,10 @@ export default class Level implements Runner, Master {
       160 - truecamera.y
     );
     this.objects
-      .filter(obj => obj.point.inCenteredRect(truecamera, 500, 356))
+      .filter(
+        obj =>
+          obj.alwaysActive || obj.point.inCenteredRect(truecamera, 500, 356)
+      )
       .forEach(e => {
         e.update(this.options);
         if (e !== this.player && !e.active) this.removeObject(e);
