@@ -105,5 +105,9 @@ async function parseObject(stage: Stage, data: any[]): Promise<LevelObject> {
       objdata.height,
       objdata.pointingLeft
     );
+  } else if (objdata.type === "movingwall") {
+    const MovingWall = (await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall"))
+      .default;
+    return new MovingWall();
   }
 }
