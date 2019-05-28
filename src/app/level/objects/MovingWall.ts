@@ -2,17 +2,29 @@ import LevelObject from "../../interfaces/LevelObject";
 import Aspect from "../../constants/Aspect";
 import NullPhysics from "../physics/NullPhysics";
 import Point from "../../system/Point";
-import { LevelOptions } from "../Level";
+import { LevelOptions, UNDEFINED } from "../Level";
+
+const WALL_LOCATION = "wallLocationDataKey";
 
 export default class MovingWall implements LevelObject {
   active = true;
-  alwaysActive: boolean = false;
+  alwaysActive: boolean = true;
   drawables: PIXI.Container;
   aspect: Aspect;
   physics = new NullPhysics();
-  point = new Point(0, 0);
+  point: Point;
 
-  constructor() {
+  constructor(levelOptions: LevelOptions) {
+    const wallLocation = levelOptions.getData(WALL_LOCATION);
+    if (wallLocation === UNDEFINED) {
+      this.point = new Point(0, 0);
+    } else {
+      this.point = new Point(wallLocation as number, 0);
+    }
+    levelOptions.hookSave(() => {
+      levelOptions.setData(WALL_LOCATION, this.point.x);
+    });
+
     this.drawables = new PIXI.Container();
     const rnd = this.point.round();
     this.drawables.x = rnd.x;

@@ -37,9 +37,14 @@ export interface LevelOptions {
   getPlayer: () => LevelObject;
   getObjects: () => LevelObject[];
   closePauseWindow: () => void;
+  getData: (key: string) => string | boolean | number | symbol;
+  setData: (key: string, data: string | boolean | number) => void;
+  hookSave: (hook: () => void) => void;
 }
 
 const BACKGROUNDS = [Palace, Vaporcity];
+
+export const UNDEFINED = Symbol("Undefined");
 
 /* Level is a Runner that represents a level in-game.
  * The level is responsible for all coordination of objects within the level.
@@ -68,6 +73,8 @@ export default class Level implements Runner, Master {
   private paused: Runner;
   private objectMemory: ((number | boolean)[] | (string | number)[])[];
   private scrollVertical: boolean;
+  private objectData: { [key: string]: string | number | boolean } = {};
+  private saveHooks: (() => void)[] = [];
 
   constructor(
     master: Master,
@@ -100,6 +107,7 @@ export default class Level implements Runner, Master {
 
     this.options = {
       saveState: () => {
+        this.saveHooks.forEach(e => e());
         this.lastState = {
           point: this.player.point,
           aspect: this.player.aspect,
@@ -185,7 +193,23 @@ export default class Level implements Runner, Master {
 
       getPlayer: () => this.player,
 
-      getObjects: () => this.objects
+      getObjects: () => this.objects,
+
+      getData: key => {
+        if (this.objectData[key]) {
+          return this.objectData[key];
+        } else {
+          return UNDEFINED;
+        }
+      },
+
+      setData: (key, value) => {
+        this.objectData[key] = value;
+      },
+
+      hookSave: hook => {
+        this.saveHooks.push(hook);
+      }
     };
   }
 
@@ -317,8 +341,9 @@ export default class Level implements Runner, Master {
     this.loaded = false;
     this.bellCount = 0;
     this.objects.slice().forEach(e => this.removeObject(e));
+    this.saveHooks = [];
     this.stage.reset();
-    const data = Loader(this.stage, objects);
+    const data = Loader(this.stage, objects, this.options);
     this.player = new Player(this.stage, this.lastState);
 
     let count = 0;

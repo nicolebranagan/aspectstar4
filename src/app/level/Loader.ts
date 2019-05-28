@@ -1,18 +1,24 @@
 import LevelObject from "../interfaces/LevelObject";
 import Point from "../system/Point";
 import Stage from "../interfaces/Stage";
+import { LevelOptions } from "./Level";
 
 /**
  * Loader will load in the objects
  */
 export default function Loader(
   stage: Stage,
-  objects: ((number | boolean)[] | (string | number)[])[]
+  objects: ((number | boolean)[] | (string | number)[])[],
+  levelOptions: LevelOptions
 ): Promise<LevelObject>[] {
-  return objects.map(async e => await parseObject(stage, e));
+  return objects.map(async e => await parseObject(stage, e, levelOptions));
 }
 
-async function parseObject(stage: Stage, data: any[]): Promise<LevelObject> {
+async function parseObject(
+  stage: Stage,
+  data: any[],
+  levelOptions: LevelOptions
+): Promise<LevelObject> {
   const objectDictionary = (await import(/* webpackChunkName: "objects" */ "../data/Objects"))
     .default;
   const objdata = objectDictionary[data[0]];
@@ -108,6 +114,6 @@ async function parseObject(stage: Stage, data: any[]): Promise<LevelObject> {
   } else if (objdata.type === "movingwall") {
     const MovingWall = (await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall"))
       .default;
-    return new MovingWall();
+    return new MovingWall(levelOptions);
   }
 }
