@@ -1,5 +1,4 @@
 import Updatable from "../interfaces/Updatable";
-import UpdatableHolder from "../interfaces/UpdatableHolder";
 import Point from "../system/Point";
 
 const CIRCLE_COLORS = [

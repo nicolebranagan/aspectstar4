@@ -55,8 +55,8 @@ export default
     "bigtileset": 1,
     "name": "Vaporcity 3",
     "start": [
-      100,
-      32
+      110,
+      190
     ],
     "tileset": 1
   }

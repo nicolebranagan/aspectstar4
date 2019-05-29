@@ -114,6 +114,6 @@ async function parseObject(
   } else if (objdata.type === "movingwall") {
     const MovingWall = (await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall"))
       .default;
-    return new MovingWall(levelOptions);
+    return new MovingWall(point, objdata.row, data[3], levelOptions);
   }
 }

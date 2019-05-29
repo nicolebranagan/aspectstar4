@@ -369,8 +369,9 @@ export default
   }, {
     "name": "Moving Wall",
     "type": "movingwall",
-    "texture": "object2",
+    "texture": "characters",
     "category": "vaporcity",
-    "rect" : [0, 0, 16, 16]
+    "rect" : [0, 192, 16, 32],
+    "row": 6
   }
 ]

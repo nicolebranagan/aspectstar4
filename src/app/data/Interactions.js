@@ -172,5 +172,45 @@ export default
     }, {
         name: 'Peacekeeper',
         text: 'And when we do have a problem, hey, that\'s what the\nvampire is for!'
+    }],
+    countvoncount: [{
+        name: 'Count Ennersby',
+        text: 'It is I, Count Ennersby. For one thousand years I\nhave ruled over Cissylvania with fear and power,\nbut now I just do odd jobs for the League\nof Nations.'
+    }, {
+        name: 'Count Ennersby',
+        text: 'So you should probably just give up now, for I\nwould hate to hurt such a pretty face.'
+    }, {
+        name: 'Nicole',
+        text: 'So, like, not being able to eat garlic must be awful, huh?'
+    }, {
+        name: 'Count Ennersby',
+        text: '...what are you talking about'
+    }, {
+        name: 'Nicole',
+        text: 'You\'re a vampire, right? They can\'t eat garlic!'
+    }, {
+        name: 'Count Ennersby',
+        text: "That's a fake weakness we put up there to trick people.\nGarlic is delicious; vampire hunters provide us free allium,\nit's great."
+    }, {
+        name: 'Nicole',
+        text: 'How devious!'
+    }, {
+        name: 'Count Ennersby',
+        text: "Well, I'd like to keep giving away all the vampire secrets,\nbut the League of Nations is paying me to either kill you\nor deliver you to them, you understand."
+    }, {
+        name: 'Nicole',
+        text: "Oh yeah, I totally understand. Probably not going to\njust give in, though. The League seems annoying."
+    }, {
+        name: 'Count Ennersby',
+        text: "The Austro-Hungarian Empire was going to fall anyway,\nNicole. You need to get over that."
+    }, {
+        name: 'Nicole',
+        text: "It's not about that!"
+    }, {
+        name: 'Count Ennersby',
+        text: "Sure, sure..."
+    }, {
+        name: 'Count Ennersby',
+        text: "Anyway, enjoy my... DEATH WALL!"
     }]
 }

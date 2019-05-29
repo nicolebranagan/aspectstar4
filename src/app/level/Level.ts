@@ -196,7 +196,7 @@ export default class Level implements Runner, Master {
       getObjects: () => this.objects,
 
       getData: key => {
-        if (this.objectData[key]) {
+        if (key in this.objectData) {
           return this.objectData[key];
         } else {
           return UNDEFINED;

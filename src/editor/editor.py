@@ -430,6 +430,7 @@ class Editor(tk.Frame):
             "character" : characterframe,
             "victory" : characterframe,
             "spikyplatform" : platformframe,
+            "movingwall": characterframe,
         })
         def getcorrectoptions(*data):
             objtype = Objects.data[getobj()]["type"]
