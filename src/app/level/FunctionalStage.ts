@@ -39,6 +39,10 @@ export default class FunctionalStage implements Stage {
   }
 
   public isSolid(pt: Point, asp: Aspect, upwardMomentum: boolean): boolean {
+    if (pt.y < 0) {
+      return false;
+    }
+
     for (const pair of this.platforms) {
       if (
         pair[2] == Aspect.NONE ||

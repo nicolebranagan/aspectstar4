@@ -51,7 +51,12 @@ export default {
       }
     };
   },
-  getAspectExplode(master: UpdatableHolder, asp: Aspect): Updatable {
+  getAspectExplode(
+    master: UpdatableHolder,
+    asp: Aspect,
+    x: number = 0,
+    y: number = 0
+  ): Updatable {
     const drawables = new PIXI.Container();
     const particles: ColorParticle[] = [];
     for (let i = 0; i < 1080; i++) {
@@ -63,6 +68,11 @@ export default {
       const particle1 = new ColorParticle(asp, 0, -16, 320, x, y);
       drawables.addChild(particle1.sprite);
       particles.push(particle1);
+    }
+
+    if (x !== 0 || y !== 0) {
+      drawables.position.x = x;
+      drawables.position.y = y;
     }
 
     return {

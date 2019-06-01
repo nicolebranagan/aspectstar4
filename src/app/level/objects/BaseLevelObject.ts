@@ -25,7 +25,9 @@ export default abstract class BaseLevelObject
   update(options?: LevelOptions): void {
     this.updatables.forEach(updatable => {
       updatable.update();
-      updatable.drawables.position = this.sprite.position;
+      if (this.sprite) {
+        updatable.drawables.position = this.sprite.position;
+      }
     });
   }
 
