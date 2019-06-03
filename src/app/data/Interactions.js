@@ -175,42 +175,50 @@ export default
     }],
     countvoncount: [{
         name: 'Count Ennersby',
-        text: 'It is I, Count Ennersby. For one thousand years I\nhave ruled over Cissylvania with fear and power,\nbut now I just do odd jobs for the League\nof Nations.'
+        text: 'It is I, Count Ennersby. For one thousand years\nI ruled over Cissylvania with fear and power,\nbut now I just do odd jobs for the League\nof Nations.',
+        font: 'gothic'
     }, {
         name: 'Count Ennersby',
-        text: 'So you should probably just give up now, for I\nwould hate to hurt such a pretty face.'
+        text: 'So you should probably just give up now, for I\nwould hate to hurt such a pretty face.',
+        font: 'gothic'
     }, {
         name: 'Nicole',
         text: 'So, like, not being able to eat garlic must be awful, huh?'
     }, {
         name: 'Count Ennersby',
-        text: '...what are you talking about'
+        text: '...what art thou talking about',
+        font: 'gothic'
     }, {
         name: 'Nicole',
         text: 'You\'re a vampire, right? They can\'t eat garlic!'
     }, {
         name: 'Count Ennersby',
-        text: "That's a fake weakness we put up there to trick people.\nGarlic is delicious; vampire hunters provide us free allium,\nit's great."
+        text: "That's a fake weakness we put up there to trick\npeople. Garlic is delicious; vampire hunters\nprovide us free allium, it's great.",
+        font: 'gothic'
     }, {
         name: 'Nicole',
         text: 'How devious!'
     }, {
         name: 'Count Ennersby',
-        text: "Well, I'd like to keep giving away all the vampire secrets,\nbut the League of Nations is paying me to either kill you\nor deliver you to them, you understand."
+        text: "Well, I'd like to keep giving away all the vampire\nsecrets, but the League of Nations is paying me to \nkill you or deliver you to them, you understand.",
+        font: 'gothic'
     }, {
         name: 'Nicole',
         text: "Oh yeah, I totally understand. Probably not going to\njust give in, though. The League seems annoying."
     }, {
         name: 'Count Ennersby',
-        text: "The Austro-Hungarian Empire was going to fall anyway,\nNicole. You need to get over that."
+        text: "The Austro-Hungarian Empire was going to fall\nanyway, Nicole. You need to get over that.",
+        font: 'gothic'
     }, {
         name: 'Nicole',
         text: "It's not about that!"
     }, {
         name: 'Count Ennersby',
-        text: "Sure, sure..."
+        text: "Sure, sure...",
+        font: 'gothic'
     }, {
         name: 'Count Ennersby',
-        text: "Anyway, enjoy my... DEATH WALL!"
+        text: "Anyway, enjoy my... DEATH WALL!",
+        font: 'gothic'
     }]
 }

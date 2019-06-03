@@ -66,5 +66,16 @@ export const CustomFonts: { [key: string]: PIXI.TextStyle } = {
     dropShadowAlpha: 0.7,
     dropShadowDistance: 1,
     strokeThickness: 1
+  }),
+  gothic: new PIXI.TextStyle({
+    fontFamily: "deutsche",
+    fontSize: 8,
+    fontWeight: "100",
+    fill: "0xFFAAAA",
+    dropShadow: true,
+    dropShadowColor: 0x000000,
+    dropShadowAlpha: 0.7,
+    dropShadowDistance: 1,
+    strokeThickness: 1
   })
 };

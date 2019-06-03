@@ -31,14 +31,16 @@ class CircleData {
   private width: number = 0;
 
   constructor() {
-    this.lifetime = getRandomInt(8, 32);
+    this.lifetime = getRandomInt(0, 16);
     this.color = getRandomColor();
     this.position = new Point(getRandomInt(-16, 16), getRandomInt(-32, 255));
   }
 
   update() {
     this.lifetime--;
-    this.width++;
+    if (this.lifetime % 2) {
+      this.width++;
+    }
   }
 
   draw(g: PIXI.Graphics) {
@@ -69,6 +71,8 @@ export default class CircleEffect implements Updatable {
       e.draw(this.graphics);
     });
     this.data = this.data.filter(e => e.lifetime > 0);
-    this.data.push(new CircleData());
+    for (let i = 0; i < 25; i++) {
+      this.data.push(new CircleData());
+    }
   }
 }
