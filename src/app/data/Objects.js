@@ -363,8 +363,8 @@ export default
     "type" : "platform",
     "texture" : "object2",
     "category" : "vaporcity",
-    "rect" : [0, 112, 48, 16],
-    "rect2" : [0, 128, 48, 16],
+    "rect" : [0, 128, 48, 16],
+    "rect2" : [0, 112, 48, 16],
     "aspect" : 3
   }, {
     "name": "Moving Wall",
