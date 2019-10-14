@@ -1,4 +1,4 @@
-const music = ["disco.wav", "win.wav", "palazzo.mp3"];
+const music = ["disco.wav", "win.wav", "palazzo.mp3", "vaporcity.mp3"];
 let currentlyPlaying: { stop: () => void } = null;
 
 const play = (key?: string) => {
