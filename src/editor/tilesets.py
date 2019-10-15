@@ -5,7 +5,8 @@ class _Tilesets():
     def __init__(self):
         self.tilesets = [
             Image.open("../public/images/level1.gif"),
-            Image.open("../public/images/level2.gif")
+            Image.open("../public/images/level2.gif"),            
+            Image.open("../public/images/level3.gif")
         ]
         self.tilesets2x = [x.resize((x.width*2, x.height*2), Image.NEAREST) for x in self.tilesets]
         self.tiles = []

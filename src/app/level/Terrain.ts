@@ -1,7 +1,7 @@
 import Drawable from "../interfaces/Drawable";
 import Attributes from "../interfaces/Attributes";
 
-const TILESETS = ["level1", "level2"];
+const TILESETS = ["level1", "level2", "level3"];
 
 /* The terrain object is in charge of drawing the level. */
 
