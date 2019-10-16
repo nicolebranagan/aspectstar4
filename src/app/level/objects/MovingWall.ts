@@ -7,6 +7,7 @@ import CircleEffect from "../../graphics/CircleEffect";
 import Character from "./Character";
 import BaseLevelObject from "./BaseLevelObject";
 import Particle from "../../graphics/Particle";
+import play from "../../audio/Music";
 
 const WALL_LOCATION = "wallLocationDataKey";
 
@@ -71,6 +72,7 @@ export default class MovingWall extends BaseLevelObject {
         return;
       } else {
         this.showCharacter = false;
+        play("vaporcity-fast");
         this.drawables.removeChild(this.character.drawables);
         this.character = null;
         options.setData(WALL_LOCATION, this.point.x);
