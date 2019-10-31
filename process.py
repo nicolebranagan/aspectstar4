@@ -28,6 +28,13 @@ pixelgrid.getTkStrip(2, True).write(filen, format='gif')
 # Game images
 
 pixelgrid = PixelGrid([(0,0,0)])
+with open("src/images/title.terra", "r") as fileo:
+    pixelgrid.load(json.load(fileo))
+filen = designation + "title.gif"
+pixelgrid.changepage(0)
+pixelgrid.getTkImage(1, False).write(filen, format='gif')
+
+pixelgrid = PixelGrid([(0,0,0)])
 with open("src/images/system.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))
 filen = designation + "system.gif"

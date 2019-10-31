@@ -8656,7 +8656,7 @@ export default
         16,
         2936,
         160,
-        ""
+        "deathwall"
       ],
       [
         3,
