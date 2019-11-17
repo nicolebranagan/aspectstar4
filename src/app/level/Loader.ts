@@ -115,5 +115,15 @@ async function parseObject(
     const MovingWall = (await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall"))
       .default;
     return new MovingWall(point, objdata.row, data[3], levelOptions);
+  } else if (objdata.type === "aspectcard") {
+    const AspectCard = (await import(/* webpackChunkName: "aspect-card" */ "./objects/AspectCard"))
+      .default;
+    return new AspectCard(
+      stage,
+      point,
+      objdata.aspect,
+      objdata.texture,
+      objdata.rect
+    );
   }
 }

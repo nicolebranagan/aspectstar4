@@ -23,6 +23,7 @@ export default class Player extends BaseLevelObject {
   aspects: Aspect[];
   physics: PlatformerPhysics;
   bells: number = 0;
+  hasCard: boolean = false;
 
   private stage: Stage;
   private facingLeft: boolean = false;
@@ -152,6 +153,10 @@ export default class Player extends BaseLevelObject {
     SFX("aspect");
     this.addChild(Particle.getAspectEffect(this, this.aspect));
     this.aspect = asp;
+    if (this.hasCard) {
+      // TODO: Add card-losing animation
+      this.hasCard = false;
+    }
   }
 
   private determineFrame(): void {

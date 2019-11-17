@@ -8,7 +8,8 @@ class __Object():
             "player"  : Image.open("../public/images/player.gif"),
             "characters" : Image.open("../public/images/characters.gif"),
             "object1" : Image.open("../public/images/object1.gif"),
-            "object2" : Image.open("../public/images/object2.gif")
+            "object2" : Image.open("../public/images/object2.gif"),
+            "object3" : Image.open("../public/images/object3.gif")
         }
         self.data = self.loadobjects()
         self.names = [e["name"] for e in self.data]

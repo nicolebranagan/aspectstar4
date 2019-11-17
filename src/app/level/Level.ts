@@ -40,6 +40,8 @@ export interface LevelOptions {
   getData: (key: string) => string | boolean | number | symbol;
   setData: (key: string, data: string | boolean | number) => void;
   hookSave: (hook: () => void) => void;
+  hasCard: (aspect: Aspect) => boolean;
+  giveCard: (aspect: Aspect) => void;
 }
 
 const BACKGROUNDS = [Palace, Vaporcity];
@@ -209,6 +211,17 @@ export default class Level implements Runner, Master {
 
       hookSave: hook => {
         this.saveHooks.push(hook);
+      },
+
+      hasCard: aspect => {
+        return this.player.aspect === aspect && this.player.hasCard;
+      },
+
+      giveCard: aspect => {
+        this.player.hasCard = true;
+        if (this.player.aspect !== aspect) {
+          this.player.getAspect(aspect);
+        }
       }
     };
   }

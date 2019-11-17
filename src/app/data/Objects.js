@@ -373,5 +373,12 @@ export default
     "category": "vaporcity",
     "rect" : [0, 192, 16, 32],
     "row": 6
+  }, {
+    "name": "Aspect Card Plus",
+    "type": "aspectcard",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [0, 96, 16, 16],
+    "aspect": 1
   }
 ]
