@@ -87,12 +87,14 @@ export default class System implements Drawable {
   private selectedAspect: Aspect;
   private bellCount: number;
   private bellCountMax: number;
+  private icons: PIXI.Sprite[];
 
   constructor(playerState: PlayerState, bellCountMax: number) {
     this.drawables = new PIXI.Container();
     this.selectedAspect = playerState.aspect;
     this.aspects = playerState.aspects;
     this.bellCountMax = bellCountMax;
+    this.icons = [];
     this.reset();
   }
 
@@ -108,6 +110,7 @@ export default class System implements Drawable {
     });
     this.drawables.addChild(topRightCorner.get(getTopRightCorner));
     this.resetBellCount();
+    this.resetIcons();
   }
 
   private resetBellCount() {
@@ -122,17 +125,32 @@ export default class System implements Drawable {
     this.drawables.addChild(getNumber(digit3, 400 - 8, 0));
   }
 
-  updateSystem(player: Player, bellCountMax: number) {
+  private resetIcons() {
+    const iconHolder = new PIXI.Container();
+    iconHolder.y = 18;
+    iconHolder.x = 0;
+    for (let i = 0; i < this.icons.length; i++) {
+      const icon = this.icons[i];
+      icon.x = 16 * i;
+      icon.y = 0;
+      iconHolder.addChild(icon);
+    }
+    this.drawables.addChild(iconHolder);
+  }
+
+  updateSystem(player: Player, bellCountMax: number, icons: PIXI.Sprite[]) {
     if (
       player.aspect !== this.selectedAspect ||
       player.aspects.length !== this.aspects.length ||
       this.bellCount !== player.bells ||
-      this.bellCountMax !== bellCountMax
+      this.bellCountMax !== bellCountMax ||
+      this.icons.length !== icons.length
     ) {
       this.selectedAspect = player.aspect;
       this.aspects = player.aspects;
       this.bellCount = player.bells;
       this.bellCountMax = bellCountMax;
+      this.icons = icons;
       this.reset();
     }
   }

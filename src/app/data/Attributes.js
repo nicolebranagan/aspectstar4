@@ -65,7 +65,7 @@ export default
     "bigtileset": 2,
     "name": "Technocave",
     "start": [
-      100,
+      108,
       287
     ],
     "tileset": 2

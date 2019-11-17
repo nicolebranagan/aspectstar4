@@ -42,6 +42,8 @@ export interface LevelOptions {
   hookSave: (hook: () => void) => void;
   hasCard: (aspect: Aspect) => boolean;
   giveCard: (aspect: Aspect) => void;
+  addIcon: (sprite: PIXI.Sprite) => number;
+  removeIcon: (index: number) => void;
 }
 
 const BACKGROUNDS = [Palace, Vaporcity];
@@ -77,6 +79,7 @@ export default class Level implements Runner, Master {
   private scrollVertical: boolean;
   private objectData: { [key: string]: string | number | boolean } = {};
   private saveHooks: (() => void)[] = [];
+  private icons: PIXI.Sprite[] = [];
 
   constructor(
     master: Master,
@@ -218,10 +221,19 @@ export default class Level implements Runner, Master {
       },
 
       giveCard: aspect => {
-        this.player.hasCard = true;
         if (this.player.aspect !== aspect) {
           this.player.getAspect(aspect);
         }
+        this.player.hasCard = true;
+      },
+
+      addIcon: icon => {
+        this.icons.push(icon);
+        return this.icons.length;
+      },
+
+      removeIcon: index => {
+        this.icons = this.icons.filter((__, i) => i !== index - 1);
       }
     };
   }
@@ -264,7 +276,7 @@ export default class Level implements Runner, Master {
 
   update(): void {
     if (!this.loaded) return;
-    this.system.updateSystem(this.player, this.bellCount);
+    this.system.updateSystem(this.player, this.bellCount, this.icons);
     if (!!this.winSystem) {
       this.winSystem.update();
       if (this.paused) {
