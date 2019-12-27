@@ -150,7 +150,7 @@ export default class System implements Drawable {
       this.aspects = player.aspects;
       this.bellCount = player.bells;
       this.bellCountMax = bellCountMax;
-      this.icons = icons;
+      this.icons = icons.slice();
       this.reset();
     }
   }
