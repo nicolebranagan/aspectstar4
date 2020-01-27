@@ -7,6 +7,7 @@ import SolidityType from "../../constants/SolidityType";
 import { LevelOptions } from "../Level";
 import BaseLevelObject from "./BaseLevelObject";
 import Particle from "../../graphics/Particle";
+import SFX from "../../audio/SFX";
 
 const getDimensions: (stage: Stage, basePt: Point) => [number, number] = (
   stage,
@@ -119,6 +120,7 @@ export default class AspectDoor extends BaseLevelObject {
       )
     ) {
       this.dying = true;
+      SFX("door");
     }
   }
 
