@@ -380,5 +380,26 @@ export default
     "category": "technocave",
     "rect": [0, 96, 16, 16],
     "aspect": 1
+  }, {
+    "name": "Aspect Card X",
+    "type": "aspectcard",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [16, 96, 16, 16],
+    "aspect": 2
+  }, {
+    "name": "Aspect Card Circle",
+    "type": "aspectcard",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [32, 96, 16, 16],
+    "aspect": 2
+  }, {
+    "name": "Aspect Door Plus",
+    "type": "aspectdoor",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [0, 112, 16, 16],
+    "rect2": [0, 128, 16, 16]
   }
 ]

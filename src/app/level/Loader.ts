@@ -125,5 +125,16 @@ async function parseObject(
       objdata.texture,
       objdata.rect
     );
+  } else if (objdata.type === "aspectdoor") {
+    const AspectDoor = (await import(/* webpackChunkName: "aspect-door" */ "./objects/AspectDoor"))
+      .default;
+    return new AspectDoor(
+      stage,
+      point,
+      objdata.aspect,
+      objdata.texture,
+      objdata.rect,
+      objdata.rect2
+    );
   }
 }

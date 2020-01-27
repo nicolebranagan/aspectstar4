@@ -1,5 +1,4 @@
 import Aspect from "../../constants/Aspect";
-import BaseLevelObject from "./BaseLevelObject";
 import SolidPhysics from "../physics/SolidPhysics";
 import Point from "../../system/Point";
 import Stage from "../../interfaces/Stage";
