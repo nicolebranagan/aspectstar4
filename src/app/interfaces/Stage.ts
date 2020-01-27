@@ -5,7 +5,13 @@ import SolidityType from "../constants/SolidityType";
 
 export default interface Stage {
   reset(): void;
-  register(object: LevelObject, solidityType: SolidityType, aspect: Aspect, xor: boolean): void;
+  register(
+    object: LevelObject,
+    solidityType: SolidityType,
+    aspect: Aspect,
+    xor: boolean
+  ): void;
+  deregister(object: LevelObject): void;
   isSolid(pt: Point, asp: Aspect, upwardMomentum: boolean): boolean;
   isDeath(pt: Point): boolean;
 }

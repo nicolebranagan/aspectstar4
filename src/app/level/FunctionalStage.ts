@@ -38,6 +38,12 @@ export default class FunctionalStage implements Stage {
     this.platforms.push([object, solidityType, aspect, xor]);
   }
 
+  public deregister(levelObject: LevelObject) {
+    this.platforms = this.platforms.filter(
+      platform => platform[0] !== levelObject
+    );
+  }
+
   public isSolid(pt: Point, asp: Aspect, upwardMomentum: boolean): boolean {
     if (pt.y < 0) {
       return false;

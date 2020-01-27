@@ -4,6 +4,7 @@ import Point from "../../system/Point";
 import LevelObject from "../../interfaces/LevelObject";
 import Stage from "../../interfaces/Stage";
 import SolidityType from "../../constants/SolidityType";
+import { LevelOptions } from "../Level";
 
 const getDimensions: (stage: Stage, basePt: Point) => [number, number] = (
   stage,
@@ -45,6 +46,7 @@ export default class AspectDoor implements LevelObject {
 
   private wall: PIXI.Container;
   private core: PIXI.Sprite;
+  private stage: Stage;
 
   constructor(
     stage: Stage,
@@ -65,9 +67,10 @@ export default class AspectDoor implements LevelObject {
     this.generateWall(texture, wallRect, coreRect, point.x, topY, height);
 
     stage.register(this, SolidityType.SOLID, Aspect.NONE, false);
+    this.stage = stage;
   }
 
-  generateWall(
+  private generateWall(
     text: string,
     wallRect: number[],
     coreRect: number[],
@@ -81,13 +84,34 @@ export default class AspectDoor implements LevelObject {
     for (let i = 0; i < tileCount; i++) {
       if (i === midpoint) {
         this.core = getSprite(text, coreRect, x, topY + i * 16);
-        this.drawables.addChild(this.core);
       } else {
         this.wall.addChild(getSprite(text, wallRect, x, topY + i * 16));
       }
     }
     this.drawables.addChild(this.wall);
+    this.drawables.addChild(this.core);
   }
 
-  update() {}
+  update(options: LevelOptions) {
+    console.log(options.hasCard(this.aspect));
+    if (!options.hasCard(this.aspect)) {
+      return;
+    }
+
+    const player = options.getPlayer();
+    if (
+      player.physics.inrange(player.point, this.point.add(new Point(16, 0))) ||
+      player.physics.inrange(
+        player.point,
+        this.point.subtract(new Point(16, 0))
+      )
+    ) {
+      this.die();
+    }
+  }
+
+  private die() {
+    this.stage.deregister(this);
+    this.active = false;
+  }
 }
