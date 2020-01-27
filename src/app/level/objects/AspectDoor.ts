@@ -5,6 +5,8 @@ import LevelObject from "../../interfaces/LevelObject";
 import Stage from "../../interfaces/Stage";
 import SolidityType from "../../constants/SolidityType";
 import { LevelOptions } from "../Level";
+import BaseLevelObject from "./BaseLevelObject";
+import Particle from "../../graphics/Particle";
 
 const getDimensions: (stage: Stage, basePt: Point) => [number, number] = (
   stage,
@@ -36,7 +38,7 @@ const getSprite = (text: string, rect: number[], x: number, y: number) => {
   return sprite;
 };
 
-export default class AspectDoor implements LevelObject {
+export default class AspectDoor extends BaseLevelObject {
   active = true;
   alwaysActive = false;
   drawables: PIXI.Container;
@@ -45,8 +47,9 @@ export default class AspectDoor implements LevelObject {
   point: Point;
 
   private wall: PIXI.Container;
-  private core: PIXI.Sprite;
   private stage: Stage;
+  private dying: boolean = false;
+  private dead: boolean = false;
 
   constructor(
     stage: Stage,
@@ -56,6 +59,7 @@ export default class AspectDoor implements LevelObject {
     coreRect: number[],
     wallRect: number[]
   ) {
+    super();
     const [topY, bottomY] = getDimensions(stage, point);
     const height = bottomY - topY;
 
@@ -83,17 +87,25 @@ export default class AspectDoor implements LevelObject {
     this.wall = new PIXI.Container();
     for (let i = 0; i < tileCount; i++) {
       if (i === midpoint) {
-        this.core = getSprite(text, coreRect, x, topY + i * 16);
+        this.sprite = getSprite(text, coreRect, x, topY + i * 16);
       } else {
         this.wall.addChild(getSprite(text, wallRect, x, topY + i * 16));
       }
     }
     this.drawables.addChild(this.wall);
-    this.drawables.addChild(this.core);
+    this.drawables.addChild(this.sprite);
   }
 
   update(options: LevelOptions) {
-    console.log(options.hasCard(this.aspect));
+    super.update();
+    if (this.dead) {
+      return;
+    }
+    if (this.dying) {
+      this.iterateDeath();
+      return;
+    }
+
     if (!options.hasCard(this.aspect)) {
       return;
     }
@@ -106,12 +118,28 @@ export default class AspectDoor implements LevelObject {
         this.point.subtract(new Point(16, 0))
       )
     ) {
-      this.die();
+      this.dying = true;
     }
   }
 
-  private die() {
-    this.stage.deregister(this);
-    this.active = false;
+  private iterateDeath() {
+    let lastStep = true;
+    this.wall.children.forEach(wallChild => {
+      if (wallChild.y < this.sprite.y) {
+        wallChild.y = wallChild.y + 1;
+        lastStep = false;
+      } else if (wallChild.y > this.sprite.y) {
+        wallChild.y = wallChild.y - 1;
+        lastStep = false;
+      }
+    });
+
+    if (lastStep) {
+      this.stage.deregister(this);
+      this.addChild(Particle.getAspectEffect(this, this.aspect));
+      this.drawables.removeChild(this.sprite);
+      this.drawables.removeChild(this.wall);
+      this.dead = true;
+    }
   }
 }
