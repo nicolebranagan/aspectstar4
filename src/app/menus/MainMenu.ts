@@ -88,7 +88,7 @@ export default class MainMenu implements Runner {
   }
 
   completeInitialization() {
-    const childText = new PIXI.Text("Copyright 2017-2019\nNicole Express", {
+    const childText = new PIXI.Text("Copyright 2017-2020\nNicole Express", {
       ...DEFAULT_TEXT_STYLE,
       align: "center",
       fill: "white"
