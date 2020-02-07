@@ -61,12 +61,12 @@ export default
     "tileset": 1
   },
   {
-    "background": 0,
+    "background": 2,
     "bigtileset": 2,
-    "name": "Technocave",
+    "name": "Technocave 1",
     "start": [
-      108,
-      287
+      100,
+      893
     ],
     "tileset": 2
   }

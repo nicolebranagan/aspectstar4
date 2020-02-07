@@ -210,7 +210,7 @@ export default {
         "Welcome to the capital city, now under occupation by the\nbenevolent League of Nations!"
     },
     {
-      name: "Marybot",
+      name: "Mary",
       text: "I'll remember your face."
     }
   ],
@@ -230,12 +230,12 @@ export default {
   ],
   clippy: [
     {
-      name: "Marybot",
+      name: "Mary",
       text:
         "A project to create the ultimate office assistant...\nIt started so well."
     },
     {
-      name: "Marybot",
+      name: "Mary",
       text:
         "But one day the Princess didn't want to write a letter;\nthe rest is history."
     },
@@ -333,6 +333,29 @@ export default {
     {
       name: "Nicole",
       text: "WHAT?!"
+    },
+    {
+      name: "Mary",
+      text: "THE VAMPIRE HAS BEEN UNDERESTIMATED.",
+      font: "machine"
+    },
+    {
+      name: "Mary",
+      text: "THEY ARE A THREAT TO NICOLE.\nTHREATS SHALL BE ELIMINATED.",
+      font: "machine"
+    },
+    {
+      name: "Mary",
+      text: "MY SENSORS REPORT THAT THE VAMPIRE HAS\nSET UP A BASE IN A RUINED RESEARCH\nFACILITY.",
+      font: "machine"
+    },
+    {
+      name: "Zip",
+      text: "Sounds scary, I'm out."
+    },
+    {
+      name: "Nicole",
+      text: "Come on... how bad could it be?"
     }
   ]
 };

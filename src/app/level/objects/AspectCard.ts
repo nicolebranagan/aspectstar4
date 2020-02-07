@@ -23,7 +23,7 @@ const getSprite = (texture: string, frame: PIXI.Rectangle, point: Point) => {
 
 export default class AspectCard implements LevelObject, UpdatableHolder {
   active = true;
-  alwaysActive = false;
+  alwaysActive = true;
   drawables: PIXI.Container;
   aspect: Aspect;
   physics: SolidPhysics;

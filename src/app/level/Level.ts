@@ -19,6 +19,7 @@ import Updatable from "../interfaces/Updatable";
 import { enterWorldMap } from "../state/Governor";
 import Vaporcity from "./backgrounds/Vaporcity";
 import SFX from "../audio/SFX";
+import Technocave from "./backgrounds/Technocave";
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -47,7 +48,7 @@ export interface LevelOptions {
   removeIcon: (index: number) => void;
 }
 
-const BACKGROUNDS = [Palace, Vaporcity];
+const BACKGROUNDS = [Palace, Vaporcity, Technocave];
 
 export const UNDEFINED = Symbol("Undefined");
 
