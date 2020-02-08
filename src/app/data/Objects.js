@@ -402,5 +402,75 @@ export default
     "rect": [0, 112, 16, 16],
     "rect2": [0, 128, 16, 16],
     "aspect": 1
+  }, {
+    "name": "Aspect Door X",
+    "type": "aspectdoor",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [16, 112, 16, 16],
+    "rect2": [16, 128, 16, 16],
+    "aspect": 2
+  }, {
+    "name": "Aspect Door Circle",
+    "type": "aspectdoor",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [32, 112, 16, 16],
+    "rect2": [32, 128, 16, 16],
+    "aspect": 3
+  }, {
+    "name" : "Techno Platform Plus",
+    "type" : "platform",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect2" : [0, 160, 48, 16],
+    "rect" : [48, 160, 48, 16],
+    "aspect" : 1
+  }, {
+    "name" : "Techno Platform X",
+    "type" : "platform",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect2" : [0, 176, 48, 16],
+    "rect" : [48, 176, 48, 16],
+    "aspect" : 2
+  }, {
+    "name" : "Techno Platform Circle",
+    "type" : "platform",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect2" : [0, 192, 48, 16],
+    "rect" : [48, 192, 48, 16],
+    "aspect" : 3
+  },
+  {
+    "name" : "Techno Square Plus",
+    "type" : "square",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect" : [16, 0, 16, 16],
+    "rect2" : [0, 0, 16, 16],
+    "aspect" : 1,
+    "xor" : false
+  },
+  {
+    "name" : "Techno Square X",
+    "type" : "square",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect" : [16, 16, 16, 16],
+    "rect2" : [0, 16, 16, 16],
+    "aspect" : 2,
+    "xor" : false
+  },
+  {
+    "name" : "Techno Square Circle",
+    "type" : "square",
+    "texture" : "object3",
+    "category" : "technocave",
+    "rect" : [16, 32, 16, 16],
+    "rect2" : [0, 32, 16, 16],
+    "aspect" : 3,
+    "xor" : false
   }
 ]

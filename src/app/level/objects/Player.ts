@@ -109,6 +109,10 @@ export default class Player extends BaseLevelObject {
     }
     let newpt = this.physics.step(this.point, this.aspect);
     this.stationary = this.point.equals(newpt);
+    if ((window as any).__DEBUG) {
+      console.log(this.point, newpt, this.physics);
+      (window as any).__DEBUG = false;
+    }
     this.point = newpt;
     if (this.physics.xvel !== 0) this.speedTimer++;
     else if (this.speedTimer !== 0) {

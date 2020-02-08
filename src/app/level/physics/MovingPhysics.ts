@@ -22,7 +22,7 @@ export default class MovingPhysics implements Physics {
     for (const obj of objects) {
       if (obj !== self) {
         if (
-          Math.round(obj.point.y) == Math.round(point.y - this.height) &&
+          Math.ceil(obj.point.y) === Math.ceil(point.y - this.height) &&
           Math.abs(point.x - obj.point.x) < this.width / 2 &&
           (asp == Aspect.NONE || asp == obj.aspect)
         ) {
@@ -33,6 +33,7 @@ export default class MovingPhysics implements Physics {
 
     move.forEach(e => {
       e.point = e.point.add(delta);
+
       /*if (delta.y) {
                 e.point = e.point.round();
             }*/
