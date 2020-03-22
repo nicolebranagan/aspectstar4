@@ -472,5 +472,32 @@ export default
     "rect2" : [0, 32, 16, 16],
     "aspect" : 3,
     "xor" : false
+  },
+  {
+    "name": "Shooter Plus",
+    "type": "shooter",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [0, 144, 16, 16],
+    "rect2": [64, 144, 16, 16],
+    "aspect": 1
+  },  
+  {
+    "name": "Shooter X",
+    "type": "shooter",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [16, 144, 16, 16],
+    "rect2": [80, 144, 16, 16],
+    "aspect": 2
+  },  
+  {
+    "name": "Shooter Circle",
+    "type": "shooter",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [32, 144, 16, 16],
+    "rect2": [96, 144, 16, 16],
+    "aspect": 3
   }
 ]

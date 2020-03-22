@@ -136,5 +136,15 @@ async function parseObject(
       objdata.rect,
       objdata.rect2
     );
+  } else if (objdata.type === "shooter") {
+    const Shooter = (await import(/* webpackChunkName: "shooter" */ "./objects/Shooter"))
+      .default;
+    return new Shooter(
+      point,
+      objdata.aspect,
+      objdata.texture,
+      objdata.rect,
+      objdata.rect2
+    );
   }
 }
