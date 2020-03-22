@@ -14,7 +14,7 @@ const ABOVE_NAME_TEXT = "Now loading...";
 const TEXT_ZONE_HEIGHT = 24;
 const TIMER_HEIGHT = 112;
 
-const LEVEL_MUSIC = ["palazzo", "vaporcity"];
+const LEVEL_MUSIC = ["palazzo", "vaporcity", "attacot"];
 
 export default class LevelPreload implements Runner {
   public drawables: PIXI.Container;

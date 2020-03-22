@@ -3,7 +3,8 @@ const music = [
   "win.wav",
   "palazzo.mp3",
   "vaporcity.mp3",
-  "vaporcity-fast.mp3"
+  "vaporcity-fast.mp3",
+  "attacot.mp3"
 ];
 let currentlyPlaying: { stop: () => void } = null;
 
