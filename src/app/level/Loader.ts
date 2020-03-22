@@ -140,11 +140,14 @@ async function parseObject(
     const Shooter = (await import(/* webpackChunkName: "shooter" */ "./objects/Shooter"))
       .default;
     return new Shooter(
+      stage,
       point,
       objdata.aspect,
       objdata.texture,
       objdata.rect,
-      objdata.rect2
+      objdata.rect2,
+      objdata.bulletrect,
+      objdata.timermax
     );
   }
 }

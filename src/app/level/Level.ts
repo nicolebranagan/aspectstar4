@@ -46,6 +46,7 @@ export interface LevelOptions {
   giveCard: (aspect: Aspect) => void;
   addIcon: (sprite: PIXI.Sprite) => number;
   removeIcon: (index: number) => void;
+  addObject: (object: LevelObject) => void;
 }
 
 const BACKGROUNDS = [Palace, Vaporcity, Technocave];
@@ -237,7 +238,9 @@ export default class Level implements Runner, Master {
 
       removeIcon: index => {
         this.icons = this.icons.filter((__, i) => i !== index - 1);
-      }
+      },
+
+      addObject: this.addObject.bind(this)
     };
   }
 

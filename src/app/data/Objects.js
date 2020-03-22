@@ -480,7 +480,9 @@ export default
     "category": "technocave",
     "rect": [0, 144, 16, 16],
     "rect2": [64, 144, 16, 16],
-    "aspect": 1
+    "bulletrect": [48, 144, 8, 8],
+    "aspect": 1,
+    "timermax": 100
   },  
   {
     "name": "Shooter X",
@@ -489,7 +491,9 @@ export default
     "category": "technocave",
     "rect": [16, 144, 16, 16],
     "rect2": [80, 144, 16, 16],
-    "aspect": 2
+    "bulletrect": [48, 152, 8, 8],
+    "aspect": 2,
+    "timermax": 100
   },  
   {
     "name": "Shooter Circle",
@@ -498,6 +502,8 @@ export default
     "category": "technocave",
     "rect": [32, 144, 16, 16],
     "rect2": [96, 144, 16, 16],
-    "aspect": 3
+    "bulletrect": [56, 144, 8, 8],
+    "aspect": 3,
+    "timermax": 100
   }
 ]
