@@ -357,5 +357,54 @@ export default {
       name: "Nicole",
       text: "Come on... how bad could it be?"
     }
+  ],
+  dontstopbelieving: [
+    {
+      name: "Peacekeeper",
+      text: "I want to get that circle keycard, but I don't want to\nlose this groovy X aspect!"
+    }
+  ],
+  batsnotcats: [
+    {
+      name: "Mary",
+      text: "THIS FACILITY WAS ABANDONED SEVERAL YEARS\nAGO DUE TO MOTH INFESTATION.",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "Oh right! Vampires love moths! This whole thing\nmakes perfect sense then!"
+    },
+    {
+      name: "Mary",
+      text: "I THINK YOU MEAN BATS",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "What on earth is a bat."
+    }
+  ],
+  ziptradictory: [
+    {
+      name: "Nicole",
+      text: "Didn't you say that you weren't going to come\nalong here?"
+    },
+    {
+      name: "Zip",
+      text: "Yeah, but then I thought, what kind of game would\nthis be if the end-of-level goal didn't show up?"
+    },
+    {
+      name: "Mary",
+      text: "DAMAGE TO FOURTH WALL IS NOT ADVISED. SITUATION\nCRITICAL.",
+      font: "machine"
+    },
+    {
+      name: "Zip",
+      text: "Fine, fine..."
+    },
+    {
+      name: "Nicole",
+      text: "So, where is that vampire anyway... this place is\nlike a maze."
+    }
   ]
 };

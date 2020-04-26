@@ -505,5 +505,14 @@ export default
     "bulletrect": [56, 144, 8, 8],
     "aspect": 3,
     "timermax": 100
+  },
+  {
+    "name" : "Peacekeeper X",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "technocave",
+    "rect" : [0, 224, 16, 32],
+    "row" : 7,
+    "oneTimeUse" : false
   }
 ]
