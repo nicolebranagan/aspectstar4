@@ -375,7 +375,7 @@ export default class Level implements Runner, Master {
     this.saveHooks = [];
     this.stage.reset();
     const data = Loader(this.stage, objects, this.options);
-    this.player = new Player(this.stage, this.lastState);
+    this.player = new Player(this.levelid === 0, this.stage, this.lastState);
 
     let count = 0;
     data.forEach(e =>

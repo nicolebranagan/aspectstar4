@@ -12,6 +12,7 @@ function loadResources(): void {
     .add("system", "images/system.gif")
     .add("title", "images/title.gif")
     .add("player", "images/player.gif")
+    .add("introplayer", "images/introplayer.gif")
     .add("particle", "images/particle.gif")
     .add("particle2", "images/particle2.gif")
     .add("characters", "images/characters.gif")

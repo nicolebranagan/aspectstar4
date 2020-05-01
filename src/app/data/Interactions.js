@@ -64,6 +64,14 @@ export default {
     {
       name: "Zip",
       text: "(I can't believe she actually agreed to that....)"
+    },
+    {
+      name: "Zip",
+      text: "By the way, you're not really going to go the whole game\nin that plugsuit, are you? Put some clothes on."
+    },
+    {
+      name: "Nicole",
+      text: "I didn't even need this for the virtual world, I just thought\nit looked sexy..."
     }
   ],
   level2: [
@@ -381,7 +389,7 @@ export default {
     },
     {
       name: "Nicole",
-      text: "What on earth is a bat."
+      text: "What on earth is a bat?!"
     }
   ],
   ziptradictory: [

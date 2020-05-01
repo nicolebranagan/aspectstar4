@@ -33,11 +33,14 @@ export default class Player extends BaseLevelObject {
   private speedTimer: number = 0;
   private waitTimer: number = 0;
   private ready = false;
+  private textureSource: string;
 
-  constructor(stage: Stage, state: PlayerState) {
+  constructor(useIntroLevel: boolean, stage: Stage, state: PlayerState) {
     super();
 
-    const text = PIXI.loader.resources["player"].texture;
+    this.textureSource = useIntroLevel ? "introplayer" : "player";
+
+    const text = PIXI.loader.resources[this.textureSource].texture;
     let rect = new PIXI.Rectangle(0, 0, 16, 32);
     text.frame = rect;
     this.sprite = new PIXI.Sprite(text);
@@ -164,7 +167,7 @@ export default class Player extends BaseLevelObject {
   }
 
   private determineFrame(): void {
-    const text = PIXI.loader.resources["player"].texture;
+    const text = PIXI.loader.resources[this.textureSource].texture;
     const aspect = (this.aspect - 1) * 40;
     let rect;
     if (!this.ready) {

@@ -49,6 +49,13 @@ pixelgrid.changepage(0)
 pixelgrid.getTkImage(1, False).write(filen, format='gif')
 
 pixelgrid = PixelGrid([(0,0,0)])
+with open("src/images/introlevel.terra", "r") as fileo:
+    pixelgrid.load(json.load(fileo))
+filen = designation + "introplayer.gif"
+pixelgrid.changepage(0)
+pixelgrid.getTkImage(1, False).write(filen, format='gif')
+
+pixelgrid = PixelGrid([(0,0,0)])
 with open("src/images/particle.terra", "r") as fileo:
     pixelgrid.load(json.load(fileo))
 filen = designation + "particle.gif"
