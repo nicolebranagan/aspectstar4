@@ -2,6 +2,7 @@ import Aspect from "../../constants/Aspect";
 import Controls from "../../interfaces/Controls";
 import PlatformerPhysics from "../physics/PlatformerPhysics";
 import Particle from "../../graphics/Particle";
+import { getOpeningAnimation } from "../../graphics/OpeningAnimation";
 import Stage from "../../interfaces/Stage";
 import PlayerState from "../PlayerState";
 import SFX from "../../audio/SFX";
@@ -25,7 +26,6 @@ export default class Player extends BaseLevelObject {
   bells: number = 0;
   hasCard: boolean = false;
 
-  private stage: Stage;
   private facingLeft: boolean = false;
   private stationary: boolean = true;
   private frame: number = 0;
@@ -35,7 +35,11 @@ export default class Player extends BaseLevelObject {
   private ready = false;
   private textureSource: string;
 
-  constructor(useIntroLevel: boolean, stage: Stage, state: PlayerState) {
+  constructor(
+    private useIntroLevel: boolean,
+    stage: Stage,
+    state: PlayerState
+  ) {
     super();
 
     this.textureSource = useIntroLevel ? "introplayer" : "player";
@@ -95,8 +99,12 @@ export default class Player extends BaseLevelObject {
     super.update();
 
     if (!this.ready) {
-      if (this.timer == 1)
+      if (this.timer == 1) {
         this.addChild(Particle.getAspectImplode(this, this.aspect));
+        if (this.useIntroLevel) {
+          this.addChild(getOpeningAnimation(this));
+        }
+      }
       this.timer++;
       if (this.timer == 51) {
         this.ready = true;
