@@ -177,7 +177,10 @@ export default class Map implements Runner {
       this.drawables.removeChild(this.mapSprite.drawables);
     }
     const position = this.flatMap[this.row * 3 + this.level];
-    this.mapSprite = new MapSprite(new Point(position.x, position.y));
+    this.mapSprite = new MapSprite(
+      this.row === 0 && this.level === 0,
+      new Point(position.x, position.y)
+    );
     this.drawables.addChild(this.mapSprite.drawables);
   }
 
