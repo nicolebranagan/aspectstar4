@@ -514,5 +514,14 @@ export default
     "rect" : [0, 224, 16, 32],
     "row" : 7,
     "oneTimeUse" : false
+  },
+  {
+    "name" : "Talkative Ennersby",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "technocave",
+    "rect" : [0, 192, 16, 32],
+    "row" : 6,
+    "oneTimeUse" : false
   }
 ]

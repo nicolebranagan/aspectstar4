@@ -71,11 +71,11 @@ export const CustomFonts: { [key: string]: PIXI.TextStyle } = {
     fontFamily: "deutsche",
     fontSize: 8,
     fontWeight: "100",
-    fill: "0xFFAAAA",
+    fill: "0x000000",
     dropShadow: true,
-    dropShadowColor: 0x000000,
+    dropShadowColor: 0xffaaaa,
     dropShadowAlpha: 0.7,
-    dropShadowDistance: 1,
-    strokeThickness: 1
+    dropShadowDistance: 0.5,
+    strokeThickness: 0
   })
 };

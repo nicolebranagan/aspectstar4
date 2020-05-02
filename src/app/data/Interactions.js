@@ -294,7 +294,7 @@ export default {
     {
       name: "Count Ennersby",
       text:
-        "That's a fake weakness we put up there to trick\npeople. Garlic is delicious; vampire hunters\nprovide us free allium, it's great.",
+        "That's a fake weakness we put up there to trick\npeople. Garlic is delicious; and vampire hunters\ngive us it for free, it's great.",
       font: "gothic"
     },
     {
@@ -314,8 +314,7 @@ export default {
     },
     {
       name: "Count Ennersby",
-      text:
-        "The Austro-Hungarian Empire was going to fall\nanyway, Nicole. You need to get over that.",
+      text: "The Austro-Hungarian Empire was going to fall\nanyway, Nicole. You need to get over that.",
       font: "gothic"
     },
     {
@@ -328,15 +327,19 @@ export default {
       font: "gothic"
     },
     {
+      name: "Nicole",
+      text: "Seriously! I swear, it's only because they overthrew\nmy girlfriend and hired a vampire to capture and/or kill\nme!\nNo other reason!"
+    },
+    {
       name: "Count Ennersby",
-      text: "Anyway, enjoy my... DEATH WALL!",
+      text: "Sure, sure, we all believe you, Nicole.\nAnyway, back to the killing.\nEnjoy my... DEATH WALL!",
       font: "gothic"
     }
   ],
   deathwall: [
     {
       name: "Zip",
-      text: "Hey Nicole, did you see that giant wall?"
+      text: "Hey Nicole, did you see that giant exploding wall?"
     },
     {
       name: "Nicole",

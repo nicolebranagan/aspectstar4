@@ -56,7 +56,7 @@ export default
     "name": "Vaporcity 3",
     "start": [
       100,
-      190
+      93
     ],
     "tileset": 1
   },

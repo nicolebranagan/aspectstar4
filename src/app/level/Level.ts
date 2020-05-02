@@ -296,13 +296,15 @@ export default class Level implements Runner, Master {
     this.background.updatePos(
       Math.min(200 - truecamera.x, 0),
       truecamera.y,
-      this.textBox ? -60 : 0
+      this.textBox && this.scrollVertical ? -60 : 0
     );
     if (this.textBox) {
-      this.levelFrame.position = new PIXI.Point(
-        Math.min(200 - truecamera.x, 0),
-        100 - truecamera.y
-      );
+      if (this.scrollVertical) {
+        this.levelFrame.position = new PIXI.Point(
+          Math.min(200 - truecamera.x, 0),
+          100 - truecamera.y
+        );
+      }
       return;
     }
     if (this.paused) {
