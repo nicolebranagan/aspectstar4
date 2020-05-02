@@ -3,6 +3,11 @@ import UpdatableHolder from "../interfaces/UpdatableHolder";
 
 const FRAMES = [
   [0, 128],
+  [0, 128],
+  [0, 128],
+  [0, 128],
+  [0, 128],
+  [0, 128],
   [32, 128],
   [64, 128],
   [96, 128],
