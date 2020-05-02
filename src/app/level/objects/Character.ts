@@ -15,6 +15,7 @@ export default class Character implements LevelObject {
   point: Point;
 
   private row: number;
+  private baseColumn: number;
   private oneTimeUse: boolean;
   protected spoken: boolean = false;
   private facingLeft: boolean = false;
@@ -32,7 +33,8 @@ export default class Character implements LevelObject {
     oneTimeUse: boolean
   ) {
     this.point = point;
-    this.row = row;
+    this.row = row % 8;
+    this.baseColumn = Math.floor(row / 8);
     this.oneTimeUse = oneTimeUse;
 
     const text = PIXI.Texture.from(
@@ -114,7 +116,12 @@ export default class Character implements LevelObject {
   }
 
   determineFrame() {
-    this.rect = new PIXI.Rectangle(this.frame * 16, this.row * 32, 16, 32);
+    this.rect = new PIXI.Rectangle(
+      this.frame * 16 + this.baseColumn * 32,
+      this.row * 32,
+      16,
+      32
+    );
     this.sprite.texture.frame = this.rect;
     if (this.facingLeft) this.sprite.scale.x = -1;
     else this.sprite.scale.x = 1;
