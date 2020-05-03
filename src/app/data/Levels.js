@@ -6547,7 +6547,7 @@ export default
       9,
       8,
       0,
-      28,
+      41,
       0,
       21,
       20,
@@ -11358,6 +11358,12 @@ export default
         48,
         1352,
         624
+      ],
+      [
+        56,
+        1088,
+        256,
+        "vampirizemecapn"
       ]
     ],
     "width": 64

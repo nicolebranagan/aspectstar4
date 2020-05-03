@@ -417,5 +417,28 @@ export default {
       name: "Nicole",
       text: "So, where is that vampire anyway... this place is\nlike a maze."
     }
+  ],
+  vampirizemecapn: [
+    {
+      name: "Townsperson",
+      text: "The vampire is offering to turn people for free!\nWhat a great deal to get immortality!",
+    },
+    {
+      name: "Nicole",
+      text: "Nice! What's the catch? I could go for some immortality.\nThis clone thing I usually go with has some odd\nphilosophical implications.",
+    },
+    {
+      name: "Townsperson",
+      text: "Well, for one thing, your font becomes unreadable.",
+      font: "gothic"
+    },
+    {
+      name: "Townsperson",
+      text: "Plus I promised to kill or catch Nicole if I see her.\nBut I mean, what are the odds of that?"
+    },
+    {
+      name: "Nicole",
+      text: "Yeah, I haven't seen her around at all."
+    }
   ]
 };

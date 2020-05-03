@@ -523,5 +523,14 @@ export default
     "rect" : [0, 192, 16, 32],
     "row" : 6,
     "oneTimeUse" : false
+  },
+  {    
+    "name" : "Vampirized Townsfolk",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "technocave",
+    "rect" : [32, 32, 16, 32],
+    "row" : 9,
+    "oneTimeUse" : false
   }
 ]

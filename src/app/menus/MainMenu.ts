@@ -41,7 +41,7 @@ const get4 = (x: number, y: number) => {
   return sprite;
 };
 
-const TIMEOUT_INTERVAL = 3;
+const TIMEOUT_INTERVAL = 1;
 
 export default class MainMenu implements Runner {
   public drawables: PIXI.Container = new PIXI.Container();
@@ -77,7 +77,7 @@ export default class MainMenu implements Runner {
 
     const callbackFunc = () => {
       if (this.rainbow4.x < 0) {
-        this.rainbow4.x++;
+        this.rainbow4.x += 2;
         setTimeout(callbackFunc, TIMEOUT_INTERVAL);
       } else {
         this.completeInitialization();
