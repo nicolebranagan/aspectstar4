@@ -20,6 +20,7 @@ import { enterWorldMap } from "../state/Governor";
 import Vaporcity from "./backgrounds/Vaporcity";
 import SFX from "../audio/SFX";
 import Technocave from "./backgrounds/Technocave";
+import Icon from "../interfaces/Icon";
 
 /* LevelOptions are options that are passed by the level to its children.
  * They allow the child level objects to do things to the parent.
@@ -44,8 +45,8 @@ export interface LevelOptions {
   hookSave: (hook: () => void) => void;
   hasCard: (aspect: Aspect) => boolean;
   giveCard: (aspect: Aspect) => void;
-  addIcon: (sprite: PIXI.Sprite) => number;
-  removeIcon: (index: number) => void;
+  addIcon: (icon: Icon) => void;
+  removeIcon: (uniqueId: string) => void;
   addObject: (object: LevelObject) => void;
 }
 
@@ -82,7 +83,7 @@ export default class Level implements Runner, Master {
   private scrollVertical: boolean;
   private objectData: { [key: string]: string | number | boolean } = {};
   private saveHooks: (() => void)[] = [];
-  private icons: PIXI.Sprite[] = [];
+  private icons: Icon[] = [];
 
   constructor(
     master: Master,
@@ -231,13 +232,15 @@ export default class Level implements Runner, Master {
         this.player.hasCard = true;
       },
 
-      addIcon: icon => {
-        this.icons.push(icon);
-        return this.icons.length;
+      addIcon: newIcon => {
+        this.icons = [
+          ...this.icons.filter(icon => icon.uniqueId !== newIcon.uniqueId),
+          newIcon
+        ];
       },
 
-      removeIcon: index => {
-        this.icons = this.icons.filter((__, i) => i !== index - 1);
+      removeIcon: uniqueId => {
+        this.icons = this.icons.filter(icon => icon.uniqueId !== uniqueId);
       },
 
       addObject: this.addObject.bind(this)
@@ -282,7 +285,11 @@ export default class Level implements Runner, Master {
 
   update(): void {
     if (!this.loaded) return;
-    this.system.updateSystem(this.player, this.bellCount, this.icons);
+    this.system.updateSystem(
+      this.player,
+      this.bellCount,
+      this.icons.map(icon => icon.sprite)
+    );
     if (!!this.winSystem) {
       this.winSystem.update();
       if (this.paused) {
@@ -375,6 +382,7 @@ export default class Level implements Runner, Master {
     this.bellCount = 0;
     this.objects.slice().forEach(e => this.removeObject(e));
     this.saveHooks = [];
+    this.icons = [];
     this.stage.reset();
     const data = Loader(this.stage, objects, this.options);
     this.player = new Player(this.levelid === 0, this.stage, this.lastState);

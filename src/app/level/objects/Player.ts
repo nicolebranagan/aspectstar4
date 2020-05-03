@@ -153,7 +153,9 @@ export default class Player extends BaseLevelObject {
   }
 
   getAspect(asp: Aspect): void {
-    this.aspects.push(asp);
+    if (this.aspects.indexOf(asp) === -1) {
+      this.aspects.push(asp);
+    }
     this.changeAspect(asp);
   }
 

@@ -29,12 +29,12 @@ export default class AspectCard implements LevelObject, UpdatableHolder {
   physics: SolidPhysics;
   point: Point;
 
+  private uniqueId: string;
   private updatables: Updatable[] = [];
   private sprite: PIXI.Sprite;
   private visible: boolean = true;
   private collection: PIXI.Container;
   private timer: number = 0;
-  private iconId: number = 0;
 
   constructor(
     stage: Stage,
@@ -47,6 +47,7 @@ export default class AspectCard implements LevelObject, UpdatableHolder {
     this.physics = new SolidPhysics(stage, 16, 16);
     this.drawables = new PIXI.Container();
     this.aspect = aspect;
+    this.uniqueId = `ASPECT_CARD_${aspect}`;
 
     this.collection = new PIXI.Container();
     this.sprite = getSprite(texture, new PIXI.Rectangle(...rect), this.point);
@@ -71,18 +72,19 @@ export default class AspectCard implements LevelObject, UpdatableHolder {
     const player = options.getPlayer();
 
     if (this.visible && player.physics.inrange(player.point, this.point)) {
+      const { uniqueId } = this;
       options.giveCard(this.aspect);
-      this.iconId = options.addIcon(new PIXI.Sprite(this.sprite.texture));
+      options.addIcon({
+        sprite: new PIXI.Sprite(this.sprite.texture),
+        uniqueId
+      });
       this.goInvisible();
       return;
     }
 
     if (!this.visible && !options.hasCard(this.aspect)) {
       this.goVisible();
-      if (this.iconId) {
-        options.removeIcon(this.iconId);
-        this.iconId = 0;
-      }
+      options.removeIcon(this.uniqueId);
     }
   }
 
