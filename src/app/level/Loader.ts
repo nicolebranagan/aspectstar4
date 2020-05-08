@@ -149,5 +149,23 @@ async function parseObject(
       objdata.bulletrect,
       objdata.timermax
     );
+  } else if (objdata.type === "spikycircler") {
+    const SpikyCircler = (await import(/* webpackChunkName: "spikycircler" */ "./objects/SpikyCircler"))
+      .default;
+
+    return new SpikyCircler(
+      stage,
+      point,
+      objdata.aspect,
+      objdata.texture,
+      objdata.rect,
+      objdata.rect2,
+      objdata.width,
+      objdata.height,
+      objdata.damageWidth,
+      objdata.damageHeight,
+      objdata.frameCount,
+      data[4]
+    );
   }
 }

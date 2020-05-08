@@ -532,5 +532,19 @@ export default
     "rect" : [32, 32, 16, 32],
     "row" : 9,
     "oneTimeUse" : false
+  },
+  {
+    "name": "Moth Circle",
+    "type": "spikycircler",
+    "texture": "object3",
+    "category": "technocave",
+    "aspect": 3,
+    "rect": [32, 0, 32, 32],
+    "rect2": [96, 0, 32, 32],
+    "width": 16,
+    "height": 28,
+    "damageWidth": 28,
+    "damageHeight": 28,
+    "frameCount": 2
   }
 ]
