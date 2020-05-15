@@ -504,5 +504,27 @@ export default {
       name: "Nicole",
       text: "You better look out, count! Next level I'm totally\ngoing to annihilate you!"
     }
+  ],
+  endthisworld: [
+    {
+      name: "Nicole",
+      text: "Zip! I didn't expect to see you so soon."
+    },
+    {
+      name: "Zip",
+      text: "It's level three time, Nicole. Let's stake this vampire."
+    },
+    {
+      name: "Nicole",
+      text: "Are you trying to sound cool?"
+    },
+    {
+      name: "Zip",
+      text: "..."
+    },
+    {
+      name: "Zip",
+      text: "No..."
+    }
   ]
 };
