@@ -521,8 +521,8 @@ export default
     "texture" : "characters",
     "category" : "technocave",
     "rect" : [0, 192, 16, 32],
-    "row" : 6,
-    "oneTimeUse" : false
+    "row" : 12,
+    "oneTimeUse" : true
   },
   {    
     "name" : "Vampirized Townsfolk",
@@ -546,5 +546,13 @@ export default
     "damageWidth": 28,
     "damageHeight": 28,
     "frameCount": 2
+  },
+  {
+    "name" : "Mocking Ennersby",
+    "type" : "character",
+    "texture" : "characters",
+    "category" : "technocave",
+    "rect" : [0, 192, 16, 32],
+    "row" : 12
   }
 ]

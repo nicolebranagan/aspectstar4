@@ -440,5 +440,69 @@ export default {
       name: "Nicole",
       text: "Yeah, I haven't seen her around at all."
     }
+  ],
+  whatareyoudoinghere: [
+    {
+      name: "Count Ennersby",
+      text: "Placing these virtual candles is a lot of work. I \ndoth hope no one expects me to place hearts in\nthem...",
+      font: "gothic"
+    },
+    {
+      name: "Count Ennersby",
+      text: "Alas! I did not expect to be caught at this time!",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "This ends now, count! I'm going to... do that thing...\nthat I'm going to do to stop you?"
+    },
+    {
+      name: "Mary",
+      text: "UTTER ANNIHILATION IS MY USUAL PREFERENCE.",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "Yeah, what she said!"
+    },
+    {
+      name: "Count Ennersby",
+      text: "But, but... that ist not fair! This is... \nThis is only level 2! You can't fight the boss\nuntil the last level!",
+      font: "gothic"
+    },
+    {
+      name: "Mary",
+      text: "UNACCEPTABLE ATTEMPT, MORTAL.",
+      font: "machine"
+    },
+    {
+      name: "Count Ennersby",
+      text: "Well, actually, since I'm a vampire, technically--",
+      font: "gothic"
+    },
+    {
+      name: "Mary",
+      text: "YOU ARE MORTAL FOR WE SHALL KILL YOU. NICOLE\nWOULD NOT FALL FOR SUCH A PITIFUL STRATEGEM.",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "No, no, I'd definitely fall for that. Gotta wait until\nthe third level. It's only fair."
+    },
+    {
+      name: "Nicole",
+      text: "Come on Mary, you wouldn't want to be unsporting!"
+    }
+  ],
+  mockingcount: [
+    {
+      name: "Count Ennersby",
+      text: "So you're really just going to... keep going?",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "You better look out, count! Next level I'm totally\ngoing to annihilate you!"
+    }
   ]
 };
