@@ -79,5 +79,15 @@ export default
       477
     ],
     "tileset": 2
+  },
+  {
+    "background": 2,
+    "bigtileset": 2,
+    "name": "Technocave 3",
+    "start": [
+      40,
+      157
+    ],
+    "tileset": 2
   }
 ]
