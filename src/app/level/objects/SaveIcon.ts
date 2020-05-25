@@ -6,6 +6,7 @@ import Stage from "../../interfaces/Stage";
 import { LevelOptions } from "../Level";
 import BaseLevelObject from "./BaseLevelObject";
 import Updatable from "../../interfaces/Updatable";
+import play from "../../audio/SFX";
 
 export default class SaveIcon extends BaseLevelObject {
   active = true;
@@ -70,6 +71,7 @@ export default class SaveIcon extends BaseLevelObject {
       this.addChild(Particle.getAspectEffect(this, Aspect.NONE));
       this.timeOut = -25;
       options.saveState();
+      play("save");
     }
   }
 }

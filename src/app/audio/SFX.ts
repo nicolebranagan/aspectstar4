@@ -1,4 +1,4 @@
-const sound = ["aspect", "jump", "coin", "die", "card", "door"];
+const sound = ["aspect", "jump", "coin", "die", "card", "door", "save"];
 
 const play = (key: string) => {
   import(/* webpackChunkName: "audio-dict" */ "./AudioDict").then(
