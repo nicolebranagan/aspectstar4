@@ -48,6 +48,7 @@ export interface LevelOptions {
   addIcon: (icon: Icon) => void;
   removeIcon: (uniqueId: string) => void;
   addObject: (object: LevelObject) => void;
+  setLifebar: (health: number, max: number) => void;
 }
 
 const BACKGROUNDS = [Palace, Vaporcity, Technocave];
@@ -84,6 +85,8 @@ export default class Level implements Runner, Master {
   private objectData: { [key: string]: string | number | boolean } = {};
   private saveHooks: (() => void)[] = [];
   private icons: Icon[] = [];
+  private health: number;
+  private max: number;
 
   constructor(
     master: Master,
@@ -243,7 +246,12 @@ export default class Level implements Runner, Master {
         this.icons = this.icons.filter(icon => icon.uniqueId !== uniqueId);
       },
 
-      addObject: this.addObject.bind(this)
+      addObject: this.addObject.bind(this),
+
+      setLifebar: (health, max) => {
+        this.health = health;
+        this.max = max;
+      }
     };
   }
 
@@ -288,7 +296,9 @@ export default class Level implements Runner, Master {
     this.system.updateSystem(
       this.player,
       this.bellCount,
-      this.icons.map(icon => icon.sprite)
+      this.icons.map(icon => icon.sprite),
+      this.health,
+      this.max
     );
     if (!!this.winSystem) {
       this.winSystem.update();
@@ -357,14 +367,20 @@ export default class Level implements Runner, Master {
   }
 
   private async initializeStage(attributes: Attributes) {
-    const levelData = (await import(/* webpackChunkName: "levels" */ "../data/Levels"))
-      .default[this.levelid];
-    const bigtile = (await import(/* webpackChunkName: "bigtiles" */ "../data/Bigtiles"))
-      .default[attributes.bigtileset];
-    const FunctionalStage = (await import(/* webpackChunkName: "functional-stage" */ "./FunctionalStage"))
-      .default;
-    const Terrain = (await import(/* webpackChunkName: "terrain" */ "./Terrain"))
-      .default;
+    const levelData = (
+      await import(/* webpackChunkName: "levels" */ "../data/Levels")
+    ).default[this.levelid];
+    const bigtile = (
+      await import(/* webpackChunkName: "bigtiles" */ "../data/Bigtiles")
+    ).default[attributes.bigtileset];
+    const FunctionalStage = (
+      await import(
+        /* webpackChunkName: "functional-stage" */ "./FunctionalStage"
+      )
+    ).default;
+    const Terrain = (
+      await import(/* webpackChunkName: "terrain" */ "./Terrain")
+    ).default;
 
     this.stage = new FunctionalStage(levelData, bigtile);
     const terrain = new Terrain(levelData, attributes, bigtile.bigtiles);

@@ -81,6 +81,66 @@ const getNumber: (number: number, x: number, y: number) => PIXI.Sprite = (
   return sprite;
 };
 
+const LIFEBAR_LEFT = [120, 0, 8, 24];
+const LIFEBAR_RIGHT = [144, 0, 8, 24];
+const LIFEBAR_FULL = [128, 0, 8, 24];
+const LIFEBAR_EMPTY = [136, 0, 8, 24];
+
+const getLifebar: (max: number, health: number) => PIXI.Container = (
+  max: number,
+  health: number
+) => {
+  let startX = 200 - 4 * max - 8;
+  const container = new PIXI.Container();
+
+  container.addChild(
+    (() => {
+      const text = PIXI.Texture.from(
+        PIXI.loader.resources["system"].texture.baseTexture
+      );
+      text.frame = new PIXI.Rectangle(...LIFEBAR_LEFT);
+      const sprite = new PIXI.Sprite(text);
+      sprite.anchor.set(0, 0);
+      sprite.x = startX;
+      sprite.y = 0;
+      return sprite;
+    })()
+  );
+
+  startX += 8;
+
+  for (let i = 0; i < max; i++) {
+    const text = PIXI.Texture.from(
+      PIXI.loader.resources["system"].texture.baseTexture
+    );
+    text.frame = new PIXI.Rectangle(
+      ...(i <= health ? LIFEBAR_FULL : LIFEBAR_EMPTY)
+    );
+    const sprite = new PIXI.Sprite(text);
+    sprite.anchor.set(0, 0);
+    sprite.x = startX;
+    sprite.y = 0;
+    startX += 8;
+    container.addChild(sprite);
+  }
+
+  container.addChild(
+    (() => {
+      const text = PIXI.Texture.from(
+        PIXI.loader.resources["system"].texture.baseTexture
+      );
+      text.frame = new PIXI.Rectangle(...LIFEBAR_RIGHT);
+      const sprite = new PIXI.Sprite(text);
+      sprite.anchor.set(0, 0);
+      sprite.x = startX;
+      sprite.y = 0;
+      return sprite;
+    })()
+  );
+
+  return container;
+};
+
 export default class System implements Drawable {
   public drawables: PIXI.Container;
   private aspects: Aspect[];
@@ -88,6 +148,8 @@ export default class System implements Drawable {
   private bellCount: number;
   private bellCountMax: number;
   private icons: PIXI.Sprite[];
+  private health: number;
+  private max: number;
 
   constructor(playerState: PlayerState, bellCountMax: number) {
     this.drawables = new PIXI.Container();
@@ -111,6 +173,9 @@ export default class System implements Drawable {
     this.drawables.addChild(topRightCorner.get(getTopRightCorner));
     this.resetBellCount();
     this.resetIcons();
+    if (this.max) {
+      this.drawables.addChild(getLifebar(this.max, this.health));
+    }
   }
 
   private resetBellCount() {
@@ -138,18 +203,28 @@ export default class System implements Drawable {
     this.drawables.addChild(iconHolder);
   }
 
-  updateSystem(player: Player, bellCountMax: number, icons: PIXI.Sprite[]) {
+  updateSystem(
+    player: Player,
+    bellCountMax: number,
+    icons: PIXI.Sprite[],
+    health: number,
+    max: number
+  ) {
     if (
       player.aspect !== this.selectedAspect ||
       player.aspects.length !== this.aspects.length ||
       this.bellCount !== player.bells ||
       this.bellCountMax !== bellCountMax ||
-      this.icons.length !== icons.length
+      this.icons.length !== icons.length ||
+      this.health !== health ||
+      this.max !== max
     ) {
       this.selectedAspect = player.aspect;
       this.aspects = player.aspects;
       this.bellCount = player.bells;
       this.bellCountMax = bellCountMax;
+      this.health = health;
+      this.max = max;
       this.icons = icons.slice();
       this.reset();
     }

@@ -554,5 +554,12 @@ export default
     "category" : "technocave",
     "rect" : [0, 192, 16, 32],
     "row" : 12
+  },
+  {
+    "name": "Boss 1",
+    "type": "boss1",
+    "texture": "boss1",
+    "category": "technocave",
+    "rect": [0, 0, 32, 48]
   }
 ]

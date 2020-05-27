@@ -526,5 +526,11 @@ export default {
       name: "Zip",
       text: "No..."
     }
+  ],
+  vampireBeforeBattle: [
+    {
+      name: "Nicole", 
+      text: "Battle"
+    }
   ]
 };

@@ -19,26 +19,30 @@ async function parseObject(
   data: any[],
   levelOptions: LevelOptions
 ): Promise<LevelObject> {
-  const objectDictionary = (await import(/* webpackChunkName: "objects" */ "../data/Objects"))
-    .default;
+  const objectDictionary = (
+    await import(/* webpackChunkName: "objects" */ "../data/Objects")
+  ).default;
   const objdata = objectDictionary[data[0]];
   const point = new Point(data[1], data[2]);
 
   if (objdata.type == "saveicon") {
-    const SaveIcon = (await import(/* webpackChunkName: "save-icon" */ "./objects/SaveIcon"))
-      .default;
+    const SaveIcon = (
+      await import(/* webpackChunkName: "save-icon" */ "./objects/SaveIcon")
+    ).default;
     return new SaveIcon(stage, point, objdata.rect);
   } else if (objdata.type == "bell") {
     const Bell = (await import(/* webpackChunkName: "bell" */ "./objects/Bell"))
       .default;
     return new Bell(stage, point, objdata.rect);
   } else if (objdata.type == "aspecttile") {
-    const AspectTile = (await import(/* webpackChunkName: "aspect-tile" */ "./objects/AspectTile"))
-      .default;
+    const AspectTile = (
+      await import(/* webpackChunkName: "aspect-tile" */ "./objects/AspectTile")
+    ).default;
     return new AspectTile(stage, point, objdata.aspect, objdata.rect);
   } else if (objdata.type == "platform") {
-    const Platform = (await import(/* webpackChunkName: "platform" */ "./objects/Platform"))
-      .default;
+    const Platform = (
+      await import(/* webpackChunkName: "platform" */ "./objects/Platform")
+    ).default;
     return new Platform(
       stage,
       point,
@@ -50,8 +54,9 @@ async function parseObject(
       data[4]
     );
   } else if (objdata.type == "square") {
-    const Square = (await import(/* webpackChunkName: "square" */ "./objects/Square"))
-      .default;
+    const Square = (
+      await import(/* webpackChunkName: "square" */ "./objects/Square")
+    ).default;
     return new Square(
       stage,
       point,
@@ -62,16 +67,19 @@ async function parseObject(
       objdata.xor
     );
   } else if (objdata.type === "character") {
-    const Character = (await import(/* webpackChunkName: "character" */ "./objects/Character"))
-      .default;
+    const Character = (
+      await import(/* webpackChunkName: "character" */ "./objects/Character")
+    ).default;
     return new Character(point, objdata.row, data[3], objdata.oneTimeUse);
   } else if (objdata.type === "victory") {
-    const Victory = (await import(/* webpackChunkName: "character" */ "./objects/Victory"))
-      .default;
+    const Victory = (
+      await import(/* webpackChunkName: "character" */ "./objects/Victory")
+    ).default;
     return new Victory(point, data[3]);
   } else if (objdata.type === "landmover") {
-    const LandMover = (await import(/* webpackChunkName: "land-mover" */ "./objects/LandMover"))
-      .default;
+    const LandMover = (
+      await import(/* webpackChunkName: "land-mover" */ "./objects/LandMover")
+    ).default;
     return new LandMover(
       stage,
       point,
@@ -83,8 +91,11 @@ async function parseObject(
       objdata.frameCount
     );
   } else if (objdata.type === "spikyplatform") {
-    const SpikyPlatform = (await import(/* webpackChunkName: "spiky-platform" */ "./objects/SpikyPlatform"))
-      .default;
+    const SpikyPlatform = (
+      await import(
+        /* webpackChunkName: "spiky-platform" */ "./objects/SpikyPlatform"
+      )
+    ).default;
     return new SpikyPlatform(
       stage,
       point,
@@ -98,8 +109,9 @@ async function parseObject(
       data[4]
     );
   } else if (objdata.type === "safetypin") {
-    const SafetyPin = (await import(/* webpackChunkName: "safety-pin" */ "./objects/SafetyPin"))
-      .default;
+    const SafetyPin = (
+      await import(/* webpackChunkName: "safety-pin" */ "./objects/SafetyPin")
+    ).default;
     return new SafetyPin(
       stage,
       point,
@@ -112,12 +124,14 @@ async function parseObject(
       objdata.pointingLeft
     );
   } else if (objdata.type === "movingwall") {
-    const MovingWall = (await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall"))
-      .default;
+    const MovingWall = (
+      await import(/* webpackChunkName: "moving-wall" */ "./objects/MovingWall")
+    ).default;
     return new MovingWall(point, objdata.row, data[3], levelOptions);
   } else if (objdata.type === "aspectcard") {
-    const AspectCard = (await import(/* webpackChunkName: "aspect-card" */ "./objects/AspectCard"))
-      .default;
+    const AspectCard = (
+      await import(/* webpackChunkName: "aspect-card" */ "./objects/AspectCard")
+    ).default;
     return new AspectCard(
       stage,
       point,
@@ -126,8 +140,9 @@ async function parseObject(
       objdata.rect
     );
   } else if (objdata.type === "aspectdoor") {
-    const AspectDoor = (await import(/* webpackChunkName: "aspect-door" */ "./objects/AspectDoor"))
-      .default;
+    const AspectDoor = (
+      await import(/* webpackChunkName: "aspect-door" */ "./objects/AspectDoor")
+    ).default;
     return new AspectDoor(
       stage,
       point,
@@ -137,8 +152,9 @@ async function parseObject(
       objdata.rect2
     );
   } else if (objdata.type === "shooter") {
-    const Shooter = (await import(/* webpackChunkName: "shooter" */ "./objects/Shooter"))
-      .default;
+    const Shooter = (
+      await import(/* webpackChunkName: "shooter" */ "./objects/Shooter")
+    ).default;
     return new Shooter(
       stage,
       point,
@@ -150,8 +166,11 @@ async function parseObject(
       objdata.timermax
     );
   } else if (objdata.type === "spikycircler") {
-    const SpikyCircler = (await import(/* webpackChunkName: "spikycircler" */ "./objects/SpikyCircler"))
-      .default;
+    const SpikyCircler = (
+      await import(
+        /* webpackChunkName: "spikycircler" */ "./objects/SpikyCircler"
+      )
+    ).default;
 
     return new SpikyCircler(
       stage,
@@ -167,5 +186,10 @@ async function parseObject(
       objdata.frameCount,
       data[4]
     );
+  } else if (objdata.type === "boss1") {
+    const Vampire = (
+      await import(/* webpackChunkName: "boss1" */ "./objects/bosses/Vampire")
+    ).default;
+    return new Vampire(point, levelOptions);
   }
 }

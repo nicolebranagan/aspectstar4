@@ -1,7 +1,7 @@
 import BaseLevelObject from "../BaseLevelObject";
 import LevelObject from "../../../interfaces/LevelObject";
 import Point from "../../../system/Point";
-import { LevelOptions } from "../../Level";
+import { LevelOptions, UNDEFINED } from "../../Level";
 import Character from "../Character";
 import NullPhysics from "../../physics/NullPhysics";
 import Aspect from "../../../constants/Aspect";
@@ -113,6 +113,7 @@ class VampireBoss implements LevelObject {
 }
 
 const DELTA_X_BETWEEN_POINTS = 96;
+const HEALTH = 5;
 
 export default class Vampire extends BaseLevelObject implements LevelObject {
   active = true;
@@ -122,14 +123,16 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
   private showCharacter: boolean;
   private character: LevelObject;
   private boss: VampireBoss;
+  private health: number = HEALTH;
 
   constructor(point: Point, levelOptions: LevelOptions) {
     super();
 
     this.point = point;
-    if (levelOptions.getData(SPOKEN_TO_KEY)) {
+    const hasSpoken = levelOptions.getData(SPOKEN_TO_KEY) !== UNDEFINED;
+    if (hasSpoken) {
       this.showCharacter = false;
-      this.startBattle();
+      this.startBattle(levelOptions);
     } else {
       this.showCharacter = true;
       this.character = new Character(
@@ -142,7 +145,9 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
     }
   }
 
-  startBattle() {}
+  startBattle(options: LevelOptions) {
+    options.setLifebar(this.health, HEALTH);
+  }
 
   update(options: LevelOptions) {
     super.update();
@@ -152,10 +157,11 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
         this.character.update(options);
         return;
       } else {
-        this.startBattle();
+        this.startBattle(options);
         this.drawables.removeChild(this.character.drawables);
         this.character = null;
         this.showCharacter = false;
+        options.setData(SPOKEN_TO_KEY, true);
       }
       return;
     }
