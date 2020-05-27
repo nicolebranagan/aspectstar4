@@ -191,5 +191,19 @@ async function parseObject(
       await import(/* webpackChunkName: "boss1" */ "./objects/bosses/Vampire")
     ).default;
     return new Vampire(point, levelOptions);
+  } else if (objdata.type === "breakapartsquare") {
+    const BreakApartSquare = (
+      await import(
+        /* webpackChunkName: "breakapartsquare" */ "./objects/BreakApartSquare"
+      )
+    ).default;
+
+    return new BreakApartSquare(
+      stage,
+      point,
+      objdata.texture,
+      objdata.rect,
+      objdata.frameCount
+    );
   }
 }

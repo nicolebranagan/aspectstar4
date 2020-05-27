@@ -561,5 +561,13 @@ export default
     "texture": "boss1",
     "category": "technocave",
     "rect": [0, 0, 32, 48]
+  },
+  {
+    "name": "Collapsing square",
+    "type": "breakapartsquare",
+    "texture": "object3",
+    "category": "technocave",
+    "rect": [0, 240, 16, 16],
+    "frameCount": 6
   }
 ]
