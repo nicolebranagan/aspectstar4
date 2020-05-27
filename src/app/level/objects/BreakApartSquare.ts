@@ -5,6 +5,7 @@ import SolidPhysics from "../physics/SolidPhysics";
 import Stage from "../../interfaces/Stage";
 import { LevelOptions } from "../Level";
 import SolidityType from "../../constants/SolidityType";
+import play from "../../audio/SFX";
 
 const getSprite: (
   point: Point,
@@ -70,6 +71,7 @@ export default class BreakApartSquare implements LevelObject {
         if (Math.abs(player.point.x - this.point.x) > 16) {
           this.state = States.STOODUPOFF;
           this.stage.deregister(this);
+          play("collapse");
         }
         break;
       }

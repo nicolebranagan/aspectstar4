@@ -5,6 +5,7 @@ import { LevelOptions, UNDEFINED } from "../../Level";
 import Character from "../Character";
 import NullPhysics from "../../physics/NullPhysics";
 import Aspect from "../../../constants/Aspect";
+import play from "../../../audio/Music";
 
 const VAMPIRE_TEXTURE = "boss1";
 const VAMPIRE_BULLET_BY_ASPECT = {
@@ -147,6 +148,7 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
 
   startBattle(options: LevelOptions) {
     options.setLifebar(this.health, HEALTH);
+    play("morality");
   }
 
   update(options: LevelOptions) {

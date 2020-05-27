@@ -4,7 +4,8 @@ const music = [
   "palazzo.mp3",
   "vaporcity.mp3",
   "vaporcity-fast.mp3",
-  "attacot.mp3"
+  "attacot.mp3",
+  "morality.mp3"
 ];
 let currentlyPlaying: { stop: () => void } = null;
 
