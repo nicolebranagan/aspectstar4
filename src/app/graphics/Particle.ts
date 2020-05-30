@@ -211,6 +211,52 @@ export default {
         if (particles.length == 0) master.removeChild(this);
       }
     };
+  },
+  getBigImageBurst(
+    master: UpdatableHolder,
+    row: number,
+    multiplier: number
+  ): Updatable {
+    const drawables = new PIXI.Container();
+    const particles: ImageParticle[] = [];
+    for (let i = 0; i < 1080; i = i + multiplier) {
+      const speed = multiplier * 2 * Math.ceil(i / 720);
+      const radius = 48;
+      const angle = 2 * Math.PI * ((i % 360) / 360);
+      const x = -speed * Math.sin(angle);
+      const y = -speed * Math.cos(angle);
+      if (Math.floor(x * 10) == 0 && Math.floor(y * 10) == 0) continue;
+      const particle1 = new ImageParticle(
+        row,
+        radius * Math.sin(angle),
+        radius * Math.cos(angle),
+        200,
+        x,
+        y
+      );
+      drawables.addChild(particle1.sprite);
+      particles.push(particle1);
+    }
+
+    return {
+      drawables: drawables,
+      update: function() {
+        const toDelete = [];
+        for (const index in particles) {
+          const p = particles[index];
+          p.update();
+          if (!p.active) {
+            drawables.removeChild(p.sprite);
+            toDelete.push(index);
+          }
+        }
+        toDelete.reverse();
+        for (const delindex of toDelete) {
+          particles.splice(Number(delindex), 1);
+        }
+        if (particles.length == 0) master.removeChild(this);
+      }
+    };
   }
 };
 
@@ -278,7 +324,7 @@ class ColorParticle {
   }
 
   update() {
-    if (this.maxLifetime != 0) {
+    if (this.maxLifetime !== 0) {
       this.lifetime++;
       if (this.lifetime >= this.maxLifetime) this.active = false;
     }
@@ -356,7 +402,7 @@ class ImageParticle {
 
   private determineFrame(): void {
     const colorstep =
-      this.maxLifetime == 0
+      this.maxLifetime === 0
         ? Math.floor(3 * Math.abs(this.sprite.position.y / 8))
         : Math.floor((3 * this.lifetime) / this.maxLifetime);
     const rect = new PIXI.Rectangle(colorstep * 8, this.row * 8, 8, 8);
@@ -369,7 +415,7 @@ class ImageParticle {
   }
 
   update() {
-    if (this.maxLifetime != 0) {
+    if (this.maxLifetime !== 0) {
       this.lifetime++;
       if (this.lifetime >= this.maxLifetime) this.active = false;
     }

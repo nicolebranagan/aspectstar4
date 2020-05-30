@@ -114,7 +114,7 @@ const getLifebar: (max: number, health: number) => PIXI.Container = (
       PIXI.loader.resources["system"].texture.baseTexture
     );
     text.frame = new PIXI.Rectangle(
-      ...(i <= health ? LIFEBAR_FULL : LIFEBAR_EMPTY)
+      ...(i < health ? LIFEBAR_FULL : LIFEBAR_EMPTY)
     );
     const sprite = new PIXI.Sprite(text);
     sprite.anchor.set(0, 0);

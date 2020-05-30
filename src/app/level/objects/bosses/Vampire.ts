@@ -6,6 +6,7 @@ import Character from "../Character";
 import NullPhysics from "../../physics/NullPhysics";
 import Aspect from "../../../constants/Aspect";
 import play from "../../../audio/Music";
+import Particle from "../../../graphics/Particle";
 
 const VAMPIRE_TEXTURE = "boss1";
 const VAMPIRE_BULLET_BY_ASPECT = {
@@ -79,21 +80,52 @@ class VampireBullet implements LevelObject {
 const VAMPIRE_WIDTH = 32;
 const VAMPIRE_HEIGHT = 48;
 
-class VampireBoss implements LevelObject {
+enum BossPhase {
+  FADE_IN,
+  STAND,
+  ATTACK,
+  WAIT,
+  FADE_OUT,
+  INJURY
+}
+
+class VampireBoss extends BaseLevelObject {
   active = true;
   alwaysActive = false;
   physics = new NullPhysics();
   point: Point;
   aspect: Aspect;
   drawables: PIXI.Container;
+  sprite: PIXI.Sprite;
 
   private timer: number = 0;
   private bullets: VampireBullet[];
+  private phase: BossPhase = BossPhase.FADE_IN;
 
-  constructor(point: Point, aspect: Aspect) {
+  constructor(
+    point: Point,
+    aspect: Aspect,
+    private speed: number,
+    private onDeath: (opt: LevelOptions) => void,
+    private onInjury: (opt: LevelOptions) => void
+  ) {
+    super();
+
     this.point = point;
     this.aspect = aspect;
     this.drawables = new PIXI.Container();
+
+    const texture = PIXI.Texture.from(
+      PIXI.loader.resources["boss1"].texture.baseTexture
+    );
+    texture.frame = new PIXI.Rectangle(0, 0, VAMPIRE_WIDTH, VAMPIRE_HEIGHT);
+    this.sprite = new PIXI.Sprite(texture);
+    this.sprite.anchor.set(0.5, 1);
+    this.sprite.x = this.point.x;
+    this.sprite.y = this.point.y;
+
+    const particles = Particle.getBigImageBurst(this, 1, 1);
+    this.addChild(particles);
   }
 
   fireBullet() {
@@ -105,8 +137,138 @@ class VampireBoss implements LevelObject {
     this.bullets.forEach(bullet => this.drawables.addChild(bullet.drawables));
   }
 
+  updateFrame(frame: number) {
+    this.sprite.texture.frame = new PIXI.Rectangle(
+      VAMPIRE_WIDTH * frame,
+      0,
+      VAMPIRE_WIDTH,
+      VAMPIRE_HEIGHT
+    );
+  }
+
   update(options: LevelOptions) {
+    super.update();
+
     const player = options.getPlayer();
+    if (this.point.x - player.point.x > 0) {
+      this.sprite.scale.x = -1;
+    } else {
+      this.sprite.scale.x = 1;
+    }
+    switch (this.phase) {
+      case BossPhase.FADE_IN: {
+        this.timer++;
+        if (this.timer == 50) {
+          this.timer = 0;
+          this.phase = BossPhase.STAND;
+          this.drawables.addChild(this.sprite);
+        }
+        return;
+      }
+      case BossPhase.STAND: {
+        this.timer++;
+        if (this.timer === 60) {
+          this.updateFrame(1);
+        }
+        if (this.timer === 64) {
+          this.updateFrame(2);
+        }
+        if (this.timer === 68) {
+          this.updateFrame(3);
+          this.phase = BossPhase.ATTACK;
+          this.timer = 0;
+        }
+        break;
+      }
+      case BossPhase.ATTACK: {
+        this.bullets = [
+          new VampireBullet(
+            this.point.add(new Point(0, -32)),
+            this.aspect,
+            3 * this.sprite.scale.x,
+            0.5
+          ),
+          new VampireBullet(
+            this.point.add(new Point(0, -32)),
+            this.aspect,
+            3 * this.sprite.scale.x,
+            -2
+          ),
+          new VampireBullet(
+            this.point.add(new Point(0, -32)),
+            this.aspect,
+            3 * this.sprite.scale.x,
+            2
+          )
+        ];
+        this.bullets.forEach(bullet => options.addObject(bullet));
+        this.phase = BossPhase.WAIT;
+        break;
+      }
+      case BossPhase.WAIT: {
+        this.timer++;
+        if (this.timer === 20) {
+          this.updateFrame(2);
+        }
+        if (this.timer === 22) {
+          this.updateFrame(1);
+        }
+        if (this.timer === 24) {
+          this.updateFrame(0);
+        }
+        this.bullets.forEach(bullet => {
+          if (bullet.point.inRect(this.point, 8, VAMPIRE_HEIGHT)) {
+            if (this.timer < 20) {
+              return;
+            }
+            this.phase = BossPhase.INJURY;
+            this.timer = 0;
+            this.updateFrame(6);
+            this.onInjury(options);
+            bullet.active = false;
+            this.addChild(
+              Particle.getAspectExplode(
+                this,
+                bullet.aspect,
+                bullet.point.x,
+                bullet.point.y
+              )
+            );
+          }
+        });
+        if (this.timer >= 150 / this.speed) {
+          this.phase = BossPhase.FADE_OUT;
+          this.addChild(Particle.getBigImageBurst(this, 1, 3));
+          this.timer = 0;
+          return;
+        }
+        break;
+      }
+      case BossPhase.FADE_OUT: {
+        this.timer++;
+        if (this.timer === 10) {
+          this.bullets.forEach(bullet => (bullet.active = false));
+        }
+        if (this.timer === 20) {
+          this.active = false;
+          this.onDeath(options);
+        }
+        break;
+      }
+      case BossPhase.INJURY: {
+        this.timer++;
+        if (this.timer === 10) {
+          this.bullets.forEach(bullet => (bullet.active = false));
+        }
+        if (this.timer === 60) {
+          this.addChild(Particle.getBigImageBurst(this, 1, 3));
+        }
+        if (this.timer === 80) {
+          this.active = false;
+          this.onDeath(options);
+        }
+      }
+    }
     if (player.point.inRect(this.point, VAMPIRE_WIDTH, VAMPIRE_HEIGHT)) {
       options.die();
     }
@@ -115,8 +277,12 @@ class VampireBoss implements LevelObject {
 
 const DELTA_X_BETWEEN_POINTS = 96;
 const HEALTH = 5;
+const ASPECTS = [Aspect.ASPECT_CIRCLE, Aspect.ASPECT_PLUS, Aspect.ASPECT_X];
 
-export default class Vampire extends BaseLevelObject implements LevelObject {
+const getShuffledAspect: (asp: Aspect) => Aspect = (playerAspect: Aspect) =>
+  ASPECTS.filter(asp => asp !== playerAspect).sort(() => Math.random())[0];
+
+export default class Vampire extends BaseLevelObject {
   active = true;
   alwaysActive = false;
   physics = new NullPhysics();
@@ -125,11 +291,18 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
   private character: LevelObject;
   private boss: VampireBoss;
   private health: number = HEALTH;
+  private possiblePoints: Point[];
 
   constructor(point: Point, levelOptions: LevelOptions) {
     super();
 
     this.point = point;
+    this.possiblePoints = [
+      point.add(new Point(DELTA_X_BETWEEN_POINTS, 0)),
+      point,
+      point.add(new Point(-DELTA_X_BETWEEN_POINTS, 0))
+    ];
+
     const hasSpoken = levelOptions.getData(SPOKEN_TO_KEY) !== UNDEFINED;
     if (hasSpoken) {
       this.showCharacter = false;
@@ -149,7 +322,41 @@ export default class Vampire extends BaseLevelObject implements LevelObject {
   startBattle(options: LevelOptions) {
     options.setLifebar(this.health, HEALTH);
     play("morality");
+    this.boss = new VampireBoss(
+      this.point,
+      getShuffledAspect(options.getPlayer().aspect),
+      1,
+      this.onBossDie,
+      this.onInjury
+    );
+    options.addObject(this.boss);
   }
+
+  onBossDie = (options: LevelOptions) => {
+    if (this.active === false) {
+      return;
+    }
+    const playerPoint = options.getPlayer().point;
+    this.boss = new VampireBoss(
+      this.possiblePoints
+        .filter(pt => pt !== this.boss.point)
+        .sort(() => Math.random())[0],
+      getShuffledAspect(options.getPlayer().aspect),
+      this.health > 4 ? 1 : this.health > 2 ? 3 : 4,
+      this.onBossDie,
+      this.onInjury
+    );
+    options.addObject(this.boss);
+  };
+
+  onInjury = (options: LevelOptions) => {
+    this.health--;
+    options.setLifebar(this.health, HEALTH);
+
+    if (this.health === 0) {
+      this.active = false;
+    }
+  };
 
   update(options: LevelOptions) {
     super.update();

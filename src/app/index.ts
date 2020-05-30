@@ -23,6 +23,7 @@ function loadResources(): void {
     .add("object1", "images/object1.gif")
     .add("object2", "images/object2.gif")
     .add("object3", "images/object3.gif")
+    .add("boss1", "images/boss1.gif")
     .load(function() {
       master.initialize();
     });
@@ -32,9 +33,10 @@ FontLoader().then(() => {
   import(/* webpackChunkName: "local-master" */ "./system/LocalMaster").then(
     LocalMaster => {
       master = new LocalMaster.default();
-      import(/* webpackChunkName: "audio-dict" */ "./audio/AudioDict").then(
-        ({ default: { initializeAudio } }) =>
-          initializeAudio().then(() => loadResources())
+      import(
+        /* webpackChunkName: "audio-dict" */ "./audio/AudioDict"
+      ).then(({ default: { initializeAudio } }) =>
+        initializeAudio().then(() => loadResources())
       );
     }
   );
