@@ -240,6 +240,7 @@ class VampireBoss extends BaseLevelObject {
           this.phase = BossPhase.FADE_OUT;
           this.addChild(Particle.getBigImageBurst(this, 1, 3));
           this.timer = 0;
+          this.updateFrame(7);
           return;
         }
         break;
