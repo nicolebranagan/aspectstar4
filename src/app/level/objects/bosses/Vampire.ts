@@ -7,6 +7,8 @@ import NullPhysics from "../../physics/NullPhysics";
 import Aspect from "../../../constants/Aspect";
 import play from "../../../audio/Music";
 import Particle from "../../../graphics/Particle";
+import Platform from "../Platform";
+import Stage from "../../../interfaces/Stage";
 
 const VAMPIRE_TEXTURE = "boss1";
 const VAMPIRE_BULLET_BY_ASPECT = {
@@ -181,24 +183,27 @@ class VampireBoss extends BaseLevelObject {
         break;
       }
       case BossPhase.ATTACK: {
+        const baseSpeed = 2 * Math.min(this.speed, 1.5);
+        const baseAngle = 80 * (Math.PI / 180);
+        const spread = 40 * (Math.PI / 180);
         this.bullets = [
           new VampireBullet(
             this.point.add(new Point(0, -32)),
             this.aspect,
-            3 * this.sprite.scale.x,
-            0.5
+            baseSpeed * Math.sin(baseAngle) * this.sprite.scale.x,
+            baseSpeed * Math.cos(baseAngle)
           ),
           new VampireBullet(
             this.point.add(new Point(0, -32)),
             this.aspect,
-            3 * this.sprite.scale.x,
-            -2
+            baseSpeed * Math.sin(baseAngle + spread) * this.sprite.scale.x,
+            baseSpeed * Math.cos(baseAngle + spread)
           ),
           new VampireBullet(
             this.point.add(new Point(0, -32)),
             this.aspect,
-            3 * this.sprite.scale.x,
-            2
+            baseSpeed * Math.sin(baseAngle - spread) * this.sprite.scale.x,
+            baseSpeed * Math.cos(baseAngle - spread)
           )
         ];
         this.bullets.forEach(bullet => options.addObject(bullet));
@@ -281,20 +286,27 @@ const HEALTH = 5;
 const ASPECTS = [Aspect.ASPECT_CIRCLE, Aspect.ASPECT_PLUS, Aspect.ASPECT_X];
 
 const getShuffledAspect: (asp: Aspect) => Aspect = (playerAspect: Aspect) =>
-  ASPECTS.filter(asp => asp !== playerAspect).sort(() => Math.random())[0];
+  ASPECTS.filter(asp => asp !== playerAspect)[Math.random() > 0.5 ? 0 : 1];
+
+enum GovernorPhase {
+  PRE_BATTLE,
+  BATTLE,
+  DEATH_ANIM,
+  VICTORY
+}
 
 export default class Vampire extends BaseLevelObject {
   active = true;
   alwaysActive = false;
   physics = new NullPhysics();
 
-  private showCharacter: boolean;
   private character: LevelObject;
   private boss: VampireBoss;
   private health: number = HEALTH;
   private possiblePoints: Point[];
+  private phase = GovernorPhase.PRE_BATTLE;
 
-  constructor(point: Point, levelOptions: LevelOptions) {
+  constructor(private stage: Stage, point: Point, levelOptions: LevelOptions) {
     super();
 
     this.point = point;
@@ -306,10 +318,8 @@ export default class Vampire extends BaseLevelObject {
 
     const hasSpoken = levelOptions.getData(SPOKEN_TO_KEY) !== UNDEFINED;
     if (hasSpoken) {
-      this.showCharacter = false;
       this.startBattle(levelOptions);
     } else {
-      this.showCharacter = true;
       this.character = new Character(
         point,
         VAMPIRE_SPEAKING_ROW,
@@ -324,26 +334,26 @@ export default class Vampire extends BaseLevelObject {
     options.setLifebar(this.health, HEALTH);
     play("morality");
     this.boss = new VampireBoss(
-      this.point,
+      this.possiblePoints[0],
       getShuffledAspect(options.getPlayer().aspect),
       1,
       this.onBossDie,
       this.onInjury
     );
     options.addObject(this.boss);
+    this.phase = GovernorPhase.BATTLE;
   }
 
   onBossDie = (options: LevelOptions) => {
-    if (this.active === false) {
+    if (this.phase !== GovernorPhase.BATTLE) {
       return;
     }
-    const playerPoint = options.getPlayer().point;
     this.boss = new VampireBoss(
-      this.possiblePoints
-        .filter(pt => pt !== this.boss.point)
-        .sort(() => Math.random())[0],
+      this.possiblePoints.filter(pt => pt !== this.boss.point)[
+        Math.random() > 0.5 ? 0 : 1
+      ],
       getShuffledAspect(options.getPlayer().aspect),
-      this.health > 4 ? 1 : this.health > 2 ? 3 : 4,
+      this.health > 4 ? 1 : this.health > 2 ? 2 : 3,
       this.onBossDie,
       this.onInjury
     );
@@ -355,25 +365,63 @@ export default class Vampire extends BaseLevelObject {
     options.setLifebar(this.health, HEALTH);
 
     if (this.health === 0) {
-      this.active = false;
+      this.phase = GovernorPhase.DEATH_ANIM;
+
+      options.setLifebar(0, 0);
+      play("attacot");
     }
   };
 
   update(options: LevelOptions) {
     super.update();
 
-    if (this.showCharacter) {
-      if (this.character.active) {
-        this.character.update(options);
+    switch (this.phase) {
+      case GovernorPhase.PRE_BATTLE: {
+        if (this.character.active) {
+          this.character.update(options);
+          return;
+        } else {
+          this.startBattle(options);
+          this.drawables.removeChild(this.character.drawables);
+          this.character = null;
+          options.setData(SPOKEN_TO_KEY, true);
+        }
         return;
-      } else {
-        this.startBattle(options);
-        this.drawables.removeChild(this.character.drawables);
-        this.character = null;
-        this.showCharacter = false;
-        options.setData(SPOKEN_TO_KEY, true);
       }
-      return;
+      case GovernorPhase.DEATH_ANIM: {
+        if (!this.boss.active) {
+          this.character = new Character(
+            this.point,
+            VAMPIRE_SPEAKING_ROW,
+            BEFORE_BATTLE_INTERACTION,
+            true
+          );
+          this.drawables.addChild(this.character.drawables);
+          this.phase = GovernorPhase.VICTORY;
+        }
+        return;
+      }
+      case GovernorPhase.VICTORY: {
+        if (this.character.active) {
+          this.character.update(options);
+          return;
+        } else {
+          this.active = false;
+          options.addObject(
+            new Platform(
+              this.stage,
+              new Point(1288, 112),
+              Aspect.ASPECT_PLUS,
+              "object3",
+              [48, 160, 48, 16],
+              [0, 160, 48, 16],
+              false,
+              144
+            )
+          );
+        }
+        return;
+      }
     }
   }
 }

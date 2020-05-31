@@ -190,7 +190,7 @@ async function parseObject(
     const Vampire = (
       await import(/* webpackChunkName: "boss1" */ "./objects/bosses/Vampire")
     ).default;
-    return new Vampire(point, levelOptions);
+    return new Vampire(stage, point, levelOptions);
   } else if (objdata.type === "breakapartsquare") {
     const BreakApartSquare = (
       await import(

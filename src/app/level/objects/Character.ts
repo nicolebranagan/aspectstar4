@@ -40,7 +40,12 @@ export default class Character implements LevelObject {
     const text = PIXI.Texture.from(
       PIXI.loader.resources["characters"].texture.baseTexture
     );
-    this.rect = new PIXI.Rectangle(0, this.row * 32, 16, 32);
+    this.rect = new PIXI.Rectangle(
+      this.frame * 16 + this.baseColumn * 32,
+      this.row * 32,
+      16,
+      32
+    );
     text.frame = this.rect;
     this.sprite = new PIXI.Sprite(text);
     this.drawables = new PIXI.Container();
