@@ -373,6 +373,10 @@ export default {
     {
       name: "Peacekeeper",
       text: "I want to get that circle keycard, but I don't want to\nlose this groovy X aspect!"
+    },
+    {
+      name: "Peacekeeper",
+      text: "And if I were to get it and go back to the X aspect,\nthen I'd lose the keycard! What an odd system."
     }
   ],
   batsnotcats: [
@@ -439,6 +443,10 @@ export default {
     {
       name: "Nicole",
       text: "Yeah, I haven't seen her around at all."
+    },
+    {
+      name: "Townsperson",
+      text: "Nicole's terrifying. Vampiric powers or not, if I ran\ninto her I'd run."
     }
   ],
   whatareyoudoinghere: [
@@ -529,8 +537,168 @@ export default {
   ],
   vampireBeforeBattle: [
     {
-      name: "Nicole", 
-      text: "Battle"
+      name: "Count Ennersby", 
+      text: "It hath been twenty billion years since anyone\nhath dared challenge me.",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "That sounds unlikely."
+    },
+    {
+      name: "Count Ennersby",
+      text: "I might be a little inaccurate. But it's definitely\nbeen awhile.",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "How much is the League of Nations paying you for this\nanyway? Surely you could just...\nnot..."
+    },
+    {
+      name: "Count Ennersby",
+      text: "More that you could pay, mortal.",
+      font: "gothic"
+    }, 
+    {
+      name: "Nicole",
+      text: "I mean, I don't know, the Empire seems to have a lot\nof money and I'm sure Marion wouldn't mind--"
+    },
+    {
+      name: "Count Ennersby",
+      text: "The time for talk is finished! Have at you!",
+      font: "gothic"
+    }
+  ],
+  vampireAfterBattle: [
+    {
+      name: "Nicole",
+      text: "I hope you learned your lesson. You and the League\nwill never beat the combined power of Marion\nand I!"
+    },
+    {
+      name: "Count Ennersby",
+      text: "The League won't leave you alone, Nicole.",
+      font: "gothic"
+    },
+    {
+      name: "Count Ennersby",
+      text: "They've already captured your Princess. You too \nwill stand trial for your crimes.",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "And that's where you-- they captured the Princess?\nWhat?"
+    },
+    {
+      name: "Count Ennersby",
+      text: "Lo, it is true, and thusly",
+      font: "gothic"
+    },
+    {
+      name: "Nicole",
+      text: "Speak clearly. Without that ridiculous font."
+    },
+    {
+      name: "Count Ennersby",
+      text: "Princess Mary has been dethroned and sits in a cell\nin Geneva. She will stand trial for her crimes against\nhumanity. And so will you."
+    },
+    {
+      name: "Nicole",
+      text: "That's where you're wrong, count! I've been traveling\nwith Mary, and she'd definitely tell me if she was in a\ncell in Geneva."
+    },
+    {
+      name: "Count Ennersby",
+      text: "That's obviously a robot."
+    },
+    {
+      name: "Nicole",
+      text: "What?!"
+    },
+    {
+      name: "Count Ennersby",
+      text: "But enough talk! My time grows near... to think,\nbeaten by a girl..",
+      font: "gothic"
+    },
+    {
+      name: "Count Ennersby",
+      text: "Of course, being beaten by a man would be just as\nhumiliating...",
+      font: "gothic"
+    },
+    {
+      name: "Count Ennersby",
+      text: "I guess I just don't like to lose...",
+      font: "gothic"
+    }
+  ],
+  zipBeforeVampire: [
+    {
+      name: "Zip",
+      text: "You can do it, Nicole! The vampire waits on the\nother side of these crumbling blocks!"
+    },
+    {
+      name: "Nicole",
+      text: "Wait, the level isn't already over?!"
+    }
+  ],
+  zipAfterVampire: [
+    {
+      name: "Zip",
+      text: "You did it! Now we can go to the abandoned floating\ncity and be safe!"
+    },
+    {
+      name: "Nicole",
+      text: "..."
+    },
+    {
+      name: "Zip",
+      text: "What's wrong, Nicole?"
+    },
+    {
+      name: "Nicole",
+      text: "\"Mary\". State your designation. Override code zed zed\nzed Mersenne two one six zero nine one."
+    },
+    {
+      name: "Marybot",
+      text: "DESIGNATION MARYBOT C-99 BATCH 632\nTHIS SOFTWARE IS DISTRIBUTED IN LINE WITH THE\nGENERAL PUBLIC LICENSE V666. YOU SHOULD HAVE\nRECEIVED A COPY OF THE LICENSE WHEN\nDOWNLOADING THIS SOFTWARE...",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "Enough. Why would you lie to me? I thought you were\nMary!"
+    },
+    {
+      name: "Marybot",
+      text: "PRIMARY MISSION IS TO PROTECT NICOLE.\nDECEPTION IS A VALID TOOL TO COMPLETE PRIMARY\nGOALS. OR SECONDARY ONES.\nOR WHEN BORED.",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "I guess she did program you, after all..."
+    },
+    {
+      name: "Nicole",
+      text: "But you should've told me! She's in trouble, captured by\nthe League of Nations! They've occupied the capital!\nThis one is for real!"
+    },
+    {
+      name: "Marybot",
+      text: "THE LEAGUE OF NATIONS IS NOT RECOMMENDED.\nTHE ABANDONED FLOATING CITY IS MUCH SAFER.\nDESPITE BEING ABANDONED BY AN UNKNOWN\nCIVILIZATION FOR UNKNOWN REASONS.",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "I know the override code. We're going to stop\nthe League and you're coming with us."
+    },
+    {
+      name: "Marybot",
+      text: "...",
+      font: "machine"
+    },
+    {
+      name: "Nicole",
+      text: "But I guess it does make sense to have a base to\nsafely plan our assault. Geneva's far away."
+    },
+    {
+      name: "Nicole",
+      text: "So we'll go to the abandoned floating city. But we\nwon't stay there!"
     }
   ]
 };

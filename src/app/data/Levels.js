@@ -13386,12 +13386,6 @@ export default
         160
       ],
       [
-        16,
-        1840,
-        128,
-        ""
-      ],
-      [
         60,
         1480,
         128
@@ -13465,6 +13459,24 @@ export default
         1,
         1632,
         96
+      ],
+      [
+        18,
+        1888,
+        128,
+        "zipAfterVampire"
+      ],
+      [
+        61,
+        840,
+        96,
+        "zipBeforeVampire"
+      ],
+      [
+        16,
+        1840,
+        128,
+        "zipAfterVampire"
       ]
     ],
     "width": 64

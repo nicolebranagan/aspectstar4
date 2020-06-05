@@ -21,6 +21,7 @@ const VAMPIRE_BULLET_BY_ASPECT = {
 const SPOKEN_TO_KEY = "vampireBossSpokenDataKey";
 const VAMPIRE_SPEAKING_ROW = 10;
 const BEFORE_BATTLE_INTERACTION = "vampireBeforeBattle";
+const AFTER_BATTLE_INTERACTION = "vampireAfterBattle";
 
 class VampireBullet implements LevelObject {
   active = true;
@@ -393,7 +394,7 @@ export default class Vampire extends BaseLevelObject {
           this.character = new Character(
             this.point,
             VAMPIRE_SPEAKING_ROW,
-            BEFORE_BATTLE_INTERACTION,
+            AFTER_BATTLE_INTERACTION,
             true
           );
           this.drawables.addChild(this.character.drawables);

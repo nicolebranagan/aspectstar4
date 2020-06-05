@@ -569,5 +569,13 @@ export default
     "category": "technocave",
     "rect": [0, 240, 16, 16],
     "frameCount": 6
+  },
+  {
+    "name": "Talky Zip",
+    "type": "character",
+    "texture": "characters",
+    "category": "technocave",
+    "rect": [0, 32, 16, 32],
+    "row": 1
   }
 ]
