@@ -21,14 +21,13 @@ const getPromise = (name: string, filename: string, opts: object) => {
 };
 
 const initializeAudio = () => {
-  const promises = sound.map(name =>
-    getPromise(name, `./audio/${name}.wav`, { loop: false })
-  );
-  promises.concat(
-    music.map(name =>
-      getPromise(name.split(".")[0], `./audio/${name}`, { loop: true })
-    )
-  );
+  const promises = sound
+    .map(name => getPromise(name, `./audio/${name}.wav`, { loop: false }))
+    .concat(
+      music.map(name =>
+        getPromise(name.split(".")[0], `./audio/${name}`, { loop: true })
+      )
+    );
   return Promise.all(promises);
 };
 

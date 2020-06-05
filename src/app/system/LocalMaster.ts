@@ -27,12 +27,25 @@ export default class LocalMaster implements Master {
 
   initialize(): void {
     // Everything that needs to go after resources have loaded
-    import(/* webpackChunkName: "main-menu" */ "../menus/MainMenu").then(
-      MainMenu => {
-        this.addRunner(new MainMenu.default(this));
-        this.update();
-      }
-    );
+    import(
+      /* webpackChunkName: "opening-crawl" */ "../screen/OpeningCrawl"
+    ).then(OpeningCrawl => {
+      let openingCrawl: Runner;
+      const onComplete = () => {
+        import(/* webpackChunkName: "main-menu" */ "../menus/MainMenu").then(
+          MainMenu => {
+            this.addRunner(new MainMenu.default(this));
+            this.removeRunner(openingCrawl);
+          }
+        );
+      };
+
+      openingCrawl = new OpeningCrawl.default(onComplete);
+
+      this.addRunner(openingCrawl);
+      this.update();
+    });
+    return;
   }
 
   update(): void {

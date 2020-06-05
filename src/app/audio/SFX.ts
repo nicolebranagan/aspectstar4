@@ -6,7 +6,8 @@ const sound = [
   "card",
   "door",
   "save",
-  "collapse"
+  "collapse",
+  "whistle"
 ];
 
 const play = (key: string) => {

@@ -48,21 +48,40 @@ export default class MainMenu implements Runner {
   private master: Master;
   private menu: Menu;
   private locked: boolean = false;
-  private underlay: PIXI.Graphics;
   private rainbow4: PIXI.Container;
+  private canvas: HTMLCanvasElement;
 
   constructor(master: Master) {
     this.master = master;
+    this.prepareCanvas();
     this.drawTitle();
   }
 
-  drawTitle() {
-    this.underlay = new PIXI.Graphics();
-    this.underlay.beginFill(0x000930);
-    this.underlay.drawRect(0, 0, 400, 225);
-    this.underlay.endFill();
-    this.drawables.addChild(this.underlay);
+  private prepareCanvas() {
+    this.canvas = document.createElement("canvas");
+    this.canvas.width = 2;
+    this.canvas.height = 250;
 
+    const ctx = this.canvas.getContext("2d");
+    const gradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+    gradient.addColorStop(0, "#660044");
+    gradient.addColorStop(0.4, "#000000");
+    gradient.addColorStop(1, "#004455");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const sprite = new PIXI.Sprite(
+      PIXI.Texture.fromCanvas(this.canvas, PIXI.SCALE_MODES.NEAREST)
+    );
+    sprite.x = 0;
+    sprite.y = 0;
+    sprite.height = 225;
+    sprite.width = 400;
+    sprite.anchor.set(0, 0);
+    this.drawables.addChild(sprite);
+  }
+
+  drawTitle() {
     this.getRainbow4();
     this.drawables.addChild(getLogo(64, 16));
   }

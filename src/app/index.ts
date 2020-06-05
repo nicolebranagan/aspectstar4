@@ -9,6 +9,9 @@ window.addEventListener("unhandledrejection", function(event) {
 
 function loadResources(): void {
   PIXI.loader
+    .add("happytrain", "images/happytrain.gif")
+    .add("logo", "images/logo.png")
+    .add("crawl", "images/crawl.png")
     .add("system", "images/system.gif")
     .add("title", "images/title.gif")
     .add("player", "images/player.gif")
