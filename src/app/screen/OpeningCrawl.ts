@@ -11,6 +11,8 @@ enum OpeningCrawlPhases {
   DONE
 }
 
+const DIM = 0x777777;
+
 class OpeningCrawlChild {
   private texture: PIXI.Texture;
   public sprite: PIXI.Sprite;
@@ -27,13 +29,15 @@ class OpeningCrawlChild {
     this.sprite.x = x;
     this.sprite.y = y;
     this.sprite.scale.x = (y + 40) / 200;
+    this.sprite.tint = this.sprite.y % 2 ? DIM : 0xffffff;
   }
 
   update() {
     this.y++;
-    if (this.y < 900)
+    if (this.y < 900) {
       this.sprite.texture.frame = new PIXI.Rectangle(0, this.y, 300, 1);
-    else this.done = true;
+      this.sprite.tint = this.sprite.y % 2 ? DIM : 0xffffff;
+    } else this.done = true;
   }
 }
 
@@ -110,7 +114,7 @@ export default class OpeningCrawl implements Runner {
         this.happyTrain.position.x++;
         if (
           this.happyTrain.position.x === 100 ||
-          this.happyTrain.position.x === 300
+          this.happyTrain.position.x === 200
         ) {
           playSFX("whistle");
         }
@@ -123,10 +127,12 @@ export default class OpeningCrawl implements Runner {
       case OpeningCrawlPhases.LOGO_LEAVES: {
         this.timer++;
         if (this.timer % 2 === 0) {
-          this.logoSprite.position.y--;
-          if (this.logoSprite.position.y < -38) {
+          this.logoSprite.scale.x++;
+          this.logoSprite.scale.y++;
+          if (this.logoSprite.scale.y > 70) {
             this.timer = 0;
             this.phase = OpeningCrawlPhases.OPENING_CRAWL;
+            this.drawables.removeChild(this.logoSprite);
           }
         }
         return;
