@@ -17,6 +17,7 @@ enum TextBoxState {
 
 const TEXT_BOX_WIDTH = 398;
 const TEXT_BOX_HEIGHT = 99;
+const TIMER_MAX = 50;
 
 export default class TextBox implements Runner {
   public drawables: PIXI.Container;
@@ -25,6 +26,7 @@ export default class TextBox implements Runner {
   private openingHeight: number = 0;
   private interaction: Interaction[];
   private marker: number = 0;
+  private timer: number = 0;
 
   constructor(interaction: Interaction[], private onComplete: () => void) {
     this.interaction = interaction;
@@ -37,6 +39,7 @@ export default class TextBox implements Runner {
     this.graphics.height = TEXT_BOX_HEIGHT;
     this.drawables.addChild(this.graphics);
     this.drawTextBox(0, TEXT_BOX_WIDTH);
+    this.timer = TIMER_MAX;
 
     this.openTextBox = this.openTextBox.bind(this);
     this.openTextBox();
@@ -99,6 +102,9 @@ export default class TextBox implements Runner {
   }
 
   respond(controls: Controls): void {
+    if (this.timer) {
+      return;
+    }
     if (this.state === TextBoxState.OPEN) {
       if (controls.ButtonA || controls.ButtonB) {
         this.marker++;
@@ -107,10 +113,15 @@ export default class TextBox implements Runner {
           this.onComplete();
         } else {
           this.drawText();
+          this.timer = TIMER_MAX;
         }
       }
     }
   }
 
-  update() {}
+  update() {
+    if (this.timer) {
+      this.timer--;
+    }
+  }
 }

@@ -293,6 +293,7 @@ export default class Level implements Runner, Master {
 
   update(): void {
     if (!this.loaded) return;
+    if (this.textBox) this.textBox.update();
     this.system.updateSystem(
       this.player,
       this.bellCount,
