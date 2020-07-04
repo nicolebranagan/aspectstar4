@@ -18,6 +18,12 @@ import BaseLevelObject from "./BaseLevelObject";
 const WAIT_TIME_MAX = 300;
 const WAIT_FRAME_CHANGE = 20;
 
+const ASPECT_ORDER = [
+  Aspect.ASPECT_PLUS,
+  Aspect.ASPECT_X,
+  Aspect.ASPECT_CIRCLE
+];
+
 export default class Player extends BaseLevelObject {
   active = true;
   alwaysActive: boolean = true;
@@ -92,6 +98,27 @@ export default class Player extends BaseLevelObject {
     }
     if (controls.ButtonO) {
       this.changeAspect(Aspect.ASPECT_CIRCLE);
+    }
+
+    if (controls.ButtonL) {
+      const i = ASPECT_ORDER.indexOf(this.aspect);
+      const iMinus1 = i - 1 >= 0 ? i - 1 : 2;
+      const iMinus2 = iMinus1 - 1 >= 0 ? iMinus1 - 1 : 2;
+
+      if (this.aspects.indexOf(ASPECT_ORDER[iMinus1]) > -1) {
+        this.changeAspect(ASPECT_ORDER[iMinus1]);
+      } else if (this.aspects.indexOf(ASPECT_ORDER[iMinus2]) > -1) {
+        this.changeAspect(ASPECT_ORDER[iMinus2]);
+      }
+    }
+
+    if (controls.ButtonR) {
+      const i = ASPECT_ORDER.indexOf(this.aspect);
+      if (this.aspects.indexOf(ASPECT_ORDER[(i + 1) % 3]) > -1) {
+        this.changeAspect(ASPECT_ORDER[(i + 1) % 3]);
+      } else if (this.aspects.indexOf(ASPECT_ORDER[(i + 2) % 3]) > -1) {
+        this.changeAspect(ASPECT_ORDER[(i + 2) % 3]);
+      }
     }
   }
 

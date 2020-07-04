@@ -16,5 +16,9 @@ export default interface Controls {
   ButtonX: boolean;
   ButtonO: boolean;
 
+  ButtonL: boolean;
+  ButtonR: boolean;
+
+  update(): void;
   release(): void;
 }

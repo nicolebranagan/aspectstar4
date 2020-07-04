@@ -1,6 +1,7 @@
 import Master from "../interfaces/Master";
 import Controls from "../interfaces/Controls";
 import KeyboardControls from "./KeyboardControls";
+import GamepadControls from "./GamepadControls";
 import Runner from "../interfaces/Runner";
 
 /* LocalMaster is the parent of everything.
@@ -23,6 +24,8 @@ export default class LocalMaster implements Master {
     this.runners = [];
     this.controls = new KeyboardControls();
     this.update = this.update.bind(this);
+
+    window.addEventListener("gamepadconnected", this.initializeGamepad);
   }
 
   initialize(): void {
@@ -48,8 +51,13 @@ export default class LocalMaster implements Master {
     return;
   }
 
+  initializeGamepad: (e: GamepadEvent) => void = (e: GamepadEvent) => {
+    this.controls = new GamepadControls(e.gamepad);
+  };
+
   update(): void {
     setTimeout(this.update, 1000 / 60);
+    this.controls.update();
     this.runners.forEach(e => {
       e.respond && e.respond(this.controls);
       e.update();

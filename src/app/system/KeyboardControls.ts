@@ -17,6 +17,9 @@ export default class KeyboardControls implements Controls {
   ButtonX = false;
   ButtonO = false;
 
+  ButtonL = false;
+  ButtonR = false;
+
   constructor() {
     window.addEventListener("keydown", e => this.keyDown(e), false);
     window.addEventListener("keyup", e => this.keyUp(e), false);
@@ -106,4 +109,6 @@ export default class KeyboardControls implements Controls {
       this.ButtonO = false;
     }
   }
+
+  update() {}
 }
